@@ -5,13 +5,10 @@ const Logo = ({ className = '' }: { className?: string }) => {
   return (
     <Link to="/" className={`flex items-center ${className}`}>
       <img 
-        src="/lovable-uploads/0d1efe81-a8fc-4a8c-8ee9-6c8dcc0c4701.png" 
+        src="/lovable-uploads/bc9b5dea-776a-46a3-b886-59da9c741e0f.png" 
         alt="Growth Path Advisory Logo" 
-        className="h-10 mr-2" 
+        className="h-10" 
       />
-      <span className="font-bold text-xl text-funding-dark">
-        Growth Path Advisory
-      </span>
     </Link>
   );
 };

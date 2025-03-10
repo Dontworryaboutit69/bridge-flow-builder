@@ -4,14 +4,15 @@ import CustomButton from './ui/CustomButton';
 
 const Hero = () => {
   return (
-    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-      {/* Background elements with enhanced texture */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-funding-light-gray/50 to-white overflow-hidden -z-10">
-        <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-funding-blue/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/4"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-funding-light-blue/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/4"></div>
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-soft-green/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-soft-purple/10 rounded-full blur-3xl"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptMC0xMnY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-40"></div>
+    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden hero-section">
+      {/* Enhanced background with more texture and color separation */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-funding-blue/5 via-white to-white overflow-hidden -z-10">
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-funding-blue/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-funding-light-blue/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/4"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-soft-green/30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-soft-purple/20 rounded-full blur-3xl"></div>
+        <div className="hero-pattern opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-funding-blue/5 via-transparent to-white"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-5 md:px-10">

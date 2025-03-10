@@ -1,3 +1,4 @@
+
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
@@ -335,33 +336,6 @@ const FundingProducts = () => (
   </section>
 );
 
-// Terms Component - simplified to just links in the footer
-const TermsAndPrivacy = () => (
-  <section id="terms" className="py-16 bg-funding-light-gray/30">
-    <div className="max-w-4xl mx-auto px-5 md:px-10">
-      <div className="glass-card p-8 md:p-10">
-        <div className="diagonal-pattern"></div>
-        <h2 className="text-2xl font-bold text-funding-dark mb-6">Terms of Service</h2>
-        <div className="prose prose-blue max-w-none">
-          <p>By using the Growth Path Advisory website and services, you agree to these Terms of Service. Please read them carefully.</p>
-          
-          <h3>Services Overview</h3>
-          <p>Growth Path Advisory provides business funding connection services. We are not a lender but connect businesses with our network of funding partners. By submitting information, you authorize us to share your information with our network of funding providers.</p>
-          
-          <h3>Eligibility Requirements</h3>
-          <p>To qualify for our services, your business must have been operating for at least 6 months and generate a minimum of $15,000 in monthly revenue. We reserve the right to decline service to businesses that do not meet these criteria.</p>
-          
-          <h3>Information Use</h3>
-          <p>Information provided to Growth Path Advisory will be used to match you with appropriate funding options. We may contact you via phone, email, or text regarding your application and funding options.</p>
-          
-          <h3>Third-Party Services</h3>
-          <p>We may refer you to third-party services if we believe they are better suited to your needs. We are not responsible for the services provided by these third parties.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 const Index = () => {
   // Smooth scroll for anchor links
   useEffect(() => {
@@ -577,22 +551,22 @@ const Index = () => {
               {[
                 {
                   quote: "I was approved for $75,000 in less than 24 hours. The process was incredibly simple and straightforward.",
-                  author: "Michael Johnson",
-                  business: "Johnson Retail Solutions",
+                  author: "Franklyn Jackson",
+                  business: "Action Jackson Septic",
                   rating: 5,
                   gradient: "bg-gradient-to-br from-soft-blue/20 to-soft-purple/10"
                 },
                 {
-                  quote: "After being rejected by three banks, Growth Path Advisory got me the funding I needed to expand my restaurant. Forever grateful!",
-                  author: "Sarah Williams",
-                  business: "Taste of Home Restaurant",
+                  quote: "After being rejected by three banks, Growth Path Advisory got me the funding I needed to expand my business. Forever grateful!",
+                  author: "Arturo Rendon",
+                  business: "AAffordable Landscape",
                   rating: 5,
                   gradient: "bg-gradient-to-br from-soft-peach/20 to-soft-yellow/10"
                 },
                 {
-                  quote: "The team was professional and guided me through the entire process. I received the perfect funding solution for my construction business.",
-                  author: "David Chen",
-                  business: "Chen Construction Co.",
+                  quote: "The team was professional and guided me through the entire process. I received the perfect funding solution for my business.",
+                  author: "Robin Thomas",
+                  business: "Watch Me Grow",
                   rating: 5,
                   gradient: "bg-gradient-to-br from-soft-green/20 to-soft-blue/10"
                 }
@@ -622,7 +596,7 @@ const Index = () => {
         
         <ProgressiveForm />
         
-        <TermsAndPrivacy />
+        {/* Terms of Service section removed as requested */}
       </main>
       
       <footer className="bg-funding-dark text-white py-12">
