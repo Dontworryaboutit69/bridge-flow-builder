@@ -1,5 +1,5 @@
 
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Phone } from 'lucide-react';
 import CustomButton from './ui/CustomButton';
 
 const Hero = () => {
@@ -113,7 +113,14 @@ const Hero = () => {
                 </CustomButton>
               </a>
               
-              <p className="text-xs text-center text-funding-gray mt-4">
+              <div className="mt-4 flex items-center justify-center">
+                <Phone className="w-4 h-4 text-funding-blue mr-2" />
+                <a href="tel:15735333894" className="text-sm text-funding-blue hover:underline">
+                  Call us at 1-573-533-3894
+                </a>
+              </div>
+              
+              <p className="text-xs text-center text-funding-gray mt-2">
                 Checking your rate won't affect your credit score
               </p>
             </div>

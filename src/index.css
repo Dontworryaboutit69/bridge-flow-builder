@@ -41,11 +41,11 @@
   
   /* New compact funding card styling */
   .funding-card {
-    @apply p-5 md:p-6 rounded-xl shadow-md border border-funding-light-gray/50 bg-white hover:shadow-lg transition-all duration-300 relative overflow-hidden;
+    @apply p-4 rounded-lg shadow-sm border border-funding-light-gray/50 bg-white hover:shadow-md transition-all duration-300 relative overflow-hidden;
   }
   
   .funding-card-icon {
-    @apply w-10 h-10 p-2 rounded-full bg-funding-blue/10 text-funding-blue flex items-center justify-center mb-4;
+    @apply w-8 h-8 p-1.5 rounded-full bg-funding-blue/10 text-funding-blue flex items-center justify-center mb-3;
   }
   
   .funding-card::before {
@@ -78,11 +78,11 @@
   }
   
   .funding-card .feature-item {
-    @apply flex items-start py-2;
+    @apply flex items-start py-1.5;
   }
   
   .funding-card .feature-icon {
-    @apply flex-shrink-0 w-5 h-5 rounded-full bg-funding-blue/10 text-funding-blue p-1 mr-3 mt-0.5;
+    @apply flex-shrink-0 w-4 h-4 rounded-full bg-funding-blue/10 text-funding-blue p-0.5 mr-2 mt-0.5;
   }
   
   /* Texture patterns */

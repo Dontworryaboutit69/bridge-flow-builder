@@ -1,11 +1,11 @@
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
 import ProgressiveForm from '@/components/ProgressiveForm';
-import { ArrowRight, CheckCircle, Clock, FileText, DollarSign, Shield, CreditCard, ChevronRight, Briefcase } from 'lucide-react';
+import { ArrowRight, CheckCircle, Clock, FileText, DollarSign, Shield, CreditCard, ChevronRight, Briefcase, Phone, Mail, MapPin } from 'lucide-react';
 import { useEffect } from 'react';
 import CustomButton from '@/components/ui/CustomButton';
+import Logo from '@/components/Logo';
 
 // Funding Products Component
 const FundingProducts = () => (
@@ -335,11 +335,11 @@ const FundingProducts = () => (
   </section>
 );
 
-// Terms Component
+// Terms Component - simplified to just links in the footer
 const TermsAndPrivacy = () => (
   <section id="terms" className="py-16 bg-funding-light-gray/30">
     <div className="max-w-4xl mx-auto px-5 md:px-10">
-      <div className="glass-card p-8 md:p-10 mb-10">
+      <div className="glass-card p-8 md:p-10">
         <div className="diagonal-pattern"></div>
         <h2 className="text-2xl font-bold text-funding-dark mb-6">Terms of Service</h2>
         <div className="prose prose-blue max-w-none">
@@ -356,26 +356,6 @@ const TermsAndPrivacy = () => (
           
           <h3>Third-Party Services</h3>
           <p>We may refer you to third-party services if we believe they are better suited to your needs. We are not responsible for the services provided by these third parties.</p>
-        </div>
-      </div>
-      
-      <div className="glass-card p-8 md:p-10" id="privacy">
-        <div className="grid-pattern"></div>
-        <h2 className="text-2xl font-bold text-funding-dark mb-6">Privacy Policy</h2>
-        <div className="prose prose-blue max-w-none">
-          <p>Growth Path Advisory is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.</p>
-          
-          <h3>Information Collection</h3>
-          <p>We collect information you provide directly to us, including personal and business information necessary to connect you with funding options. This may include contact details, financial information, and business history.</p>
-          
-          <h3>Information Use</h3>
-          <p>We use your information to connect you with funding providers, improve our services, communicate with you about funding opportunities, and comply with legal obligations.</p>
-          
-          <h3>Information Sharing</h3>
-          <p>We share your information with funding providers in our network to help you secure business funding. We may also share information with service providers who help us operate our business.</p>
-          
-          <h3>Your Choices</h3>
-          <p>You can opt out of marketing communications at any time. Contact us at privacy@growthpathadvisory.com to request access to, correction of, or deletion of your personal information.</p>
         </div>
       </div>
     </div>
@@ -649,9 +629,9 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Growth Path Advisory</h3>
+              <Logo className="mb-4 justify-start" />
               <p className="text-gray-400 mb-4">
-                Helping businesses grow with fast, flexible funding solutions since 2015.
+                Helping businesses grow with fast, flexible funding solutions.
               </p>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/GrowthPathAdvisory" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
@@ -701,23 +681,16 @@ const Index = () => {
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
               <ul className="space-y-3 text-gray-400">
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                  </svg>
-                  <span><a href="tel:+18664447432">1-866-444-7432</a></span>
+                  <Phone className="h-5 w-5 mr-2 mt-0.5" />
+                  <span><a href="tel:+15735333894" className="hover:text-white">1-573-533-3894</a></span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                  <span><a href="mailto:info@growthpathadvisory.com">info@growthpathadvisory.com</a></span>
+                  <Mail className="h-5 w-5 mr-2 mt-0.5" />
+                  <span><a href="mailto:info@growthpathadvisory.com" className="hover:text-white">info@growthpathadvisory.com</a></span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  </svg>
-                  <span>15 N Mill St, Suite 207<br />Nyack, NY 10960</span>
+                  <MapPin className="h-5 w-5 mr-2 mt-0.5" />
+                  <span>Orlando, FL 32810</span>
                 </li>
               </ul>
             </div>
@@ -726,9 +699,8 @@ const Index = () => {
           <div className="mt-12 pt-8 border-t border-gray-800 text-gray-400 flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} Growth Path Advisory. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#privacy" className="hover:text-white">Privacy Policy</a>
               <a href="#terms" className="hover:text-white">Terms of Service</a>
-              <a href="#" className="hover:text-white">Sitemap</a>
+              <a href="#privacy" className="hover:text-white">Privacy Policy</a>
             </div>
           </div>
         </div>

@@ -4,8 +4,7 @@ import CustomButton from './ui/CustomButton';
 
 const DisqualifiedView = () => {
   const handleRedirect = () => {
-    // Replace with your partner page URL
-    window.location.href = "https://partner-page-for-low-revenue.com";
+    window.location.href = "https://tinyurl.com/3bzkmw4k";
   };
 
   return (
@@ -69,7 +68,7 @@ const DisqualifiedView = () => {
         </CustomButton>
         
         <p className="text-sm text-funding-gray">
-          Feel free to contact us directly at <a href="tel:18004999004" className="text-funding-blue hover:underline">1-800-499-9004</a> if you have any questions.
+          Feel free to contact us directly at <a href="tel:15735333894" className="text-funding-blue hover:underline">1-573-533-3894</a> if you have any questions.
         </p>
       </div>
     </div>

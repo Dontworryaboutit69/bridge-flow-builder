@@ -30,11 +30,11 @@ const Step1 = () => {
         </p>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {loanAmounts.map((amount, index) => (
           <button
             key={index}
-            className={`p-4 rounded-xl transition-all duration-200 text-left relative ${
+            className={`p-3 rounded-lg transition-all duration-200 text-left relative ${
               formData.loanAmount === amount
                 ? 'border-2 border-funding-blue bg-funding-blue/5 text-funding-dark'
                 : 'border border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'
@@ -42,9 +42,9 @@ const Step1 = () => {
             onClick={() => handleSelect(amount)}
           >
             {formData.loanAmount === amount && (
-              <div className="absolute inset-0 bg-gradient-to-br from-funding-blue/5 to-transparent rounded-xl pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-funding-blue/5 to-transparent rounded-lg pointer-events-none"></div>
             )}
-            <span className="font-medium">{amount}</span>
+            <span className="font-medium text-sm">{amount}</span>
           </button>
         ))}
       </div>

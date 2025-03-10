@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,14 +28,7 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link 
-          to="/" 
-          className="flex items-center"
-        >
-          <div className="font-bold text-xl text-funding-dark">
-            Growth Path Advisory
-          </div>
-        </Link>
+        <Logo />
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -55,6 +49,13 @@ const Navbar = () => {
             className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
           >
             Testimonials
+          </a>
+          <a 
+            href="tel:15735333894" 
+            className="flex items-center text-funding-blue font-medium hover:text-funding-blue/80 transition-colors duration-200"
+          >
+            <Phone className="w-4 h-4 mr-2" />
+            1-573-533-3894
           </a>
           <a 
             href="#apply-now" 
@@ -99,6 +100,14 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Testimonials
+            </a>
+            <a 
+              href="tel:15735333894" 
+              className="flex items-center text-funding-blue font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Phone className="w-5 h-5 mr-2" />
+              1-573-533-3894
             </a>
             <a 
               href="#apply-now" 
