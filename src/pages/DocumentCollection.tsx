@@ -2,7 +2,7 @@
 import Navbar from '@/components/Navbar';
 import Logo from '@/components/Logo';
 import CustomButton from '@/components/ui/CustomButton';
-import { ArrowRight, Upload, FileCheck, File, FileText, CalendarClock, Clock, Phone } from 'lucide-react';
+import { ArrowRight, Upload, FileCheck, File, FileText, CalendarClock, Clock, Phone, Mail, MapPin } from 'lucide-react';
 import { useState } from 'react';
 
 type Document = {
