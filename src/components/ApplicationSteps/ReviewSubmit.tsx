@@ -37,6 +37,13 @@ const ReviewSubmit = () => {
     window.scrollTo(0, 0);
   }, [submitSuccess]);
   
+  // Format date of birth for display
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  };
+  
   return (
     <div className="w-full max-w-3xl mx-auto">
       {!submitSuccess ? (
@@ -73,6 +80,14 @@ const ReviewSubmit = () => {
                   <span className="font-medium text-funding-dark">{applicationData.phone}</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-funding-gray">Date of Birth:</span>
+                  <span className="font-medium text-funding-dark">{formatDate(applicationData.dateOfBirth)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-funding-gray">SSN:</span>
+                  <span className="font-medium text-funding-dark">XXX-XX-{applicationData.socialSecurityNumber.slice(-4)}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-funding-gray">Address:</span>
                   <span className="font-medium text-funding-dark">{applicationData.address}</span>
                 </div>
@@ -103,6 +118,14 @@ const ReviewSubmit = () => {
                 <div className="flex justify-between">
                   <span className="text-funding-gray">Business Type:</span>
                   <span className="font-medium text-funding-dark">{applicationData.businessType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-funding-gray">EIN Number:</span>
+                  <span className="font-medium text-funding-dark">{applicationData.einNumber}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-funding-gray">Ownership Percentage:</span>
+                  <span className="font-medium text-funding-dark">{applicationData.ownershipPercentage}%</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-funding-gray">Industry:</span>
@@ -192,20 +215,39 @@ const ReviewSubmit = () => {
               </div>
             </div>
             
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="terms"
-                  type="checkbox"
-                  className="h-4 w-4 text-funding-blue rounded"
-                  checked={applicationData.agreeToTerms}
-                  onChange={(e) => updateApplicationData({ agreeToTerms: e.target.checked })}
-                />
+            <div className="space-y-3">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="agreeInformationCorrect"
+                    type="checkbox"
+                    className="h-4 w-4 text-funding-blue rounded"
+                    checked={applicationData.agreeInformationCorrect}
+                    onChange={(e) => updateApplicationData({ agreeInformationCorrect: e.target.checked })}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="agreeInformationCorrect" className="text-funding-gray">
+                    I certify that all information provided in this application is correct, accurate, and complete to the best of my knowledge.
+                  </label>
+                </div>
               </div>
-              <div className="ml-3 text-sm">
-                <label htmlFor="terms" className="text-funding-gray">
-                  I have reviewed the application and agree to the <a href="#terms" className="text-funding-blue hover:underline">Terms of Service</a> and <a href="#privacy" className="text-funding-blue hover:underline">Privacy Policy</a>. I consent to receive calls and messages regarding my application.
-                </label>
+              
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    type="checkbox"
+                    className="h-4 w-4 text-funding-blue rounded"
+                    checked={applicationData.agreeToTerms}
+                    onChange={(e) => updateApplicationData({ agreeToTerms: e.target.checked })}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="terms" className="text-funding-gray">
+                    I have reviewed the application and agree to the <a href="#terms" className="text-funding-blue hover:underline">Terms of Service</a> and <a href="#privacy" className="text-funding-blue hover:underline">Privacy Policy</a>. I consent to receive calls and messages regarding my application.
+                  </label>
+                </div>
               </div>
             </div>
           </div>

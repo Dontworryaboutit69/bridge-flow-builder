@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 
 type ApplicationData = {
@@ -11,6 +10,8 @@ type ApplicationData = {
   city: string;
   state: string;
   zipCode: string;
+  socialSecurityNumber: string;
+  dateOfBirth: string;
   
   // Business Information
   businessName: string;
@@ -23,6 +24,8 @@ type ApplicationData = {
   businessState: string;
   businessZipCode: string;
   websiteUrl: string;
+  einNumber: string;
+  ownershipPercentage: string;
   
   // Financial Information
   bankName: string;
@@ -35,6 +38,7 @@ type ApplicationData = {
   
   // Documentation Agreement
   agreeToTerms: boolean;
+  agreeInformationCorrect: boolean;
 };
 
 type ApplicationContextType = {
@@ -61,6 +65,8 @@ const initialApplicationData: ApplicationData = {
   city: '',
   state: '',
   zipCode: '',
+  socialSecurityNumber: '',
+  dateOfBirth: '',
   
   // Business Information
   businessName: '',
@@ -73,6 +79,8 @@ const initialApplicationData: ApplicationData = {
   businessState: '',
   businessZipCode: '',
   websiteUrl: '',
+  einNumber: '',
+  ownershipPercentage: '',
   
   // Financial Information
   bankName: '',
@@ -85,6 +93,7 @@ const initialApplicationData: ApplicationData = {
   
   // Documentation Agreement
   agreeToTerms: false,
+  agreeInformationCorrect: false,
 };
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
@@ -126,7 +135,9 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
           !!applicationData.address &&
           !!applicationData.city &&
           !!applicationData.state &&
-          !!applicationData.zipCode
+          !!applicationData.zipCode &&
+          !!applicationData.socialSecurityNumber &&
+          !!applicationData.dateOfBirth
         );
       case 2: // Business Information
         return (
@@ -137,7 +148,9 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
           !!applicationData.businessAddress &&
           !!applicationData.businessCity &&
           !!applicationData.businessState &&
-          !!applicationData.businessZipCode
+          !!applicationData.businessZipCode &&
+          !!applicationData.einNumber &&
+          !!applicationData.ownershipPercentage
         );
       case 3: // Financial Information
         return (
@@ -147,7 +160,7 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
           !!applicationData.useOfFunds
         );
       case 4: // Documentation
-        return applicationData.agreeToTerms;
+        return applicationData.agreeToTerms && applicationData.agreeInformationCorrect;
       default:
         return false;
     }

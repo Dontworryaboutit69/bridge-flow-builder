@@ -1,10 +1,13 @@
 
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../ui/CustomButton';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
+import { useState } from 'react';
 
 const PersonalInfo = () => {
   const { applicationData, updateApplicationData, nextStep, isStepValid } = useApplication();
+  
+  const [ssnMasked, setSsnMasked] = useState(true);
   
   const states = [
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 
@@ -15,6 +18,23 @@ const PersonalInfo = () => {
     'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
+  
+  // Format SSN as user types (XXX-XX-XXXX)
+  const formatSSN = (value: string) => {
+    const numbersOnly = value.replace(/[^\d]/g, '');
+    if (numbersOnly.length <= 3) {
+      return numbersOnly;
+    } else if (numbersOnly.length <= 5) {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(3)}`;
+    } else {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(3, 5)}-${numbersOnly.slice(5, 9)}`;
+    }
+  };
+  
+  // Toggle SSN visibility
+  const toggleSSNVisibility = () => {
+    setSsnMasked(!ssnMasked);
+  };
   
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -86,6 +106,49 @@ const PersonalInfo = () => {
                 value={applicationData.phone}
                 onChange={(e) => updateApplicationData({ phone: e.target.value.replace(/[^\d]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3').trim() })}
               />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label htmlFor="socialSecurityNumber" className="block text-sm font-medium text-funding-dark">
+                Social Security Number*
+              </label>
+              <div className="relative">
+                <input
+                  type={ssnMasked ? "password" : "text"}
+                  id="socialSecurityNumber"
+                  className="w-full px-4 py-3 rounded-lg border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+                  placeholder="XXX-XX-XXXX"
+                  value={applicationData.socialSecurityNumber}
+                  onChange={(e) => updateApplicationData({ socialSecurityNumber: formatSSN(e.target.value) })}
+                  maxLength={11}
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-funding-gray text-sm hover:text-funding-dark transition-colors"
+                  onClick={toggleSSNVisibility}
+                >
+                  {ssnMasked ? "Show" : "Hide"}
+                </button>
+              </div>
+              <p className="text-xs text-funding-gray">Your SSN is securely encrypted and never stored in plaintext.</p>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="dateOfBirth" className="block text-sm font-medium text-funding-dark">
+                Date of Birth*
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  className="w-full px-4 py-3 rounded-lg border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+                  value={applicationData.dateOfBirth}
+                  onChange={(e) => updateApplicationData({ dateOfBirth: e.target.value })}
+                />
+                <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-funding-gray w-5 h-5 pointer-events-none" />
+              </div>
             </div>
           </div>
           

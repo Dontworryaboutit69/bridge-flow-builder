@@ -94,7 +94,8 @@ const Application = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow pt-24 md:pt-36 pb-8 md:pb-16 bg-funding-light-gray/30 relative">
+        {/* Added more top padding (pt-32 instead of pt-24) for better spacing */}
+        <main className="flex-grow pt-32 md:pt-40 pb-8 md:pb-16 bg-funding-light-gray/30 relative">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-soft-peach/20 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-soft-blue/20 rounded-full blur-3xl"></div>
