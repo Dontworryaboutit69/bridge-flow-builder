@@ -1,0 +1,97 @@
+
+import { useForm } from '@/lib/formContext';
+import Button from '../ui/Button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+const Step2 = () => {
+  const { formData, updateFormData, nextStep, prevStep, isStepValid } = useForm();
+  
+  const industries = [
+    'Retail',
+    'Food & Restaurant',
+    'Professional Services',
+    'Healthcare',
+    'Construction',
+    'Manufacturing',
+    'Technology',
+    'Transportation',
+    'Real Estate',
+    'Other'
+  ];
+  
+  const handleIndustrySelect = (industry: string) => {
+    updateFormData({ industry });
+  };
+  
+  return (
+    <div className="w-full max-w-xl mx-auto animate-fade-in">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
+          Tell us about your business
+        </h2>
+        <p className="text-funding-gray">
+          This helps us find the right funding option for you
+        </p>
+      </div>
+      
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="businessName" className="block text-sm font-medium text-funding-dark">
+            Business Name
+          </label>
+          <input
+            type="text"
+            id="businessName"
+            className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            placeholder="Enter your business name"
+            value={formData.businessName}
+            onChange={(e) => updateFormData({ businessName: e.target.value })}
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-funding-dark">
+            Industry
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {industries.map((industry, index) => (
+              <button
+                key={index}
+                type="button"
+                className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+                  formData.industry === industry
+                    ? 'border-funding-blue bg-funding-blue/5 text-funding-dark'
+                    : 'border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'
+                }`}
+                onClick={() => handleIndustrySelect(industry)}
+              >
+                <span className="text-sm font-medium">{industry}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      <div className="mt-10 flex justify-between">
+        <Button 
+          variant="outline" 
+          onClick={prevStep}
+          className="group"
+        >
+          <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+          Back
+        </Button>
+        <Button 
+          onClick={nextStep} 
+          disabled={!isStepValid()}
+          className="group"
+        >
+          Continue
+          <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Step2;
