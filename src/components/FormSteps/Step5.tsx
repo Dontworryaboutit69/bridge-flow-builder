@@ -1,4 +1,3 @@
-
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
@@ -15,7 +14,6 @@ const Step5 = () => {
     submitSuccess 
   } = useForm();
   
-  // Redirect to full application after success
   const handleScheduleAppointment = () => {
     window.location.href = 'https://calendly.com/growthpathadvisory/30min';
   };
@@ -26,10 +24,10 @@ const Step5 = () => {
         <>
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
-              Last Step: Contact Details
+              Last Step: See If You Pre-Qualify
             </h2>
             <p className="text-funding-gray">
-              We'll use these to send your funding options
+              Complete this final step to check your pre-qualification status
             </p>
           </div>
           
@@ -121,75 +119,64 @@ const Step5 = () => {
               className="group"
               isLoading={isSubmitting}
             >
-              Submit Application
+              Check Pre-Qualification
             </CustomButton>
           </div>
         </>
       ) : (
         <div className="text-center p-8 animate-fade-in">
-          <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6">
-            <Check className="w-8 h-8 text-green-600" />
+          <div className="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6">
+            <Check className="w-10 h-10 text-green-600" />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-4">
-            Congratulations! You're Pre-Qualified
+            Congratulations! You Pre-Qualify
           </h2>
-          <p className="text-funding-gray mb-8 max-w-md mx-auto">
-            Based on the information you provided, you qualify for business funding with Growth Path Advisory.
+          <p className="text-funding-gray mb-8 max-w-lg mx-auto">
+            Great news! Based on your information, you pre-qualify for business funding with Growth Path Advisory. The next step is to complete your full funding application.
           </p>
           
-          <div className="glass-card p-6 max-w-md mx-auto mb-8 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
-            <h4 className="font-medium text-lg text-funding-dark mb-4">Next Steps:</h4>
-            <ol className="space-y-4 text-left">
+          <div className="glass-card p-8 max-w-lg mx-auto mb-10 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
+            <h4 className="font-medium text-lg text-funding-dark mb-6">Next Steps</h4>
+            <ol className="space-y-5 text-left">
               <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-3 mt-0.5">
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
                   1
                 </div>
-                <span className="text-funding-dark">
-                  Complete your full application to verify your information
-                </span>
+                <div>
+                  <h5 className="font-medium text-funding-dark mb-1">Complete Full Application</h5>
+                  <p className="text-sm text-funding-gray">Submit your detailed business funding application.</p>
+                </div>
               </li>
               <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-3 mt-0.5">
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
                   2
                 </div>
-                <span className="text-funding-dark">
-                  Schedule a call with a funding advisor to discuss your options
-                </span>
+                <div>
+                  <h5 className="font-medium text-funding-dark mb-1">Document Collection</h5>
+                  <p className="text-sm text-funding-gray">Provide necessary documentation to verify your information.</p>
+                </div>
               </li>
               <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-3 mt-0.5">
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
                   3
                 </div>
-                <span className="text-funding-dark">
-                  Receive funding in as little as 24 hours after approval
-                </span>
+                <div>
+                  <h5 className="font-medium text-funding-dark mb-1">Final Review & Funding</h5>
+                  <p className="text-sm text-funding-gray">Get approved and receive your funds quickly.</p>
+                </div>
               </li>
             </ol>
           </div>
           
-          <div className="space-y-4">
+          <div className="max-w-md mx-auto">
             <Link to="/application">
               <CustomButton 
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full"
               >
-                Continue to Full Application
+                Start Full Application
               </CustomButton>
             </Link>
-            
-            <div className="flex items-center justify-center">
-              <span className="mx-4 text-funding-gray">or</span>
-            </div>
-            
-            <CustomButton 
-              onClick={handleScheduleAppointment}
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto group"
-            >
-              <CalendarClock className="mr-2 w-5 h-5" />
-              Schedule a Call with an Advisor
-            </CustomButton>
           </div>
         </div>
       )}

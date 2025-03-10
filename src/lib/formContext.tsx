@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 
 type FormData = {
@@ -125,14 +124,14 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsSubmitting(true);
     try {
       // In a real app, you would send the form data to your backend here
-      console.log('Form submitted with data:', formData);
+      console.log('Pre-qualification form submitted:', formData);
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       setSubmitSuccess(true);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error submitting pre-qualification form:', error);
     } finally {
       setIsSubmitting(false);
     }
