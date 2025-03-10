@@ -3,6 +3,7 @@ import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewSubmit = () => {
   const { 
@@ -14,6 +15,17 @@ const ReviewSubmit = () => {
     isSubmitting,
     submitSuccess 
   } = useApplication();
+  
+  const navigate = useNavigate();
+  
+  // Redirect to thank-you page on successful submission
+  useEffect(() => {
+    if (submitSuccess) {
+      setTimeout(() => {
+        navigate('/thank-you');
+      }, 1500);
+    }
+  }, [submitSuccess, navigate]);
   
   // Handle scheduling an appointment
   const handleScheduleAppointment = () => {
@@ -227,57 +239,8 @@ const ReviewSubmit = () => {
             Application Submitted Successfully!
           </h2>
           <p className="text-funding-gray mb-8 max-w-lg mx-auto">
-            Thank you for submitting your application to Growth Path Advisory. One of our funding specialists will review your information and contact you shortly.
+            Thank you for submitting your application to Growth Path Advisory. Redirecting you to the next steps...
           </p>
-          
-          <div className="glass-card p-8 max-w-lg mx-auto mb-10 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
-            <h4 className="font-medium text-lg text-funding-dark mb-6">What Happens Next?</h4>
-            <ol className="space-y-5 text-left">
-              <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
-                  1
-                </div>
-                <div>
-                  <h5 className="font-medium text-funding-dark mb-1">Application Review</h5>
-                  <p className="text-sm text-funding-gray">Your application will be reviewed by our team within 24 hours.</p>
-                </div>
-              </li>
-              <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
-                  2
-                </div>
-                <div>
-                  <h5 className="font-medium text-funding-dark mb-1">Funding Consultation</h5>
-                  <p className="text-sm text-funding-gray">A funding specialist will contact you to discuss your options and requirements.</p>
-                </div>
-              </li>
-              <li className="flex items-start">
-                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-4">
-                  3
-                </div>
-                <div>
-                  <h5 className="font-medium text-funding-dark mb-1">Final Approval & Funding</h5>
-                  <p className="text-sm text-funding-gray">Upon approval, you'll receive your funds in as little as 24 hours.</p>
-                </div>
-              </li>
-            </ol>
-          </div>
-          
-          <div className="max-w-md mx-auto">
-            <p className="font-medium text-funding-dark mb-4">Want to speak with a funding advisor right away?</p>
-            <CustomButton 
-              onClick={handleScheduleAppointment}
-              size="lg"
-              className="w-full"
-            >
-              <CalendarClock className="mr-2 w-5 h-5" />
-              Schedule a Call Now
-            </CustomButton>
-            
-            <p className="mt-6 text-sm text-funding-gray">
-              Or call us directly at <a href="tel:+15735333894" className="text-funding-blue font-medium">1-573-533-3894</a>
-            </p>
-          </div>
         </div>
       )}
     </div>
