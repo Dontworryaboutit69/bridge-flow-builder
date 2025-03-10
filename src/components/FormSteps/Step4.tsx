@@ -1,6 +1,6 @@
 
 import { useForm } from '@/lib/formContext';
-import Button from '../ui/Button';
+import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const Step4 = () => {
@@ -65,22 +65,22 @@ const Step4 = () => {
       </div>
       
       <div className="mt-10 flex justify-between">
-        <Button 
+        <CustomButton 
           variant="outline" 
           onClick={prevStep}
           className="group"
         >
           <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Back
-        </Button>
-        <Button 
+        </CustomButton>
+        <CustomButton 
           onClick={nextStep} 
           disabled={!isStepValid()}
           className="group"
         >
           Continue
           <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

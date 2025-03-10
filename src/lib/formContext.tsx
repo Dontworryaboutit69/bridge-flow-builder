@@ -27,6 +27,8 @@ type FormContextType = {
   submitForm: () => Promise<void>;
   isSubmitting: boolean;
   submitSuccess: boolean;
+  isDisqualified: boolean;
+  checkQualification: () => void;
 };
 
 const initialFormData: FormData = {
@@ -49,10 +51,29 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isDisqualified, setIsDisqualified] = useState(false);
   const totalSteps = 5;
 
   const updateFormData = (data: Partial<FormData>) => {
     setFormData(prev => ({ ...prev, ...data }));
+    
+    // If this is revenue data update, check for disqualification
+    if (data.monthlyRevenue) {
+      setTimeout(() => checkQualification(), 0);
+    }
+    
+    // If this is time in business update, check for disqualification
+    if (data.timeInBusiness) {
+      setTimeout(() => checkQualification(), 0);
+    }
+  };
+
+  const checkQualification = () => {
+    // Check if user is disqualified based on revenue or time in business
+    const isRevenueDisqualified = formData.monthlyRevenue === 'Less than $15,000';
+    const isTimeDisqualified = formData.timeInBusiness === 'Less than 6 months';
+    
+    setIsDisqualified(isRevenueDisqualified || isTimeDisqualified);
   };
 
   const nextStep = () => {
@@ -97,6 +118,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setFormData(initialFormData);
     setCurrentStep(1);
     setSubmitSuccess(false);
+    setIsDisqualified(false);
   };
 
   const submitForm = async () => {
@@ -131,6 +153,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
         submitForm,
         isSubmitting,
         submitSuccess,
+        isDisqualified,
+        checkQualification,
       }}
     >
       {children}

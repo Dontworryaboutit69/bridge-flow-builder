@@ -1,14 +1,15 @@
 
 import { useForm } from '@/lib/formContext';
-import Button from '../ui/Button';
+import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const Step3 = () => {
   const { formData, updateFormData, nextStep, prevStep, isStepValid } = useForm();
   
   const revenueOptions = [
-    '$15,000 - $20,000',
-    '$20,000 - $50,000',
+    'Less than $15,000',
+    '$15,000 - $25,000',
+    '$25,000 - $50,000',
     '$50,000 - $100,000',
     '$100,000 - $250,000',
     '$250,000 - $500,000',
@@ -16,6 +17,7 @@ const Step3 = () => {
   ];
   
   const timeOptions = [
+    'Less than 6 months',
     '6-12 months',
     '1-2 years',
     '2-5 years',
@@ -68,7 +70,7 @@ const Step3 = () => {
           <label className="block text-sm font-medium text-funding-dark">
             Time in Business
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {timeOptions.map((option, index) => (
               <button
                 key={index}
@@ -110,22 +112,22 @@ const Step3 = () => {
       </div>
       
       <div className="mt-10 flex justify-between">
-        <Button 
+        <CustomButton 
           variant="outline" 
           onClick={prevStep}
           className="group"
         >
           <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Back
-        </Button>
-        <Button 
+        </CustomButton>
+        <CustomButton 
           onClick={nextStep} 
           disabled={!isStepValid()}
           className="group"
         >
           Continue
           <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

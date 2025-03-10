@@ -6,6 +6,7 @@ import Step2 from './FormSteps/Step2';
 import Step3 from './FormSteps/Step3';
 import Step4 from './FormSteps/Step4';
 import Step5 from './FormSteps/Step5';
+import DisqualifiedView from './DisqualifiedView';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ProgressBar = () => {
@@ -38,7 +39,12 @@ const ProgressBar = () => {
 };
 
 const FormStepContent = () => {
-  const { currentStep } = useForm();
+  const { currentStep, formData, isDisqualified } = useForm();
+
+  // Check if user is disqualified
+  if (isDisqualified) {
+    return <DisqualifiedView />;
+  }
   
   return (
     <TransitionGroup>
@@ -71,8 +77,15 @@ const FormWrapper = () => {
 const ProgressiveForm = () => {
   return (
     <FormProvider>
-      <section id="apply-now" className="py-16 bg-funding-light-gray/30">
-        <div className="max-w-7xl mx-auto px-5 md:px-10">
+      <section id="apply-now" className="py-16 bg-funding-light-gray/30 relative">
+        {/* Background texture patterns */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptMC0xMnY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+          <div className="absolute -top-12 -left-12 w-64 h-64 bg-soft-peach/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-soft-blue/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
               Get Funding in 3 Easy Steps

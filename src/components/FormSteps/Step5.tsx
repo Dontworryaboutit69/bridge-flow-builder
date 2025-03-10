@@ -1,7 +1,7 @@
 
 import { useForm } from '@/lib/formContext';
-import Button from '../ui/Button';
-import { ArrowLeft, Check } from 'lucide-react';
+import CustomButton from '../ui/CustomButton';
+import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
 
 const Step5 = () => {
   const { 
@@ -13,6 +13,15 @@ const Step5 = () => {
     isSubmitting,
     submitSuccess 
   } = useForm();
+  
+  // Redirect to full application after success
+  const handleScheduleAppointment = () => {
+    window.location.href = 'https://calendly.com/growthpathadvisory/30min';
+  };
+  
+  const handleContinueToApplication = () => {
+    window.location.href = 'https://mca.growthpathadvisory.com/personal-information';
+  };
   
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in">
@@ -93,14 +102,14 @@ const Step5 = () => {
               </div>
               <div className="ml-3 text-sm">
                 <label htmlFor="terms" className="text-funding-gray">
-                  By submitting, I agree to the <a href="#" className="text-funding-blue hover:underline">Terms of Service</a> and <a href="#" className="text-funding-blue hover:underline">Privacy Policy</a>. I consent to receive calls and SMS messages.
+                  By submitting, I agree to the <a href="#terms" className="text-funding-blue hover:underline">Terms of Service</a> and <a href="#privacy" className="text-funding-blue hover:underline">Privacy Policy</a>. I consent to receive calls and SMS messages.
                 </label>
               </div>
             </div>
           </div>
           
           <div className="mt-10 flex justify-between">
-            <Button 
+            <CustomButton 
               variant="outline" 
               onClick={prevStep}
               className="group"
@@ -108,15 +117,15 @@ const Step5 = () => {
             >
               <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
               Back
-            </Button>
-            <Button 
+            </CustomButton>
+            <CustomButton 
               onClick={submitForm}
               disabled={!isStepValid() || isSubmitting}
               className="group"
               isLoading={isSubmitting}
             >
               Submit Application
-            </Button>
+            </CustomButton>
           </div>
         </>
       ) : (
@@ -125,20 +134,21 @@ const Step5 = () => {
             <Check className="w-8 h-8 text-green-600" />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-4">
-            Application Submitted!
+            Congratulations! You're Pre-Qualified
           </h2>
           <p className="text-funding-gray mb-8 max-w-md mx-auto">
-            Thank you for your application. One of our funding advisors will contact you shortly to discuss your options.
+            Based on the information you provided, you qualify for business funding with Growth Path Advisory.
           </p>
-          <div className="glass-card p-6 max-w-md mx-auto">
-            <h4 className="font-medium text-lg text-funding-dark mb-4">What happens next?</h4>
+          
+          <div className="glass-card p-6 max-w-md mx-auto mb-8 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
+            <h4 className="font-medium text-lg text-funding-dark mb-4">Next Steps:</h4>
             <ol className="space-y-4 text-left">
               <li className="flex items-start">
                 <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-sm mr-3 mt-0.5">
                   1
                 </div>
                 <span className="text-funding-dark">
-                  Our team reviews your application (usually within 1 hour)
+                  Complete your full application to verify your information
                 </span>
               </li>
               <li className="flex items-start">
@@ -146,7 +156,7 @@ const Step5 = () => {
                   2
                 </div>
                 <span className="text-funding-dark">
-                  A funding advisor contacts you to discuss options
+                  Schedule a call with a funding advisor to discuss your options
                 </span>
               </li>
               <li className="flex items-start">
@@ -154,10 +164,34 @@ const Step5 = () => {
                   3
                 </div>
                 <span className="text-funding-dark">
-                  Complete final paperwork and receive funding in as little as 24 hours
+                  Receive funding in as little as 24 hours after approval
                 </span>
               </li>
             </ol>
+          </div>
+          
+          <div className="space-y-4">
+            <CustomButton 
+              onClick={handleContinueToApplication}
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              Continue to Full Application
+            </CustomButton>
+            
+            <div className="flex items-center justify-center">
+              <span className="mx-4 text-funding-gray">or</span>
+            </div>
+            
+            <CustomButton 
+              onClick={handleScheduleAppointment}
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto group"
+            >
+              <CalendarClock className="mr-2 w-5 h-5" />
+              Schedule a Call with an Advisor
+            </CustomButton>
           </div>
         </div>
       )}

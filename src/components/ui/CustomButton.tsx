@@ -14,7 +14,7 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-const Button = ({
+const CustomButton = ({
   children,
   variant = 'primary',
   size = 'md',
@@ -69,4 +69,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default CustomButton;
