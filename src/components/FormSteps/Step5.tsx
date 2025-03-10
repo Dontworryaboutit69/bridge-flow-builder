@@ -2,6 +2,7 @@
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Step5 = () => {
   const { 
@@ -17,10 +18,6 @@ const Step5 = () => {
   // Redirect to full application after success
   const handleScheduleAppointment = () => {
     window.location.href = 'https://calendly.com/growthpathadvisory/30min';
-  };
-  
-  const handleContinueToApplication = () => {
-    window.location.href = 'https://mca.growthpathadvisory.com/personal-information';
   };
   
   return (
@@ -171,13 +168,14 @@ const Step5 = () => {
           </div>
           
           <div className="space-y-4">
-            <CustomButton 
-              onClick={handleContinueToApplication}
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              Continue to Full Application
-            </CustomButton>
+            <Link to="/application">
+              <CustomButton 
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                Continue to Full Application
+              </CustomButton>
+            </Link>
             
             <div className="flex items-center justify-center">
               <span className="mx-4 text-funding-gray">or</span>
