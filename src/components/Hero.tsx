@@ -44,14 +44,22 @@ const Hero = () => {
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <div className="flex items-center">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-medium">
-                      {String.fromCharCode(64 + i)}
+                  {[
+                    { initial: 'J', image: '/images/face1.jpg' },
+                    { initial: 'S', image: '/images/face2.jpg' },
+                    { initial: 'M', image: '/images/face3.jpg' },
+                    { initial: 'K', image: '/images/face4.jpg' }
+                  ].map((profile, i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full border-2 border-white bg-funding-blue/10 flex items-center justify-center text-xs font-medium text-funding-blue overflow-hidden"
+                    >
+                      {profile.initial}
                     </div>
                   ))}
                 </div>
                 <div className="ml-3 text-sm text-funding-gray">
-                  <span className="font-medium text-funding-dark">1,000+</span> businesses funded this month
+                  <span className="font-medium text-funding-dark">100+</span> happy clients
                 </div>
               </div>
               
