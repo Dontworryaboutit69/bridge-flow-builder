@@ -80,9 +80,12 @@ const Hero = () => {
           {/* Hero image or form teaser */}
           <div className="flex-1 w-full max-w-md mx-auto md:max-w-none animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="glass-card p-6 md:p-8 relative before:absolute before:inset-0 before:bg-white/5 before:backdrop-blur-sm before:rounded-2xl before:border before:border-white/20 before:-z-10">
-              <div className="absolute -top-3 -right-3 bg-funding-blue text-white text-xs font-bold px-3 py-1 rounded-full">
+              <div className="absolute -top-3 -right-3 bg-funding-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
                 Pre-qualify in 2 minutes
               </div>
+              
+              <div className="diagonal-pattern"></div>
+              
               <h3 className="text-xl font-bold text-funding-dark mb-6">See if you qualify for funding</h3>
               
               <ul className="space-y-4 mb-6">

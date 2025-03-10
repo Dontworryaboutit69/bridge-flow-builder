@@ -34,13 +34,16 @@ const Step1 = () => {
         {loanAmounts.map((amount, index) => (
           <button
             key={index}
-            className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
+            className={`p-4 rounded-xl transition-all duration-200 text-left relative ${
               formData.loanAmount === amount
-                ? 'border-funding-blue bg-funding-blue/5 text-funding-dark'
-                : 'border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'
+                ? 'border-2 border-funding-blue bg-funding-blue/5 text-funding-dark'
+                : 'border border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'
             }`}
             onClick={() => handleSelect(amount)}
           >
+            {formData.loanAmount === amount && (
+              <div className="absolute inset-0 bg-gradient-to-br from-funding-blue/5 to-transparent rounded-xl pointer-events-none"></div>
+            )}
             <span className="font-medium">{amount}</span>
           </button>
         ))}

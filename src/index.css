@@ -38,6 +38,72 @@
   .hover-scale {
     @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-md;
   }
+  
+  /* New compact funding card styling */
+  .funding-card {
+    @apply p-5 md:p-6 rounded-xl shadow-md border border-funding-light-gray/50 bg-white hover:shadow-lg transition-all duration-300 relative overflow-hidden;
+  }
+  
+  .funding-card-icon {
+    @apply w-10 h-10 p-2 rounded-full bg-funding-blue/10 text-funding-blue flex items-center justify-center mb-4;
+  }
+  
+  .funding-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br opacity-5 pointer-events-none;
+  }
+  
+  .funding-card-blue::before {
+    background: linear-gradient(135deg, var(--funding-blue), var(--funding-light-blue));
+  }
+  
+  .funding-card-green::before {
+    background: linear-gradient(135deg, #34d399, #10b981);
+  }
+  
+  .funding-card-purple::before {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  }
+  
+  .funding-card-orange::before {
+    background: linear-gradient(135deg, #fb923c, #f97316);
+  }
+  
+  .funding-card-teal::before {
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+  }
+  
+  .funding-card-pink::before {
+    background: linear-gradient(135deg, #f472b6, #ec4899);
+  }
+  
+  .funding-card .feature-item {
+    @apply flex items-start py-2;
+  }
+  
+  .funding-card .feature-icon {
+    @apply flex-shrink-0 w-5 h-5 rounded-full bg-funding-blue/10 text-funding-blue p-1 mr-3 mt-0.5;
+  }
+  
+  /* Texture patterns */
+  .dot-pattern {
+    background-image: radial-gradient(var(--funding-blue) 1px, transparent 1px);
+    background-size: 20px 20px;
+    @apply absolute inset-0 opacity-[0.03] pointer-events-none;
+  }
+  
+  .grid-pattern {
+    background-image: linear-gradient(to right, var(--funding-blue) 1px, transparent 1px),
+                     linear-gradient(to bottom, var(--funding-blue) 1px, transparent 1px);
+    background-size: 20px 20px;
+    @apply absolute inset-0 opacity-[0.02] pointer-events-none;
+  }
+  
+  .diagonal-pattern {
+    background-image: repeating-linear-gradient(45deg, var(--funding-blue) 0, var(--funding-blue) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+    @apply absolute inset-0 opacity-[0.02] pointer-events-none;
+  }
 }
 
 /* Animation classes */

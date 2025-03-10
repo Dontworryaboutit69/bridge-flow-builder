@@ -126,6 +126,16 @@ export default {
 			boxShadow: {
 				'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
 				'soft': '0 5px 15px rgba(0, 0, 0, 0.05)',
+			},
+			backgroundImage: {
+				'dot-pattern': "radial-gradient(var(--funding-blue) 1px, transparent 1px)",
+				'grid-pattern': "linear-gradient(to right, var(--funding-blue) 1px, transparent 1px), linear-gradient(to bottom, var(--funding-blue) 1px, transparent 1px)",
+				'diagonal-pattern': "repeating-linear-gradient(45deg, var(--funding-blue) 0, var(--funding-blue) 1px, transparent 0, transparent 50%)",
+			},
+			backgroundSize: {
+				'pattern-sm': '10px 10px',
+				'pattern-md': '20px 20px',
+				'pattern-lg': '30px 30px',
 			}
 		}
 	},
