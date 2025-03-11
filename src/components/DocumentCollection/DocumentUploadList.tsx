@@ -19,9 +19,27 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
   
   const allRequiredUploaded = documents
     .filter(doc => doc.required)
-    .every(doc => doc.uploaded);
+    .every(doc => {
+      if (doc.id === 'bank-statements' && doc.maxUploads) {
+        return (doc.uploadCount || 0) >= doc.maxUploads;
+      }
+      return doc.uploaded;
+    });
 
   const handleSubmit = () => {
+    // Check for bank statements specifically
+    const bankStatement = documents.find(doc => doc.id === 'bank-statements');
+    if (bankStatement && bankStatement.required && bankStatement.maxUploads) {
+      if ((bankStatement.uploadCount || 0) < bankStatement.maxUploads) {
+        toast({
+          title: "Bank statements missing",
+          description: `Please upload all ${bankStatement.maxUploads} months of bank statements before submitting.`,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+    
     if (allRequiredUploaded) {
       toast({
         title: "Documents successfully submitted",
@@ -44,6 +62,20 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
     }
   };
 
+  const totalUploaded = documents.reduce((count, doc) => {
+    if (doc.id === 'bank-statements') {
+      return count + (doc.uploadCount || 0);
+    }
+    return doc.uploaded ? count + 1 : count;
+  }, 0);
+  
+  const totalRequired = documents.reduce((count, doc) => {
+    if (doc.id === 'bank-statements' && doc.maxUploads) {
+      return count + doc.maxUploads;
+    }
+    return count + 1;
+  }, 0);
+
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 mb-6">
       <h2 className="text-xl font-bold text-funding-dark mb-6">Required Documents</h2>
@@ -65,7 +97,7 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
         </p>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <p className="text-sm font-medium">
-            {documents.filter(d => d.uploaded).length} of {documents.length} documents uploaded
+            {totalUploaded} of {totalRequired} documents uploaded
           </p>
           <CustomButton 
             className="group"

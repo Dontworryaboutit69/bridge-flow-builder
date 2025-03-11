@@ -6,6 +6,9 @@ export type Document = {
   uploaded: boolean;
   required: boolean;
   files?: File[];
+  // For bank statements tracking
+  uploadCount?: number;
+  maxUploads?: number;
 };
 
 export type CreditScoreRange = 

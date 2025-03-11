@@ -16,6 +16,8 @@ const DocumentCollection = () => {
       description: 'Most recent 3 months of business bank statements',
       uploaded: false,
       required: true,
+      uploadCount: 0,
+      maxUploads: 3,
     },
     {
       id: 'photo-id',
@@ -54,7 +56,7 @@ const DocumentCollection = () => {
     if (files.length === 0) {
       // This is a "remove" operation
       setDocuments(docs => docs.map(doc => 
-        doc.id === id ? { ...doc, uploaded: false } : doc
+        doc.id === id ? { ...doc, uploaded: false, uploadCount: 0 } : doc
       ));
       toast({
         title: "Document removed",
@@ -98,9 +100,26 @@ const DocumentCollection = () => {
     
     // In a real application, you would create a FormData object and use fetch/axios to upload
     setTimeout(() => {
-      setDocuments(docs => docs.map(doc => 
-        doc.id === id ? { ...doc, uploaded: true } : doc
-      ));
+      setDocuments(docs => docs.map(doc => {
+        if (doc.id === id) {
+          if (doc.id === 'bank-statements') {
+            // For bank statements, we want to track the number of uploads
+            const newCount = Math.min((doc.uploadCount || 0) + 1, doc.maxUploads || 3);
+            const isFullyUploaded = newCount >= (doc.maxUploads || 3);
+            
+            return { 
+              ...doc, 
+              uploaded: isFullyUploaded, 
+              uploadCount: newCount 
+            };
+          } else {
+            // For other documents, uploaded is binary
+            return { ...doc, uploaded: true };
+          }
+        }
+        return doc;
+      }));
+      
       setUploadingId(null);
       
       toast({

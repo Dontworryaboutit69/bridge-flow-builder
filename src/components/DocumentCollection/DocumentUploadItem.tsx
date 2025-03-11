@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { FileCheck, File, Upload, Loader2, X } from 'lucide-react';
+import { FileCheck, File, Upload, Loader2, X, Plus } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import { toast } from '@/hooks/use-toast';
 import { Document } from '@/types/documents';
@@ -52,6 +52,9 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
   };
 
   const isUploading = uploadingId === document.id;
+  const isBankStatement = document.id === 'bank-statements';
+  const bankStatementUploadsRemaining = isBankStatement ? 
+    Math.max(0, (document.maxUploads || 3) - (document.uploadCount || 0)) : 0;
 
   return (
     <div 
@@ -82,6 +85,31 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
                   <X className="w-4 h-4" />
                 </button>
               </div>
+            ) : isBankStatement && document.uploadCount && document.uploadCount > 0 ? (
+              <div className="flex space-x-2 items-center">
+                <span className="text-sm text-blue-600 font-medium">
+                  {document.uploadCount} of {document.maxUploads} uploaded
+                </span>
+                {bankStatementUploadsRemaining > 0 ? (
+                  <CustomButton
+                    size="sm"
+                    onClick={openFileDialog}
+                    disabled={isUploading}
+                    isLoading={isUploading}
+                    className="py-1 px-3 h-auto"
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Add More
+                  </CustomButton>
+                ) : null}
+                <button 
+                  onClick={removeDocument}
+                  className="text-red-500 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-red-50"
+                  aria-label="Remove document"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             ) : (
               <CustomButton
                 size="sm"
@@ -99,11 +127,28 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
           
           {!document.uploaded && (
             <div className="mt-3">
-              <p className="text-xs text-funding-gray italic">
-                {document.id === 'bank-statements' 
-                  ? 'Upload all 3 months of statements (multiple files allowed)' 
-                  : 'Drag and drop file here or click to browse'}
-              </p>
+              {isBankStatement && document.uploadCount && document.uploadCount > 0 ? (
+                <p className="text-xs text-funding-gray italic">
+                  {bankStatementUploadsRemaining > 0 ? 
+                    `Please upload ${bankStatementUploadsRemaining} more statement${bankStatementUploadsRemaining > 1 ? 's' : ''}` : 
+                    'All 3 bank statements uploaded'}
+                </p>
+              ) : (
+                <p className="text-xs text-funding-gray italic">
+                  {isBankStatement
+                    ? 'Upload all 3 months of statements (one at a time)'
+                    : 'Drag and drop file here or click to browse'}
+                </p>
+              )}
+            </div>
+          )}
+
+          {isBankStatement && document.uploadCount && document.uploadCount > 0 && !document.uploaded && (
+            <div className="w-full bg-gray-200 h-2 rounded-full mt-2 overflow-hidden">
+              <div 
+                className="bg-funding-blue h-full rounded-full" 
+                style={{ width: `${(document.uploadCount / (document.maxUploads || 3)) * 100}%` }}
+              ></div>
             </div>
           )}
         </div>
@@ -114,7 +159,7 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
         ref={fileInputRef}
         className="hidden"
         onChange={handleFileSelect}
-        multiple={document.id === 'bank-statements'}
+        multiple={false} // We'll handle one file at a time
         accept=".pdf,.jpg,.jpeg,.png"
       />
     </div>
