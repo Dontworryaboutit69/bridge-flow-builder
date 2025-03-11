@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
@@ -328,7 +327,7 @@ const FundingProducts = () => (
         <a href="#apply-now">
           <CustomButton size="lg">
             Check Your Rate
-            <ChevronRight className="ml-1 w-5 h-5" />
+            <ChevronRight className="ml-1 w-4 h-4" />
           </CustomButton>
         </a>
       </div>
@@ -383,7 +382,7 @@ const Index = () => {
                 How It Works
               </h2>
               <p className="text-funding-gray max-w-2xl mx-auto">
-                We've simplified the business funding process to get you the capital you need, when you need it.
+                Traditional lenders waste your time. We deposit money in your bank account.
               </p>
             </div>
             

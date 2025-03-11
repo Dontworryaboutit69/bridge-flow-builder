@@ -88,10 +88,10 @@ const ProgressiveForm = () => {
         <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
-              How It Works
+              Get Prequalified For Funding
             </h2>
             <p className="text-funding-gray max-w-xl mx-auto">
-              Traditional lenders waste your time. We deposit money in your bank account.
+              Only takes 2 minutes to qualify for $15,000 - $5M in business funding.
             </p>
           </div>
           
