@@ -20,8 +20,8 @@ const Testimonials = () => {
     },
     {
       quote: "The team was professional and responsive. They found the perfect funding solution for my situation when no one else could.",
-      author: "Sarah Mitchell",
-      business: "Bright Ideas Marketing",
+      author: "Robin Thomas",
+      business: "Watch Me Grow Daycare",
       rating: 5,
       gradient: "bg-gradient-to-br from-soft-green/20 to-soft-blue/10"
     }
