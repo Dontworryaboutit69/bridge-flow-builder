@@ -16,6 +16,7 @@ type ApplicationData = {
   // Business Information
   businessName: string;
   businessType: string;
+  businessStartDate: string;
   industry: string;
   timeInBusiness: string;
   employeeCount: string;
@@ -71,6 +72,7 @@ const initialApplicationData: ApplicationData = {
   // Business Information
   businessName: '',
   businessType: '',
+  businessStartDate: '',
   industry: '',
   timeInBusiness: '',
   employeeCount: '',
@@ -143,6 +145,7 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
         return (
           !!applicationData.businessName &&
           !!applicationData.businessType &&
+          !!applicationData.businessStartDate &&
           !!applicationData.industry &&
           !!applicationData.timeInBusiness &&
           !!applicationData.businessAddress &&
