@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
@@ -661,7 +660,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="col-span-1 md:col-span-1">
-              <Logo className="w-40 mb-4" variant="white" />
+              <Logo className="w-40 mb-4" />
               <p className="text-gray-400 mb-4">
                 Providing fast, flexible funding solutions for businesses nationwide.
               </p>
