@@ -38,7 +38,7 @@ const BusinessOperationsSection = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="industry" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="industry" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Industry*
           </label>
           <select
@@ -57,7 +57,7 @@ const BusinessOperationsSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="timeInBusiness" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="timeInBusiness" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Time in Business*
           </label>
           <select
@@ -78,7 +78,7 @@ const BusinessOperationsSection = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="employeeCount" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="employeeCount" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Number of Employees
           </label>
           <select
@@ -97,7 +97,7 @@ const BusinessOperationsSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="websiteUrl" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="websiteUrl" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Business Website
           </label>
           <input

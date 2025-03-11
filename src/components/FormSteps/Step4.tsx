@@ -20,7 +20,7 @@ const Step4 = () => {
       <div className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label htmlFor="firstName" className="block text-sm font-medium text-funding-dark">
+            <label htmlFor="firstName" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
               First Name
             </label>
             <input
@@ -34,7 +34,7 @@ const Step4 = () => {
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="lastName" className="block text-sm font-medium text-funding-dark">
+            <label htmlFor="lastName" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
               Last Name
             </label>
             <input
@@ -49,7 +49,7 @@ const Step4 = () => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="email" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="email" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Email Address
           </label>
           <input
@@ -63,7 +63,7 @@ const Step4 = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="phone" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="phone" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Phone Number
           </label>
           <input

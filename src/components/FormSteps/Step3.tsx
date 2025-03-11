@@ -45,7 +45,7 @@ const Step3 = () => {
       
       <div className="space-y-6">
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Monthly Revenue
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -67,7 +67,7 @@ const Step3 = () => {
         </div>
         
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Time in Business
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -89,7 +89,7 @@ const Step3 = () => {
         </div>
         
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Credit Score
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

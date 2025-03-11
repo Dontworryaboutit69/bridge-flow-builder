@@ -38,7 +38,7 @@ const BusinessDetailsSection = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="businessName" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="businessName" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Business Name*
           </label>
           <input
@@ -52,7 +52,7 @@ const BusinessDetailsSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="businessType" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="businessType" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Business Type*
           </label>
           <select
@@ -73,7 +73,7 @@ const BusinessDetailsSection = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="einNumber" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="einNumber" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             EIN Number*
           </label>
           <input
@@ -89,7 +89,7 @@ const BusinessDetailsSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="ownershipPercentage" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="ownershipPercentage" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Ownership Percentage*
           </label>
           <div className="relative">

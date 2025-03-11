@@ -69,7 +69,7 @@ const Step2 = () => {
       
       <div className="space-y-6">
         <div className="space-y-2">
-          <label htmlFor="businessName" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="businessName" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Business Name
           </label>
           <input
@@ -83,7 +83,7 @@ const Step2 = () => {
         </div>
         
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             Industry
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -105,7 +105,7 @@ const Step2 = () => {
         </div>
 
         <div className="space-y-2 mt-8">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
             How quickly do you need capital?
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
