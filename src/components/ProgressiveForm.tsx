@@ -71,13 +71,18 @@ const FormWrapper = () => {
   const { setCurrentStep, formData } = useForm();
   const location = useLocation();
   
-  // Start at Step 2 if we're on the pre-qualification page and have loan amount
+  // Check if we're on pre-qualification page and if we came from homepage
   useEffect(() => {
-    if (location.pathname === '/pre-qualification' && formData.loanAmount) {
-      // Skip to step 2 automatically when on pre-qualification page
-      setCurrentStep(2);
+    const isPrequalificationPage = location.pathname === '/pre-qualification';
+    const cameFromHomepage = location.state?.fromHomepage;
+    
+    // If we're on pre-qualification and have a loan amount, start at step 2
+    if (isPrequalificationPage && formData.loanAmount && (cameFromHomepage || currentStep === 1)) {
+      setTimeout(() => {
+        setCurrentStep(2);
+      }, 300); // Small delay to allow for smooth transition
     }
-  }, [location.pathname, formData.loanAmount, setCurrentStep]);
+  }, [location.pathname, location.state, formData.loanAmount, setCurrentStep]);
   
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto">

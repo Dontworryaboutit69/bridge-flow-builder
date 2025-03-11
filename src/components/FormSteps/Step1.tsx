@@ -2,11 +2,13 @@
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Step1 = () => {
   const { formData, updateFormData, nextStep, isStepValid, setCurrentStep } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const loanAmounts = [
     '$5,000 - $25,000',
@@ -22,9 +24,11 @@ const Step1 = () => {
   };
   
   const handleContinue = () => {
-    if (window.location.pathname === '/') {
-      navigate('/pre-qualification');
+    if (location.pathname === '/') {
+      // When on homepage, navigate to pre-qualification with the amount in state
+      navigate('/pre-qualification', { state: { fromHomepage: true } });
     } else {
+      // When already on pre-qualification page, just go to next step
       nextStep();
     }
   };

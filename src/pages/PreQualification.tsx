@@ -8,11 +8,13 @@ import { useForm } from "@/lib/formContext";
 import ZapierSettings from "@/components/admin/ZapierSettings";
 import { useApplication } from "@/lib/applicationContext";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const PreQualification = () => {
   const { zapierWebhookUrl: prequalWebhookUrl, setZapierWebhookUrl: setPrequalWebhookUrl } = useForm();
   const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
   const [isAdmin, setIsAdmin] = useState(false);
+  const location = useLocation();
   
   // Simple admin check using "?admin=true" in URL
   useEffect(() => {
