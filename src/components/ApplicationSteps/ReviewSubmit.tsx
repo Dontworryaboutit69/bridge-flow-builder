@@ -258,6 +258,7 @@ const ReviewSubmit = () => {
               onClick={prevStep}
               className="group"
               disabled={isSubmitting}
+              size="md"
             >
               <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
               Back
@@ -267,6 +268,7 @@ const ReviewSubmit = () => {
               disabled={!isStepValid() || isSubmitting}
               className="group"
               isLoading={isSubmitting}
+              size="md"
             >
               Submit Application
             </CustomButton>

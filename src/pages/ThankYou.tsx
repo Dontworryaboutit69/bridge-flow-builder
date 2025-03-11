@@ -95,6 +95,7 @@ const ThankYou = () => {
                       <Link to="/documents">
                         <CustomButton 
                           className="group"
+                          size="md"
                         >
                           <FileText className="mr-2 w-5 h-5" />
                           Upload Documents Now
@@ -128,6 +129,7 @@ const ThankYou = () => {
                     </p>
                     <CustomButton 
                       variant="outline"
+                      size="md"
                       onClick={handleScheduleAppointment}
                       className="group"
                     >
