@@ -47,6 +47,37 @@ const Step4 = () => {
             />
           </div>
         </div>
+
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-sm font-medium text-funding-dark">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={(e) => updateFormData({ email: e.target.value })}
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <label htmlFor="phone" className="block text-sm font-medium text-funding-dark">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            placeholder="(XXX) XXX-XXXX"
+            value={formData.phone}
+            onChange={(e) => updateFormData({ phone: e.target.value.replace(/[^\d]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3').trim() })}
+          />
+          <p className="text-xs text-funding-gray mt-1">
+            Standard rates apply. We'll never spam you.
+          </p>
+        </div>
         
         <div className="glass-card p-5 border border-funding-blue/20">
           <div className="flex items-start">

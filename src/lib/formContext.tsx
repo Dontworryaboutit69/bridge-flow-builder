@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState } from 'react';
 
 type FormData = {
@@ -97,9 +98,20 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       case 3:
         return !!formData.monthlyRevenue && !!formData.timeInBusiness;
       case 4:
-        return !!formData.firstName && !!formData.lastName;
+        return !!formData.firstName && !!formData.lastName && !!formData.email && !!formData.phone && validateEmail(formData.email) && validatePhone(formData.phone);
       case 5:
-        return !!formData.email && !!formData.phone && validateEmail(formData.email) && validatePhone(formData.phone);
+        // Step 5 is now just review, so we check if all required info is present
+        return !!formData.loanAmount && 
+               !!formData.businessName && 
+               !!formData.industry && 
+               !!formData.monthlyRevenue && 
+               !!formData.timeInBusiness && 
+               !!formData.firstName && 
+               !!formData.lastName && 
+               !!formData.email && 
+               !!formData.phone && 
+               validateEmail(formData.email) && 
+               validatePhone(formData.phone);
       default:
         return false;
     }
