@@ -26,7 +26,13 @@ const Step1 = () => {
   const handleContinue = () => {
     if (location.pathname === '/') {
       // When on homepage, navigate to pre-qualification with the amount in state
-      navigate('/pre-qualification', { state: { fromHomepage: true } });
+      navigate('/pre-qualification', { 
+        state: { fromHomepage: true },
+        replace: false
+      });
+      
+      // Scroll to top after navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       // When already on pre-qualification page, just go to next step
       nextStep();

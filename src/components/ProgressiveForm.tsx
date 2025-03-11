@@ -5,7 +5,7 @@ import Step3 from './FormSteps/Step3';
 import Step4 from './FormSteps/Step4';
 import Step5 from './FormSteps/Step5';
 import DisqualifiedView from './DisqualifiedView';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ProgressBar = () => {
@@ -44,9 +44,14 @@ const ProgressBar = () => {
 
 const FormStepContent = () => {
   const { currentStep, isDisqualified, submitForm } = useForm();
-
-  // Debug log to track which step component is being rendered
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll to top of form content when step changes
   useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    
     console.log("Rendering step component:", currentStep, "isDisqualified:", isDisqualified);
   }, [currentStep, isDisqualified]);
 
@@ -74,7 +79,7 @@ const FormStepContent = () => {
   }
   
   return (
-    <div className="form-step">
+    <div className="form-step" ref={contentRef}>
       {currentStep === 1 && <Step1 />}
       {currentStep === 2 && <Step2 />}
       {currentStep === 3 && <Step3 />}
@@ -87,6 +92,7 @@ const FormStepContent = () => {
 const FormWrapper = () => {
   const { formData, currentStep, setCurrentStep } = useForm();
   const location = useLocation();
+  const wrapperRef = useRef<HTMLDivElement>(null);
   
   // Check if we're on pre-qualification page and if we came from homepage
   useEffect(() => {
@@ -107,12 +113,17 @@ const FormWrapper = () => {
       setTimeout(() => {
         console.log("Setting current step to 2");
         setCurrentStep(2);
+        
+        // Ensure the wrapper is scrolled to the top
+        if (wrapperRef.current) {
+          wrapperRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       }, 300); // Small delay to allow for smooth transition
     }
   }, [location.pathname, location.state, formData.loanAmount, setCurrentStep, currentStep]);
   
   return (
-    <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto">
+    <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto" ref={wrapperRef}>
       <ProgressBar />
       <FormStepContent />
     </div>
@@ -120,8 +131,21 @@ const FormWrapper = () => {
 };
 
 const ProgressiveForm = () => {
+  const formRef = useRef<HTMLElement>(null);
+  const { currentStep } = useForm();
+  
+  // Scroll to top of form section when step changes
+  useEffect(() => {
+    if (formRef.current) {
+      window.scrollTo({
+        top: formRef.current.offsetTop - 100, // Offset to account for navbar
+        behavior: 'smooth'
+      });
+    }
+  }, [currentStep]);
+  
   return (
-    <section className="py-16 bg-funding-light-gray/30 min-h-screen relative">
+    <section ref={formRef} className="py-16 bg-funding-light-gray/30 min-h-screen relative">
       {/* Background texture patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptMC0xMnY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
