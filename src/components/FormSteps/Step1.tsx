@@ -63,7 +63,7 @@ const Step1 = () => {
         ))}
       </div>
       
-      <div className="mt-10 flex justify-center md:justify-end">
+      <div className="mt-10 flex justify-center">
         <CustomButton 
           onClick={handleContinue} 
           disabled={!isStepValid()}
