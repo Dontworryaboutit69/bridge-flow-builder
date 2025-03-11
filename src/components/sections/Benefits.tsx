@@ -17,7 +17,7 @@ const Benefits = () => {
       <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-2xl md:text-4xl font-bold text-funding-dark mb-4">
-            Benefits of Our Funding
+            Why Get Funded With Us
           </h2>
           <p className="text-funding-gray max-w-2xl mx-auto">
             Our business funding solutions are designed with your success in mind
