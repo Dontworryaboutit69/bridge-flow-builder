@@ -74,6 +74,27 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Mobile-first approach */
+  h1 {
+    @apply text-2xl md:text-4xl font-bold;
+  }
+  h2 {
+    @apply text-xl md:text-3xl font-bold;
+  }
+  h3 {
+    @apply text-lg md:text-2xl font-bold;
+  }
+  
+  /* Improve touch targets on mobile */
+  button, a, input, select, textarea {
+    @apply outline-none focus:outline-none focus:ring-2 focus:ring-funding-blue/40;
+  }
+  
+  /* Responsive spacing */
+  section {
+    @apply py-10 md:py-16;
+  }
 }
 
 /* Custom colors */
@@ -138,6 +159,13 @@
 
 .hover-scale:hover {
   transform: translateY(-5px);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .hover-scale:hover {
+    transform: translateY(-3px);
+  }
 }
 
 /* Hero section styling */
@@ -274,5 +302,20 @@
   100% {
     transform: scale(150, 150);
     opacity: 0;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  .funding-card {
+    @apply p-4;
+  }
+  
+  .funding-card-icon {
+    @apply w-8 h-8 mb-3;
+  }
+  
+  .feature-icon {
+    @apply w-3 h-3;
   }
 }
