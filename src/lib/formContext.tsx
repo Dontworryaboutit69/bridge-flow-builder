@@ -1,53 +1,8 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import { toast } from "sonner";
-
-type FormData = {
-  loanAmount: string;
-  businessName: string;
-  monthlyRevenue: string;
-  timeInBusiness: string;
-  creditScore: string;
-  industry: string;
-  capitalTimeframe: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-};
-
-type FormContextType = {
-  currentStep: number;
-  formData: FormData;
-  setCurrentStep: (step: number) => void;
-  updateFormData: (data: Partial<FormData>) => void;
-  nextStep: () => void;
-  prevStep: () => void;
-  isStepValid: () => boolean;
-  totalSteps: number;
-  resetForm: () => void;
-  submitForm: () => Promise<void>;
-  isSubmitting: boolean;
-  submitSuccess: boolean;
-  isDisqualified: boolean;
-  checkQualification: () => void;
-  zapierWebhookUrl: string;
-  setZapierWebhookUrl: (url: string) => void;
-};
-
-const initialFormData: FormData = {
-  loanAmount: '',
-  businessName: '',
-  monthlyRevenue: '',
-  timeInBusiness: '',
-  creditScore: '',
-  industry: '',
-  capitalTimeframe: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-};
+import { FormData, FormContextType, initialFormData } from './formTypes';
+import { isStepValid as validateStep, checkQualification as validateQualification, validateEmail, validatePhone } from './formValidation';
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
@@ -75,10 +30,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const checkQualification = () => {
-    const isRevenueDisqualified = formData.monthlyRevenue === 'Less than $15,000';
-    const isTimeDisqualified = formData.timeInBusiness === 'Less than 6 months';
-    
-    setIsDisqualified(isRevenueDisqualified || isTimeDisqualified);
+    setIsDisqualified(validateQualification(formData));
   };
 
   const nextStep = () => {
@@ -94,39 +46,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const isStepValid = () => {
-    switch (currentStep) {
-      case 1:
-        return !!formData.loanAmount;
-      case 2:
-        return !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
-      case 3:
-        return !!formData.monthlyRevenue && !!formData.timeInBusiness;
-      case 4:
-        return !!formData.firstName && !!formData.lastName && !!formData.email && !!formData.phone && validateEmail(formData.email) && validatePhone(formData.phone);
-      case 5:
-        return !!formData.loanAmount && 
-               !!formData.businessName && 
-               !!formData.industry && 
-               !!formData.capitalTimeframe &&
-               !!formData.monthlyRevenue && 
-               !!formData.timeInBusiness && 
-               !!formData.firstName && 
-               !!formData.lastName && 
-               !!formData.email && 
-               !!formData.phone && 
-               validateEmail(formData.email) && 
-               validatePhone(formData.phone);
-      default:
-        return false;
-    }
-  };
-
-  const validateEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePhone = (phone: string) => {
-    return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phone);
+    return validateStep(currentStep, formData);
   };
 
   const resetForm = () => {
