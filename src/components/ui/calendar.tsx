@@ -71,15 +71,25 @@ function Calendar({
             "July", "August", "September", "October", "November", "December"
           ];
           
+          const handleMonthChange = (newMonth: string) => {
+            const newDate = new Date(displayMonth);
+            newDate.setMonth(parseInt(newMonth));
+            // Access the DayPicker methods via the props.onNavigation
+            props.onSelect?.(newDate, 'month', { origin: 'caption' });
+          };
+          
+          const handleYearChange = (newYear: string) => {
+            const newDate = new Date(displayMonth);
+            newDate.setFullYear(parseInt(newYear));
+            // Access the DayPicker methods via the props.onNavigation
+            props.onSelect?.(newDate, 'year', { origin: 'caption' });
+          };
+          
           return (
             <div className="flex justify-center items-center space-x-2 py-1">
               <Select
                 value={month.toString()}
-                onValueChange={(newMonth) => {
-                  const newDate = new Date(displayMonth);
-                  newDate.setMonth(parseInt(newMonth));
-                  props.goToMonth(newDate);
-                }}
+                onValueChange={handleMonthChange}
               >
                 <SelectTrigger className="h-7 w-[110px] text-xs">
                   <SelectValue>{months[month]}</SelectValue>
@@ -95,11 +105,7 @@ function Calendar({
               
               <Select
                 value={year.toString()}
-                onValueChange={(newYear) => {
-                  const newDate = new Date(displayMonth);
-                  newDate.setFullYear(parseInt(newYear));
-                  props.goToMonth(newDate);
-                }}
+                onValueChange={handleYearChange}
               >
                 <SelectTrigger className="h-7 w-[80px] text-xs">
                   <SelectValue>{year}</SelectValue>
