@@ -8,6 +8,8 @@ import Step4 from './FormSteps/Step4';
 import Step5 from './FormSteps/Step5';
 import DisqualifiedView from './DisqualifiedView';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ProgressBar = () => {
   const { currentStep, totalSteps } = useForm();
@@ -39,7 +41,7 @@ const ProgressBar = () => {
 };
 
 const FormStepContent = () => {
-  const { currentStep, formData, isDisqualified } = useForm();
+  const { currentStep, isDisqualified } = useForm();
 
   // Check if user is disqualified
   if (isDisqualified) {
@@ -66,6 +68,17 @@ const FormStepContent = () => {
 };
 
 const FormWrapper = () => {
+  const { setCurrentStep, formData } = useForm();
+  const location = useLocation();
+  
+  // Start at Step 2 if we're on the pre-qualification page and have loan amount
+  useEffect(() => {
+    if (location.pathname === '/pre-qualification' && formData.loanAmount) {
+      // Skip to step 2 automatically when on pre-qualification page
+      setCurrentStep(2);
+    }
+  }, [location.pathname, formData.loanAmount, setCurrentStep]);
+  
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto">
       <ProgressBar />

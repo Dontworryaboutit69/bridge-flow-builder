@@ -1,9 +1,7 @@
-
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const Step1 = () => {
   const { formData, updateFormData, nextStep, isStepValid, setCurrentStep } = useForm();
@@ -22,21 +20,10 @@ const Step1 = () => {
     updateFormData({ loanAmount: amount });
   };
   
-  // Check if we're on pre-qualification page and should skip to step 2
-  useEffect(() => {
-    if (window.location.pathname === '/pre-qualification' && formData.loanAmount) {
-      // If we're on pre-qualification page and have a loan amount, skip to step 2
-      setCurrentStep(2);
-    }
-  }, [window.location.pathname, formData.loanAmount, setCurrentStep]);
-  
   const handleContinue = () => {
     if (window.location.pathname === '/') {
-      // If on landing page, navigate to pre-qualification page
-      // The step will be automatically advanced to step 2 by the useEffect
       navigate('/pre-qualification');
     } else {
-      // If already on pre-qualification page, just move to next step
       nextStep();
     }
   };
