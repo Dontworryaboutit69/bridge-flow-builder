@@ -5,4 +5,5 @@ export type Document = {
   description: string;
   uploaded: boolean;
   required: boolean;
+  files?: File[];
 };

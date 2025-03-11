@@ -10,11 +10,18 @@ import { Document } from '@/types/documents';
 type DocumentsLayoutProps = {
   documents: Document[];
   uploadingId: string | null;
-  handleUpload: (id: string) => void;
+  handleUpload: (id: string, files: FileList) => void;
   schedulingLink: string;
+  onSubmitDocuments: () => void;
 };
 
-const DocumentsLayout = ({ documents, uploadingId, handleUpload, schedulingLink }: DocumentsLayoutProps) => {
+const DocumentsLayout = ({ 
+  documents, 
+  uploadingId, 
+  handleUpload, 
+  schedulingLink,
+  onSubmitDocuments
+}: DocumentsLayoutProps) => {
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
       <div className="border-b border-funding-light-gray pb-6 mb-6">
@@ -27,6 +34,7 @@ const DocumentsLayout = ({ documents, uploadingId, handleUpload, schedulingLink 
             documents={documents}
             uploadingId={uploadingId}
             handleUpload={handleUpload}
+            onSubmitDocuments={onSubmitDocuments}
           />
           
           <DocumentSubmissionTips />
