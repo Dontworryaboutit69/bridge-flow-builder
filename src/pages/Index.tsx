@@ -42,17 +42,11 @@ const Index = () => {
       <main>
         <Hero />
         
-        {/* Enhanced visual separator between Hero and HowItWorks */}
-        <div className="relative py-16">
+        {/* Simple visual separator with minimal spacing */}
+        <div className="relative py-4">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-funding-blue/50 to-transparent"></div>
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-funding-blue/30 to-transparent"></div>
           </div>
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white via-white to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white to-transparent"></div>
-          
-          {/* Decorative elements */}
-          <div className="absolute left-1/4 top-1/2 -translate-y-1/2 w-24 h-24 bg-funding-blue/5 rounded-full blur-3xl"></div>
-          <div className="absolute right-1/4 top-1/2 -translate-y-1/2 w-24 h-24 bg-soft-green/5 rounded-full blur-3xl"></div>
         </div>
         
         <HowItWorks />
