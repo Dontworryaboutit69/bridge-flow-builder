@@ -28,9 +28,9 @@ const DocumentCollection = () => {
       required: true,
     },
     {
-      id: 'business-license',
-      name: 'Business License',
-      description: 'Valid business license or registration',
+      id: 'voided-check',
+      name: 'Voided Check or Direct Deposit Form',
+      description: 'For verification of your business bank account',
       uploaded: false,
       required: false,
     },
