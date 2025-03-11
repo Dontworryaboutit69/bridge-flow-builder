@@ -4,13 +4,37 @@ import ProgressiveForm from "@/components/ProgressiveForm";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import { useForm } from "@/lib/formContext";
+import ZapierSettings from "@/components/admin/ZapierSettings";
+import { useApplication } from "@/lib/applicationContext";
+import { useState, useEffect } from "react";
 
 const PreQualification = () => {
+  const { zapierWebhookUrl: prequalWebhookUrl, setZapierWebhookUrl: setPrequalWebhookUrl } = useForm();
+  const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  // Simple admin check using "?admin=true" in URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsAdmin(params.get('admin') === 'true');
+  }, []);
+  
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
       <main className="flex-grow pt-24">
+        {isAdmin && (
+          <div className="max-w-7xl mx-auto px-5 md:px-10 mb-4 flex justify-end">
+            <ZapierSettings 
+              prequalWebhookUrl={prequalWebhookUrl}
+              applicationWebhookUrl={applicationWebhookUrl}
+              setPrequalWebhookUrl={setPrequalWebhookUrl}
+              setApplicationWebhookUrl={setApplicationWebhookUrl}
+            />
+          </div>
+        )}
         <ProgressiveForm />
       </main>
       

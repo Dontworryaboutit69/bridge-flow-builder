@@ -1,4 +1,6 @@
+
 import React, { createContext, useContext, useState } from 'react';
+import { toast } from "sonner";
 
 type FormData = {
   loanAmount: string;
@@ -29,6 +31,8 @@ type FormContextType = {
   submitSuccess: boolean;
   isDisqualified: boolean;
   checkQualification: () => void;
+  zapierWebhookUrl: string;
+  setZapierWebhookUrl: (url: string) => void;
 };
 
 const initialFormData: FormData = {
@@ -53,6 +57,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [isDisqualified, setIsDisqualified] = useState(false);
+  const [zapierWebhookUrl, setZapierWebhookUrl] = useState<string>(
+    localStorage.getItem('prequalify_zapier_webhook') || ''
+  );
   const totalSteps = 5;
 
   const updateFormData = (data: Partial<FormData>) => {
@@ -134,11 +141,40 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log('Pre-qualification form submitted:', formData);
       
+      // Save webhook URL to localStorage if provided
+      if (zapierWebhookUrl) {
+        localStorage.setItem('prequalify_zapier_webhook', zapierWebhookUrl);
+      }
+      
+      // If we have a webhook URL, send the data to Zapier
+      if (zapierWebhookUrl) {
+        try {
+          await fetch(zapierWebhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            mode: 'no-cors', // Handle CORS issues
+            body: JSON.stringify({
+              form_type: 'pre_qualification',
+              ...formData,
+              submission_date: new Date().toISOString(),
+              source_url: window.location.href,
+            }),
+          });
+          console.log('Data sent to Zapier webhook successfully');
+        } catch (error) {
+          console.error('Error sending data to Zapier:', error);
+          toast("Error connecting to Zapier, but qualification saved locally");
+        }
+      }
+      
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       setSubmitSuccess(true);
     } catch (error) {
       console.error('Error submitting pre-qualification form:', error);
+      toast("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -161,6 +197,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
         submitSuccess,
         isDisqualified,
         checkQualification,
+        zapierWebhookUrl,
+        setZapierWebhookUrl,
       }}
     >
       {children}
