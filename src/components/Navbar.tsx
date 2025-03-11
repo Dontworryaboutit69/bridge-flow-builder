@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
@@ -8,6 +8,8 @@ import Logo from './Logo';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isApplicationPage = location.pathname === '/application';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,56 +30,88 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Logo />
+        {isApplicationPage ? (
+          <div className="flex items-center">
+            <img 
+              src="/lovable-uploads/bc9b5dea-776a-46a3-b886-59da9c741e0f.png" 
+              alt="Growth Path Advisory Logo" 
+              className="h-10" 
+            />
+          </div>
+        ) : (
+          <Logo />
+        )}
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <a 
-            href="#how-it-works" 
-            className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
-          >
-            How It Works
-          </a>
-          <a 
-            href="#benefits" 
-            className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
-          >
-            Benefits
-          </a>
-          <a 
-            href="#testimonials" 
-            className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
-          >
-            Testimonials
-          </a>
+        {/* Desktop Navigation - Only show full nav on non-application pages */}
+        {!isApplicationPage ? (
+          <nav className="hidden md:flex items-center space-x-8">
+            <a 
+              href="#how-it-works" 
+              className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
+            >
+              How It Works
+            </a>
+            <a 
+              href="#benefits" 
+              className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
+            >
+              Benefits
+            </a>
+            <a 
+              href="#testimonials" 
+              className="text-funding-dark/80 hover:text-funding-blue transition-colors duration-200"
+            >
+              Testimonials
+            </a>
+            <a 
+              href="tel:15735333894" 
+              className="flex items-center text-funding-blue font-medium hover:text-funding-blue/80 transition-colors duration-200"
+            >
+              <Phone className="w-4 h-4 mr-2" />
+              1-573-533-3894
+            </a>
+            <a 
+              href="#apply-now" 
+              className="bg-funding-blue text-white px-6 py-2.5 rounded-full font-medium flex items-center hover:bg-opacity-90 transition-all duration-200 group"
+            >
+              Apply Now
+              <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </nav>
+        ) : (
           <a 
             href="tel:15735333894" 
-            className="flex items-center text-funding-blue font-medium hover:text-funding-blue/80 transition-colors duration-200"
+            className="hidden md:flex items-center text-funding-blue font-medium hover:text-funding-blue/80 transition-colors duration-200"
           >
             <Phone className="w-4 h-4 mr-2" />
             1-573-533-3894
           </a>
-          <a 
-            href="#apply-now" 
-            className="bg-funding-blue text-white px-6 py-2.5 rounded-full font-medium flex items-center hover:bg-opacity-90 transition-all duration-200 group"
-          >
-            Apply Now
-            <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-        </nav>
+        )}
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-funding-dark"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* Mobile Menu Button - Only on non-application pages */}
+        {!isApplicationPage && (
+          <button 
+            className="md:hidden text-funding-dark"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        )}
+
+        {/* Phone number for mobile on application page */}
+        {isApplicationPage && (
+          <a 
+            href="tel:15735333894" 
+            className="md:hidden flex items-center text-funding-blue font-medium"
+          >
+            <Phone className="w-5 h-5" />
+          </a>
+        )}
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
+      {/* Mobile Navigation - Only on non-application pages */}
+      {!isApplicationPage && isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 top-[72px] bg-white z-40 animate-fade-in">
           <nav className="flex flex-col p-5 space-y-6">
             <a 
