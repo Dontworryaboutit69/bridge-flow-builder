@@ -68,7 +68,7 @@ const FormStepContent = () => {
 };
 
 const FormWrapper = () => {
-  const { setCurrentStep, formData } = useForm();
+  const { setCurrentStep, formData, currentStep } = useForm();
   const location = useLocation();
   
   // Check if we're on pre-qualification page and if we came from homepage
@@ -82,7 +82,7 @@ const FormWrapper = () => {
         setCurrentStep(2);
       }, 300); // Small delay to allow for smooth transition
     }
-  }, [location.pathname, location.state, formData.loanAmount, setCurrentStep]);
+  }, [location.pathname, location.state, formData.loanAmount, setCurrentStep, currentStep]);
   
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto">
