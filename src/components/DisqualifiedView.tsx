@@ -4,7 +4,7 @@ import CustomButton from './ui/CustomButton';
 
 const DisqualifiedView = () => {
   const handleRedirect = () => {
-    window.location.href = "https://tinyurl.com/3bzkmw4k";
+    window.location.href = "https://bankbreezy.com/funding/?refcode=BB306164&partner-id=BB&agent-name=Sonia%20Barriera&agent-email=sibkk2012@gmail.com";
   };
 
   return (
@@ -15,10 +15,10 @@ const DisqualifiedView = () => {
         </svg>
       </div>
       <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-4">
-        We Have Other Options for You
+        Great News!
       </h2>
       <p className="text-funding-gray mb-8 max-w-md mx-auto">
-        Based on your current monthly revenue, we have partners who specialize in helping businesses at your stage.
+        Even though you don't qualify for funding through Growth Path Advisory, our partner program works with newer businesses or businesses doing under $15,000 in average monthly revenue.
       </p>
       
       <div className="glass-card p-6 max-w-md mx-auto mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100">
@@ -41,7 +41,7 @@ const DisqualifiedView = () => {
               </svg>
             </div>
             <span className="text-funding-dark">
-              Our trusted partners offer solutions specifically for growing businesses
+              Our trusted partners at BankBreezy offer solutions specifically for growing businesses
             </span>
           </li>
           <li className="flex items-start">
@@ -63,7 +63,7 @@ const DisqualifiedView = () => {
           size="lg"
           className="group"
         >
-          Continue to Partner Resources
+          Continue to BankBreezy
           <ExternalLink className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
         </CustomButton>
         
