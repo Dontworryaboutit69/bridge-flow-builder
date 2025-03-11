@@ -67,37 +67,37 @@ const ReviewSubmit = () => {
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Full Name:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.firstName} {applicationData.lastName}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.firstName} {applicationData.lastName}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Email:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.email}</span>
+                  <span className="font-medium text-funding-dark text-right break-all">{applicationData.email}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Phone:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.phone}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.phone}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Date of Birth:</span>
-                  <span className="font-medium text-funding-dark">{formatDate(applicationData.dateOfBirth)}</span>
+                  <span className="font-medium text-funding-dark text-right">{formatDate(applicationData.dateOfBirth)}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">SSN:</span>
-                  <span className="font-medium text-funding-dark">XXX-XX-{applicationData.socialSecurityNumber.slice(-4)}</span>
+                  <span className="font-medium text-funding-dark text-right">XXX-XX-{applicationData.socialSecurityNumber.slice(-4)}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Address:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.address}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.address}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">City:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.city}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.city}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">State/ZIP:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.state}, {applicationData.zipCode}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.state}, {applicationData.zipCode}</span>
                 </div>
               </div>
             </div>
@@ -111,45 +111,45 @@ const ReviewSubmit = () => {
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Business Name:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.businessName}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.businessName}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Business Type:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.businessType}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.businessType}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">EIN Number:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.einNumber}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.einNumber}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Ownership Percentage:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.ownershipPercentage}%</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.ownershipPercentage}%</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Industry:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.industry}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.industry}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Time in Business:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.timeInBusiness}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.timeInBusiness}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Employees:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.employeeCount || 'Not specified'}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.employeeCount || 'Not specified'}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Website:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.websiteUrl || 'Not specified'}</span>
+                  <span className="font-medium text-funding-dark text-right break-all">{applicationData.websiteUrl || 'Not specified'}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Business Address:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.businessAddress}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.businessAddress}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Business Location:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.businessCity}, {applicationData.businessState} {applicationData.businessZipCode}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.businessCity}, {applicationData.businessState} {applicationData.businessZipCode}</span>
                 </div>
               </div>
             </div>
@@ -163,29 +163,29 @@ const ReviewSubmit = () => {
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Monthly Revenue:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.monthlyRevenue}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.monthlyRevenue}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Credit Score:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.creditScore}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.creditScore}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Funding Amount:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.loanAmount}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.loanAmount}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Use of Funds:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.useOfFunds}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.useOfFunds}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Bank Name:</span>
-                  <span className="font-medium text-funding-dark">{applicationData.bankName || 'Not provided'}</span>
+                  <span className="font-medium text-funding-dark text-right">{applicationData.bankName || 'Not provided'}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Bank Account:</span>
-                  <span className="font-medium text-funding-dark">
+                  <span className="font-medium text-funding-dark text-right">
                     {applicationData.accountNumber ? 
                       '•••• ' + applicationData.accountNumber.slice(-4) 
                       : 'Not provided'}

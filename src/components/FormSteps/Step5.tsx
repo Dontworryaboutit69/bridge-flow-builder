@@ -37,41 +37,41 @@ const Step5 = () => {
             <div className="glass-card p-5 border border-funding-blue/20">
               <h4 className="font-medium text-funding-dark mb-2">Pre-Qualification Summary</h4>
               <ul className="space-y-2 text-sm">
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Funding Amount:</span>
-                  <span className="font-medium text-funding-dark">{formData.loanAmount}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.loanAmount}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Business:</span>
-                  <span className="font-medium text-funding-dark">{formData.businessName}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.businessName}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Industry:</span>
-                  <span className="font-medium text-funding-dark">{formData.industry}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.industry}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Needed By:</span>
-                  <span className="font-medium text-funding-dark">{formData.capitalTimeframe}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.capitalTimeframe}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Monthly Revenue:</span>
-                  <span className="font-medium text-funding-dark">{formData.monthlyRevenue}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.monthlyRevenue}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Time in Business:</span>
-                  <span className="font-medium text-funding-dark">{formData.timeInBusiness}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.timeInBusiness}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Name:</span>
-                  <span className="font-medium text-funding-dark">{formData.firstName} {formData.lastName}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.firstName} {formData.lastName}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Email:</span>
-                  <span className="font-medium text-funding-dark">{formData.email}</span>
+                  <span className="font-medium text-funding-dark text-right break-all">{formData.email}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Phone:</span>
-                  <span className="font-medium text-funding-dark">{formData.phone}</span>
+                  <span className="font-medium text-funding-dark text-right">{formData.phone}</span>
                 </li>
               </ul>
             </div>
