@@ -51,7 +51,7 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
       
       // Delay navigation to ensure toast is visible
       setTimeout(() => {
-        navigate('/thank-you');
+        navigate('/thank-you?docs_submitted=true');
       }, 1500);
     } else {
       toast({
