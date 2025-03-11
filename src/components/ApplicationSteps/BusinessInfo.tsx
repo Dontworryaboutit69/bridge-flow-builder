@@ -1,7 +1,9 @@
-
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
 
 const BusinessInfo = () => {
   const { applicationData, updateApplicationData, nextStep, prevStep, isStepValid } = useApplication();
@@ -56,7 +58,6 @@ const BusinessInfo = () => {
     '100+ employees'
   ];
   
-  // Format EIN as user types (XX-XXXXXXX)
   const formatEIN = (value: string) => {
     const numbersOnly = value.replace(/[^\d]/g, '');
     if (numbersOnly.length <= 2) {
@@ -66,7 +67,6 @@ const BusinessInfo = () => {
     }
   };
   
-  // Format ownership percentage to ensure it's a valid percentage
   const formatOwnershipPercentage = (value: string) => {
     const numbersOnly = value.replace(/[^\d]/g, '');
     const percentage = parseInt(numbersOnly, 10);
@@ -75,7 +75,6 @@ const BusinessInfo = () => {
       return '';
     }
     
-    // Cap at 100%
     return Math.min(percentage, 100).toString();
   };
   
@@ -125,6 +124,36 @@ const BusinessInfo = () => {
                 ))}
               </select>
             </div>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-funding-dark">
+              Business Start Date*
+            </label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className={`w-full px-4 py-3 rounded-lg border text-left border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all ${
+                    !applicationData.businessStartDate && 'text-funding-gray'
+                  }`}
+                >
+                  {applicationData.businessStartDate ? 
+                    format(new Date(applicationData.businessStartDate), 'PPP') : 
+                    'Select start date'}
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={applicationData.businessStartDate ? new Date(applicationData.businessStartDate) : undefined}
+                  onSelect={(date) => updateApplicationData({ businessStartDate: date?.toISOString() })}
+                  disabled={(date) => date > new Date()}
+                  initialFocus
+                  className="p-3 pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -240,7 +269,7 @@ const BusinessInfo = () => {
           
           <div className="space-y-2">
             <label htmlFor="businessAddress" className="block text-sm font-medium text-funding-dark">
-              Business Address*
+              Business Street Address*
             </label>
             <input
               type="text"
