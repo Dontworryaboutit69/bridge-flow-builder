@@ -12,9 +12,9 @@ type NextStepsSectionProps = {
 const NextStepsSection = ({ documentsSubmitted, onSchedule }: NextStepsSectionProps) => {
   return (
     <>
-      <h3 className="text-xl font-bold text-funding-dark mb-4">Next Steps</h3>
+      <h3 className="text-xl font-bold text-funding-dark mb-6">Next Steps</h3>
       
-      <div className="space-y-6 mb-10">
+      <div className="space-y-8 mb-10">
         <DocumentStep documentsSubmitted={documentsSubmitted} />
         <ReviewStep documentsSubmitted={documentsSubmitted} onSchedule={onSchedule} />
         <FundingStep documentsSubmitted={documentsSubmitted} />
