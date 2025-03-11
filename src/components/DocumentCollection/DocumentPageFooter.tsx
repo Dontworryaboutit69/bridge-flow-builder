@@ -64,15 +64,15 @@ const DocumentPageFooter = () => {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 mr-2 mt-0.5" />
-                <span><a href="tel:8885551234" className="hover:text-white">(888) 555-1234</a></span>
+                <span><a href="tel:15735333894" className="hover:text-white">1-573-533-3894</a></span>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 mr-2 mt-0.5" />
-                <span><a href="mailto:info@example.com" className="hover:text-white">info@example.com</a></span>
+                <span><a href="mailto:support@growthpathadvisory.com" className="hover:text-white">support@growthpathadvisory.com</a></span>
               </li>
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 mt-0.5" />
-                <span>123 Funding St, Suite 100<br />New York, NY 10001</span>
+                <span>Orlando, FL 32810</span>
               </li>
             </ul>
           </div>
