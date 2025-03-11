@@ -56,7 +56,7 @@ function Calendar({
       components={{
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-        Caption: (props) => {
+        Caption: (props: CaptionProps) => {
           const { displayMonth } = props;
           const month = displayMonth.getMonth();
           const year = displayMonth.getFullYear();
@@ -78,9 +78,7 @@ function Calendar({
                 onValueChange={(newMonth) => {
                   const newDate = new Date(displayMonth);
                   newDate.setMonth(parseInt(newMonth));
-                  if (props.onMonthChange) {
-                    props.onMonthChange(newDate);
-                  }
+                  props.goToMonth(newDate);
                 }}
               >
                 <SelectTrigger className="h-7 w-[110px] text-xs">
@@ -100,9 +98,7 @@ function Calendar({
                 onValueChange={(newYear) => {
                   const newDate = new Date(displayMonth);
                   newDate.setFullYear(parseInt(newYear));
-                  if (props.onMonthChange) {
-                    props.onMonthChange(newDate);
-                  }
+                  props.goToMonth(newDate);
                 }}
               >
                 <SelectTrigger className="h-7 w-[80px] text-xs">
