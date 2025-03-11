@@ -6,9 +6,27 @@ import BusinessDetailsSection from './BusinessDetailsSection';
 import BusinessLocationSection from './BusinessLocationSection';
 import BusinessOperationsSection from './BusinessOperationsSection';
 import BusinessDateSelector from './BusinessDateSelector';
+import { useEffect } from 'react';
+import { useForm } from '@/lib/formContext';
 
 const BusinessInfo = () => {
-  const { applicationData, nextStep, prevStep, isStepValid } = useApplication();
+  const { applicationData, updateApplicationData, nextStep, prevStep, isStepValid } = useApplication();
+  const { formData } = useForm();
+  
+  // Autopopulate from pre-qualification data if available
+  useEffect(() => {
+    // Only populate if the business fields are empty
+    if (!applicationData.businessName && formData.businessName) {
+      updateApplicationData({
+        businessName: formData.businessName || '',
+        industry: formData.industry || '',
+        timeInBusiness: formData.timeInBusiness || '',
+        monthlyRevenue: formData.monthlyRevenue || '',
+        creditScore: formData.creditScore || '',
+        loanAmount: formData.loanAmount || ''
+      });
+    }
+  }, [formData, applicationData, updateApplicationData]);
   
   return (
     <div className="w-full max-w-3xl mx-auto">

@@ -5,9 +5,25 @@ import { ArrowRight } from 'lucide-react';
 import PersonalContactSection from './PersonalContactSection';
 import PersonalAddressSection from './PersonalAddressSection';
 import PersonalIdentitySection from './PersonalIdentitySection';
+import { useEffect } from 'react';
+import { useForm } from '@/lib/formContext';
 
 const PersonalInfo = () => {
-  const { nextStep, isStepValid } = useApplication();
+  const { applicationData, updateApplicationData, nextStep, isStepValid } = useApplication();
+  const { formData } = useForm();
+  
+  // Autopopulate from pre-qualification data if available
+  useEffect(() => {
+    // Only populate if the personal fields are empty
+    if (!applicationData.firstName && formData.firstName) {
+      updateApplicationData({
+        firstName: formData.firstName || '',
+        lastName: formData.lastName || '',
+        email: formData.email || '',
+        phone: formData.phone || '',
+      });
+    }
+  }, [formData, applicationData, updateApplicationData]);
 
   return (
     <div className="w-full max-w-3xl mx-auto">

@@ -2,9 +2,24 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useEffect } from 'react';
+import { useForm } from '@/lib/formContext';
 
 const FinancialInfo = () => {
   const { applicationData, updateApplicationData, nextStep, prevStep, isStepValid } = useApplication();
+  const { formData } = useForm();
+  
+  // Autopopulate from pre-qualification data if available
+  useEffect(() => {
+    // Only populate if the financial fields are empty and we have pre-qualification data
+    if (!applicationData.monthlyRevenue && formData.monthlyRevenue) {
+      updateApplicationData({
+        monthlyRevenue: formData.monthlyRevenue || '',
+        creditScore: formData.creditScore || '',
+        loanAmount: formData.loanAmount || '',
+      });
+    }
+  }, [formData, applicationData, updateApplicationData]);
   
   const revenueOptions = [
     '$15,000 - $25,000',
