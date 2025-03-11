@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Phone, CalendarClock } from 'lucide-react';
-import Logo from '@/components/Logo';
 import CustomButton from '@/components/ui/CustomButton';
 
 type DocumentHeaderProps = {
@@ -11,9 +10,7 @@ type DocumentHeaderProps = {
 const DocumentHeader = ({ schedulingLink }: DocumentHeaderProps) => {
   return (
     <div className="flex flex-col items-center mb-6 md:mb-10">
-      <div className="w-full flex justify-between items-center mb-8 md:mb-12">
-        <Logo />
-        
+      <div className="w-full flex justify-end items-center mb-8 md:mb-12">
         <div className="hidden md:flex items-center gap-4">
           <a 
             href="tel:15735333894" 

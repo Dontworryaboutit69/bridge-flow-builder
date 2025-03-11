@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight, Phone, CalendarClock } from 'lucide-react';
@@ -35,12 +34,9 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Only show logo in Navbar if NOT on documents page in mobile view */}
-        {!(isDocumentsPage && window.innerWidth < 768) && (
-          <div className="flex items-center">
-            <Logo />
-          </div>
-        )}
+        <div className="flex items-center">
+          <Logo />
+        </div>
 
         {/* Desktop Navigation - Only show full nav on non-restricted pages */}
         {!isRestrictedPage ? (
