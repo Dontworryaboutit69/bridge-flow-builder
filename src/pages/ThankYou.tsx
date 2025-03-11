@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Logo from '@/components/Logo';
 import CustomButton from '@/components/ui/CustomButton';
+import { Button } from '@/components/ui/button';
 import { CheckCircle, ArrowRight, FileText, CalendarClock } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -127,16 +128,18 @@ const ThankYou = () => {
                     <p className="text-funding-gray mb-3">
                       A funding specialist will review your {documentsSubmitted ? 'documents' : 'application and documents'} within 24-48 hours.
                     </p>
-                    <CustomButton 
-                      variant="outline"
-                      size="md"
-                      onClick={handleScheduleAppointment}
-                      className="group"
-                    >
-                      <CalendarClock className="mr-2 w-5 h-5" />
-                      Schedule a Consultation
-                      <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </CustomButton>
+                    <div className="flex justify-start">
+                      <CustomButton 
+                        variant="outline"
+                        size="sm"
+                        onClick={handleScheduleAppointment}
+                        className="group px-5 py-2.5 inline-flex items-center"
+                      >
+                        <CalendarClock className="mr-2 w-4 h-4" />
+                        Schedule a Consultation
+                        <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </CustomButton>
+                    </div>
                   </div>
                 </div>
                 
