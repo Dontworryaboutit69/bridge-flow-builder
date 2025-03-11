@@ -74,15 +74,13 @@ function Calendar({
           const handleMonthChange = (newMonth: string) => {
             const newDate = new Date(displayMonth);
             newDate.setMonth(parseInt(newMonth));
-            // Access the DayPicker methods via the props.onNavigation
-            props.onSelect?.(newDate, 'month', { origin: 'caption' });
+            props.goToMonth(newDate);
           };
           
           const handleYearChange = (newYear: string) => {
             const newDate = new Date(displayMonth);
             newDate.setFullYear(parseInt(newYear));
-            // Access the DayPicker methods via the props.onNavigation
-            props.onSelect?.(newDate, 'year', { origin: 'caption' });
+            props.goToMonth(newDate);
           };
           
           return (
