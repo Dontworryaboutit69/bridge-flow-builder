@@ -41,6 +41,16 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        
+        {/* Visual separator between Hero and HowItWorks */}
+        <div className="relative">
+          <div className="max-w-7xl mx-auto px-5 md:px-10 py-2">
+            <div className="h-px w-full bg-gradient-to-r from-funding-light-gray/10 via-funding-blue/30 to-funding-light-gray/10"></div>
+          </div>
+          <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+        
         <HowItWorks />
         <TrustIndicators />
         <FundingProducts />
