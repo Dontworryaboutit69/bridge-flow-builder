@@ -36,12 +36,16 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const nextStep = useCallback(() => {
     if (currentStep < totalSteps) {
-      console.log(`Moving from step ${currentStep} to ${currentStep + 1}`);
-      setCurrentStep(prev => prev + 1);
+      if (validateStep(currentStep, formData)) {
+        console.log(`Moving from step ${currentStep} to ${currentStep + 1}`);
+        setCurrentStep(prev => prev + 1);
+      } else {
+        console.log(`Cannot move to next step - validation failed for step ${currentStep}`);
+      }
     } else {
       console.log("Already at the last step");
     }
-  }, [currentStep, totalSteps]);
+  }, [currentStep, totalSteps, formData]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 1) {
@@ -143,4 +147,3 @@ export const useForm = () => {
   }
   return context;
 };
-

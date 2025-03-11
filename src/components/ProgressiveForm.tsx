@@ -6,7 +6,6 @@ import Step3 from './FormSteps/Step3';
 import Step4 from './FormSteps/Step4';
 import Step5 from './FormSteps/Step5';
 import DisqualifiedView from './DisqualifiedView';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -69,7 +68,7 @@ const FormStepContent = () => {
 };
 
 const FormWrapper = () => {
-  const { setCurrentStep, formData, currentStep } = useForm();
+  const { formData, currentStep, setCurrentStep } = useForm();
   const location = useLocation();
   
   // Check if we're on pre-qualification page and if we came from homepage
@@ -85,7 +84,9 @@ const FormWrapper = () => {
     });
     
     // If we're on pre-qualification and have a loan amount, start at step 2
-    if (isPrequalificationPage && formData.loanAmount && (cameFromHomepage || currentStep === 1)) {
+    // Only do this on initial load, not during form navigation
+    if (isPrequalificationPage && formData.loanAmount && 
+        cameFromHomepage && currentStep === 1) {
       setTimeout(() => {
         console.log("Setting current step to 2");
         setCurrentStep(2);

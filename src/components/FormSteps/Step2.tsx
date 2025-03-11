@@ -46,10 +46,14 @@ const Step2 = () => {
     });
   }, [formData.businessName, formData.industry, formData.capitalTimeframe, isStepValid]);
 
-  // Add a direct handler that logs before moving to the next step
+  // Handle next step click
   const handleNextStep = () => {
-    console.log("Moving to next step from Step 2");
-    nextStep();
+    if (isStepValid()) {
+      console.log("Moving to next step from Step 2");
+      nextStep();
+    } else {
+      console.log("Cannot move to next step - validation failed");
+    }
   };
   
   return (
