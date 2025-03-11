@@ -10,11 +10,11 @@ type DocumentHeaderProps = {
 
 const DocumentHeader = ({ schedulingLink }: DocumentHeaderProps) => {
   return (
-    <div className="flex flex-col items-center mb-10">
-      <div className="w-full flex justify-between items-center mb-12">
+    <div className="flex flex-col items-center mb-6 md:mb-10">
+      <div className="w-full flex justify-between items-center mb-8 md:mb-12">
         <Logo />
         
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <a 
             href="tel:15735333894" 
             className="flex items-center text-funding-blue font-medium hover:text-funding-blue/80 transition-colors duration-200"
@@ -28,6 +28,7 @@ const DocumentHeader = ({ schedulingLink }: DocumentHeaderProps) => {
             target="_blank"
             rel="noopener noreferrer"
             size="sm"
+            className="rounded-full"
           >
             <CalendarClock className="mr-2 w-4 h-4" />
             Schedule Now
@@ -35,7 +36,7 @@ const DocumentHeader = ({ schedulingLink }: DocumentHeaderProps) => {
         </div>
       </div>
       
-      <h1 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
+      <h1 className="text-2xl md:text-4xl font-bold text-funding-dark mb-4">
         Document Collection
       </h1>
       <p className="text-funding-gray max-w-2xl mx-auto text-center">

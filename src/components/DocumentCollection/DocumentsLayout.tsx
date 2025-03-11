@@ -23,7 +23,7 @@ const DocumentsLayout = ({
   onSubmitDocuments
 }: DocumentsLayoutProps) => {
   return (
-    <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
+    <div className="max-w-7xl mx-auto px-4 md:px-10 relative">
       <div className="border-b border-funding-light-gray pb-6 mb-6">
         <DocumentHeader schedulingLink={schedulingLink} />
       </div>

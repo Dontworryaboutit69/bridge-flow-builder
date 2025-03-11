@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { FileCheck, File, Upload, Loader2, X, Plus } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -69,12 +70,12 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
           {document.uploaded ? <FileCheck className="w-5 h-5" /> : <File className="w-5 h-5" />}
         </div>
         <div className="ml-4 flex-grow">
-          <div className="flex items-center justify-between">
-            <h3 className="font-medium text-funding-dark">
+          <div className="flex items-center justify-between flex-wrap">
+            <h3 className="font-medium text-funding-dark mb-1 md:mb-0">
               {document.name} {document.required && <span className="text-red-500">*</span>}
             </h3>
             {document.uploaded ? (
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 mt-1 md:mt-0">
                 <span className="text-sm text-green-600 font-medium flex items-center">
                   <FileCheck className="w-4 h-4 mr-1" /> Uploaded
                 </span>
@@ -87,7 +88,7 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
                 </button>
               </div>
             ) : isBankStatement && document.uploadCount && document.uploadCount > 0 ? (
-              <div className="flex space-x-2 items-center">
+              <div className="flex space-x-2 items-center mt-1 md:mt-0">
                 <span className="text-sm text-blue-600 font-medium">
                   {document.uploadCount} of {document.maxUploads} uploaded
                 </span>
@@ -97,7 +98,7 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
                     onClick={openFileDialog}
                     disabled={isUploading}
                     isLoading={isUploading}
-                    className="py-1 px-3 h-auto"
+                    className="py-1 px-3 h-auto rounded-full ml-2"
                   >
                     <Plus className="w-4 h-4 mr-1" />
                     Add More
@@ -117,7 +118,7 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
                 onClick={openFileDialog}
                 disabled={isUploading}
                 isLoading={isUploading}
-                className="py-1 px-3 h-auto"
+                className="py-1 px-3 h-auto rounded-full mt-1 md:mt-0"
               >
                 <Upload className="w-4 h-4 mr-1" />
                 Upload

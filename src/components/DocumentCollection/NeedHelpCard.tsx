@@ -42,7 +42,8 @@ const NeedHelpCard = ({ schedulingLink }: NeedHelpCardProps) => {
           href={schedulingLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full"
+          className="w-full rounded-full"
+          size="md"
         >
           <CalendarClock className="mr-2 w-4 h-4" />
           Schedule Call

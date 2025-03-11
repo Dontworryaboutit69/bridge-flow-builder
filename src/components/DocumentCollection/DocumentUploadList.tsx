@@ -100,7 +100,8 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
             {totalUploaded} of {totalRequired} documents uploaded
           </p>
           <CustomButton 
-            className="group"
+            className="group rounded-full"
+            size="md"
             disabled={!allRequiredUploaded}
             onClick={handleSubmit}
           >
