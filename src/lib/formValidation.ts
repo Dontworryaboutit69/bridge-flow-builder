@@ -57,14 +57,25 @@ export const checkQualification = (formData: FormData): boolean => {
   // Check if time in business is "Less than 6 months"
   const isTimeDisqualified = formData.timeInBusiness === 'Less than 6 months';
   
+  // Check if credit score is "Excellent (720+)" or "Good (680-719)"
+  const hasHighCreditScore = 
+    formData.creditScore === 'Excellent (720+)' || 
+    formData.creditScore === 'Good (680-719)';
+  
+  // If they have high credit score, they can qualify regardless of revenue or time in business
+  const isQualified = hasHighCreditScore || (!isRevenueDisqualified && !isTimeDisqualified);
+  
   // Print debug information
   console.log("Qualification check:", { 
     monthlyRevenue: formData.monthlyRevenue,
     timeInBusiness: formData.timeInBusiness,
+    creditScore: formData.creditScore,
     isRevenueDisqualified,
     isTimeDisqualified,
-    isDisqualified: isRevenueDisqualified || isTimeDisqualified
+    hasHighCreditScore,
+    isDisqualified: !isQualified
   });
   
-  return isRevenueDisqualified || isTimeDisqualified;
+  // Return true if disqualified (not qualified)
+  return !isQualified;
 };
