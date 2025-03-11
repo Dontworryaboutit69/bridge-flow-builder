@@ -20,24 +20,25 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateFormData = useCallback((data: Partial<FormData>) => {
     console.log("Updating form data:", data);
     setFormData(prev => ({ ...prev, ...data }));
-    
-    if (data.monthlyRevenue) {
-      setTimeout(() => checkQualification(), 0);
-    }
-    
-    if (data.timeInBusiness) {
-      setTimeout(() => checkQualification(), 0);
-    }
   }, []);
 
   const checkQualification = useCallback(() => {
-    setIsDisqualified(validateQualification(formData));
+    const disqualified = validateQualification(formData);
+    console.log("Setting disqualification status:", disqualified);
+    setIsDisqualified(disqualified);
+    return disqualified;
   }, [formData]);
 
   const nextStep = useCallback(() => {
     if (currentStep < totalSteps) {
       if (validateStep(currentStep, formData)) {
         console.log(`Moving from step ${currentStep} to ${currentStep + 1}`);
+        
+        // If moving to final step, pre-check qualification
+        if (currentStep === 4) {
+          checkQualification();
+        }
+        
         setCurrentStep(prev => prev + 1);
       } else {
         console.log(`Cannot move to next step - validation failed for step ${currentStep}`);
@@ -45,7 +46,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       console.log("Already at the last step");
     }
-  }, [currentStep, totalSteps, formData]);
+  }, [currentStep, totalSteps, formData, checkQualification]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 1) {
@@ -75,6 +76,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log('Pre-qualification form submitted:', formData);
       
+      // Check qualification status after form submission
+      const disqualified = checkQualification();
+      console.log("Qualification status after submission:", { disqualified });
+      
       // Save webhook URL to localStorage if provided
       if (zapierWebhookUrl) {
         localStorage.setItem('prequalify_zapier_webhook', zapierWebhookUrl);
@@ -94,6 +99,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
               ...formData,
               submission_date: new Date().toISOString(),
               source_url: window.location.href,
+              is_qualified: !disqualified
             }),
           });
           console.log('Data sent to Zapier webhook successfully');
@@ -105,14 +111,18 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      setSubmitSuccess(true);
+      // Only set submitSuccess if they qualify
+      if (!disqualified) {
+        setSubmitSuccess(true);
+      }
+      
     } catch (error) {
       console.error('Error submitting pre-qualification form:', error);
       toast("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData, zapierWebhookUrl]);
+  }, [formData, zapierWebhookUrl, checkQualification]);
 
   return (
     <FormContext.Provider

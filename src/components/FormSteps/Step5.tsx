@@ -11,7 +11,8 @@ const Step5 = () => {
     isStepValid, 
     submitForm, 
     isSubmitting,
-    submitSuccess 
+    submitSuccess,
+    isDisqualified
   } = useForm();
   
   const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
@@ -22,7 +23,7 @@ const Step5 = () => {
   
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in">
-      {!submitSuccess ? (
+      {!submitSuccess && !isDisqualified ? (
         <>
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
@@ -114,7 +115,7 @@ const Step5 = () => {
             </CustomButton>
           </div>
         </>
-      ) : (
+      ) : submitSuccess && !isDisqualified ? (
         <div className="text-center p-8 animate-fade-in">
           <div className="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6">
             <Check className="w-10 h-10 text-green-600" />
@@ -170,7 +171,7 @@ const Step5 = () => {
             </Link>
           </div>
         </div>
-      )}
+      ) : null /* If isDisqualified is true, nothing is rendered here as it's handled by DisqualifiedView */}
     </div>
   );
 };

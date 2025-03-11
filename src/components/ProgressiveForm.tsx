@@ -44,15 +44,16 @@ const ProgressBar = () => {
 };
 
 const FormStepContent = () => {
-  const { currentStep, isDisqualified } = useForm();
+  const { currentStep, isDisqualified, submitForm } = useForm();
 
   // Debug log to track which step component is being rendered
   useEffect(() => {
-    console.log("Rendering step component:", currentStep);
-  }, [currentStep]);
+    console.log("Rendering step component:", currentStep, "isDisqualified:", isDisqualified);
+  }, [currentStep, isDisqualified]);
 
-  // Check if user is disqualified
-  if (isDisqualified) {
+  // Check if user is disqualified and has submitted the form
+  // We only show the DisqualifiedView after they've submitted on Step 5
+  if (isDisqualified && currentStep === 5) {
     return <DisqualifiedView />;
   }
   

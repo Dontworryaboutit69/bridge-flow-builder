@@ -51,8 +51,20 @@ export const isStepValid = (currentStep: number, formData: FormData): boolean =>
 };
 
 export const checkQualification = (formData: FormData): boolean => {
+  // Check if revenue is "Less than $15,000"
   const isRevenueDisqualified = formData.monthlyRevenue === 'Less than $15,000';
+  
+  // Check if time in business is "Less than 6 months"
   const isTimeDisqualified = formData.timeInBusiness === 'Less than 6 months';
+  
+  // Print debug information
+  console.log("Qualification check:", { 
+    monthlyRevenue: formData.monthlyRevenue,
+    timeInBusiness: formData.timeInBusiness,
+    isRevenueDisqualified,
+    isTimeDisqualified,
+    isDisqualified: isRevenueDisqualified || isTimeDisqualified
+  });
   
   return isRevenueDisqualified || isTimeDisqualified;
 };
