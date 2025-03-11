@@ -4,13 +4,13 @@ import ProgressiveForm from "@/components/ProgressiveForm";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import { useForm } from "@/lib/formContext";
+import { FormProvider, useForm } from "@/lib/formContext";
 import ZapierSettings from "@/components/admin/ZapierSettings";
 import { useApplication } from "@/lib/applicationContext";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const PreQualification = () => {
+const PreQualificationContent = () => {
   const { zapierWebhookUrl: prequalWebhookUrl, setZapierWebhookUrl: setPrequalWebhookUrl } = useForm();
   const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
   const [isAdmin, setIsAdmin] = useState(false);
@@ -62,6 +62,14 @@ const PreQualification = () => {
         </div>
       </footer>
     </div>
+  );
+};
+
+const PreQualification = () => {
+  return (
+    <FormProvider>
+      <PreQualificationContent />
+    </FormProvider>
   );
 };
 

@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const Step1 = () => {
-  const { formData, updateFormData, nextStep, isStepValid, setCurrentStep } = useForm();
+  const { formData, updateFormData, nextStep, isStepValid } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
   
