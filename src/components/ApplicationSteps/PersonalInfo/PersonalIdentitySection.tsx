@@ -1,14 +1,22 @@
 
 import { useApplication } from '@/lib/applicationContext';
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { useState, useEffect } from 'react';
 import { CreditScoreRange } from '@/types/documents';
-import { useState } from 'react';
 
 const PersonalIdentitySection = () => {
   const { applicationData, updateApplicationData } = useApplication();
   const [ssnMasked, setSsnMasked] = useState(true);
+  const [dateValue, setDateValue] = useState('');
+
+  // Initialize the date input if there's already a value in applicationData
+  useEffect(() => {
+    if (applicationData.dateOfBirth) {
+      // Format date to YYYY-MM-DD for HTML date input
+      const date = new Date(applicationData.dateOfBirth);
+      const formattedDate = date.toISOString().split('T')[0];
+      setDateValue(formattedDate);
+    }
+  }, [applicationData.dateOfBirth]);
 
   const creditScoreRanges: CreditScoreRange[] = [
     'Below 600',
@@ -32,6 +40,19 @@ const PersonalIdentitySection = () => {
   const toggleSSNVisibility = () => {
     setSsnMasked(!ssnMasked);
   };
+  
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = e.target.value;
+    setDateValue(newDate);
+    
+    if (newDate) {
+      // Store as ISO string in application data
+      const date = new Date(newDate);
+      updateApplicationData({ dateOfBirth: date.toISOString() });
+    } else {
+      updateApplicationData({ dateOfBirth: '' });
+    }
+  };
 
   return (
     <>
@@ -40,32 +61,14 @@ const PersonalIdentitySection = () => {
           <label className="block text-sm font-medium text-funding-dark">
             Date of Birth*
           </label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                className={`w-full px-4 py-3 rounded-lg border text-left border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all ${
-                  !applicationData.dateOfBirth && 'text-funding-gray'
-                }`}
-              >
-                {applicationData.dateOfBirth ? 
-                  format(new Date(applicationData.dateOfBirth), 'PPP') : 
-                  'Select date'}
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={applicationData.dateOfBirth ? new Date(applicationData.dateOfBirth) : undefined}
-                onSelect={(date) => updateApplicationData({ dateOfBirth: date?.toISOString() })}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
-                initialFocus
-                className="p-3 pointer-events-auto"
-              />
-            </PopoverContent>
-          </Popover>
+          <input
+            type="date"
+            value={dateValue}
+            onChange={handleDateChange}
+            max={new Date().toISOString().split('T')[0]} // Limit to today
+            min="1900-01-01" // Reasonable minimum date
+            className="w-full px-4 py-3 rounded-lg border text-left border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+          />
         </div>
 
         <div className="space-y-2">

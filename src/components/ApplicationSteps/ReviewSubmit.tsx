@@ -37,7 +37,7 @@ const ReviewSubmit = () => {
     window.scrollTo(0, 0);
   }, [submitSuccess]);
   
-  // Format date of birth for display
+  // Format date for display
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
