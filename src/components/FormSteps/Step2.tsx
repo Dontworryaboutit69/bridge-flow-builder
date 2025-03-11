@@ -2,6 +2,7 @@
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useEffect } from 'react';
 
 const Step2 = () => {
   const { formData, updateFormData, nextStep, prevStep, isStepValid } = useForm();
@@ -35,6 +36,22 @@ const Step2 = () => {
     updateFormData({ capitalTimeframe });
   };
   
+  // Add debugging to verify if isStepValid() is working correctly
+  useEffect(() => {
+    console.log("Step 2 validation state:", {
+      businessName: !!formData.businessName,
+      industry: !!formData.industry,
+      capitalTimeframe: !!formData.capitalTimeframe,
+      isValid: isStepValid()
+    });
+  }, [formData.businessName, formData.industry, formData.capitalTimeframe, isStepValid]);
+
+  // Add a direct handler that logs before moving to the next step
+  const handleNextStep = () => {
+    console.log("Moving to next step from Step 2");
+    nextStep();
+  };
+  
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in">
       <div className="text-center mb-8">
@@ -56,7 +73,7 @@ const Step2 = () => {
             id="businessName"
             className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
             placeholder="Enter your business name"
-            value={formData.businessName}
+            value={formData.businessName || ''}
             onChange={(e) => updateFormData({ businessName: e.target.value })}
           />
         </div>
@@ -116,7 +133,7 @@ const Step2 = () => {
           Back
         </CustomButton>
         <CustomButton 
-          onClick={nextStep} 
+          onClick={handleNextStep} 
           disabled={!isStepValid()}
           className="group"
         >

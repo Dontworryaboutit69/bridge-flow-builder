@@ -13,6 +13,11 @@ import { useLocation } from 'react-router-dom';
 const ProgressBar = () => {
   const { currentStep, totalSteps } = useForm();
   
+  // Add debug log to track current step
+  useEffect(() => {
+    console.log("Current step in progress bar:", currentStep);
+  }, [currentStep]);
+  
   return (
     <div className="w-full mb-8">
       <div className="flex justify-between mb-2">
@@ -42,27 +47,24 @@ const ProgressBar = () => {
 const FormStepContent = () => {
   const { currentStep, isDisqualified } = useForm();
 
+  // Debug log to track which step component is being rendered
+  useEffect(() => {
+    console.log("Rendering step component:", currentStep);
+  }, [currentStep]);
+
   // Check if user is disqualified
   if (isDisqualified) {
     return <DisqualifiedView />;
   }
   
   return (
-    <TransitionGroup>
-      <CSSTransition
-        key={currentStep}
-        timeout={300}
-        classNames="form-step"
-      >
-        <div className="form-step">
-          {currentStep === 1 && <Step1 />}
-          {currentStep === 2 && <Step2 />}
-          {currentStep === 3 && <Step3 />}
-          {currentStep === 4 && <Step4 />}
-          {currentStep === 5 && <Step5 />}
-        </div>
-      </CSSTransition>
-    </TransitionGroup>
+    <div className="form-step">
+      {currentStep === 1 && <Step1 />}
+      {currentStep === 2 && <Step2 />}
+      {currentStep === 3 && <Step3 />}
+      {currentStep === 4 && <Step4 />}
+      {currentStep === 5 && <Step5 />}
+    </div>
   );
 };
 
@@ -75,9 +77,17 @@ const FormWrapper = () => {
     const isPrequalificationPage = location.pathname === '/pre-qualification';
     const cameFromHomepage = location.state?.fromHomepage;
     
+    console.log("FormWrapper init:", { 
+      isPrequalificationPage, 
+      cameFromHomepage, 
+      loanAmount: formData.loanAmount, 
+      currentStep 
+    });
+    
     // If we're on pre-qualification and have a loan amount, start at step 2
     if (isPrequalificationPage && formData.loanAmount && (cameFromHomepage || currentStep === 1)) {
       setTimeout(() => {
+        console.log("Setting current step to 2");
         setCurrentStep(2);
       }, 300); // Small delay to allow for smooth transition
     }

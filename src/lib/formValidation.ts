@@ -10,11 +10,19 @@ export const validatePhone = (phone: string): boolean => {
 };
 
 export const isStepValid = (currentStep: number, formData: FormData): boolean => {
+  console.log(`Validating step ${currentStep} with data:`, formData);
+  
   switch (currentStep) {
     case 1:
       return !!formData.loanAmount;
     case 2:
-      return !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
+      const isValid = !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
+      console.log(`Step 2 validation result: ${isValid}`, {
+        businessName: !!formData.businessName,
+        industry: !!formData.industry,
+        capitalTimeframe: !!formData.capitalTimeframe
+      });
+      return isValid;
     case 3:
       return !!formData.monthlyRevenue && !!formData.timeInBusiness;
     case 4:

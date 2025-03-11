@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import { toast } from "sonner";
 import { FormData, FormContextType, initialFormData } from './formTypes';
 import { isStepValid as validateStep, checkQualification as validateQualification, validateEmail, validatePhone } from './formValidation';
@@ -17,7 +17,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
   const totalSteps = 5;
 
-  const updateFormData = (data: Partial<FormData>) => {
+  const updateFormData = useCallback((data: Partial<FormData>) => {
+    console.log("Updating form data:", data);
     setFormData(prev => ({ ...prev, ...data }));
     
     if (data.monthlyRevenue) {
@@ -27,36 +28,45 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (data.timeInBusiness) {
       setTimeout(() => checkQualification(), 0);
     }
-  };
+  }, []);
 
-  const checkQualification = () => {
+  const checkQualification = useCallback(() => {
     setIsDisqualified(validateQualification(formData));
-  };
+  }, [formData]);
 
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
+      console.log(`Moving from step ${currentStep} to ${currentStep + 1}`);
+      setCurrentStep(prev => prev + 1);
+    } else {
+      console.log("Already at the last step");
     }
-  };
+  }, [currentStep, totalSteps]);
 
-  const prevStep = () => {
+  const prevStep = useCallback(() => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      console.log(`Moving from step ${currentStep} to ${currentStep - 1}`);
+      setCurrentStep(prev => prev - 1);
+    } else {
+      console.log("Already at the first step");
     }
-  };
+  }, [currentStep]);
 
-  const isStepValid = () => {
-    return validateStep(currentStep, formData);
-  };
+  const isStepValid = useCallback(() => {
+    const valid = validateStep(currentStep, formData);
+    console.log(`Step ${currentStep} validation: ${valid}`);
+    return valid;
+  }, [currentStep, formData]);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
+    console.log("Resetting form");
     setFormData(initialFormData);
     setCurrentStep(1);
     setSubmitSuccess(false);
     setIsDisqualified(false);
-  };
+  }, []);
 
-  const submitForm = async () => {
+  const submitForm = useCallback(async () => {
     setIsSubmitting(true);
     try {
       console.log('Pre-qualification form submitted:', formData);
@@ -98,7 +108,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [formData, zapierWebhookUrl]);
 
   return (
     <FormContext.Provider
@@ -133,3 +143,4 @@ export const useForm = () => {
   }
   return context;
 };
+
