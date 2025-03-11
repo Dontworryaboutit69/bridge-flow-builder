@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { toast } from "sonner";
 import { FormData, FormContextType, initialFormData } from './formTypes';
@@ -34,7 +33,23 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (validateStep(currentStep, formData)) {
         console.log(`Moving from step ${currentStep} to ${currentStep + 1}`);
         
-        // If moving to final step, pre-check qualification
+        if (typeof window !== 'undefined') {
+          if (window.fbq) {
+            window.fbq('trackCustom', 'CompleteStep', { 
+              step: currentStep,
+              stepName: getStepName(currentStep)
+            });
+          }
+          
+          if (window.gtag) {
+            window.gtag('event', 'complete_step', {
+              'event_category': 'form',
+              'event_label': `Step ${currentStep} - ${getStepName(currentStep)}`,
+              'value': currentStep
+            });
+          }
+        }
+        
         if (currentStep === 4) {
           checkQualification();
         }
@@ -47,6 +62,17 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log("Already at the last step");
     }
   }, [currentStep, totalSteps, formData, checkQualification]);
+
+  const getStepName = (step: number): string => {
+    switch (step) {
+      case 1: return 'Loan Amount';
+      case 2: return 'Business Details';
+      case 3: return 'Financial Information';
+      case 4: return 'Contact Information';
+      case 5: return 'Review & Submit';
+      default: return 'Unknown Step';
+    }
+  };
 
   const prevStep = useCallback(() => {
     if (currentStep > 1) {
@@ -76,16 +102,50 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log('Pre-qualification form submitted:', formData);
       
-      // Check qualification status after form submission
+      if (typeof window !== 'undefined') {
+        if (window.fbq) {
+          window.fbq('track', 'Lead', {
+            content_name: 'Business Funding Pre-qualification',
+            content_category: 'Funding',
+            value: formData.loanAmount || 'Unknown',
+            currency: 'USD',
+          });
+        }
+        
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            'event_category': 'form',
+            'event_label': 'Pre-qualification Form',
+            'value': formData.loanAmount ? parseFloat(formData.loanAmount.replace(/[^0-9.-]+/g, '')) : 0,
+          });
+        }
+      }
+      
       const disqualified = checkQualification();
       console.log("Qualification status after submission:", { disqualified });
       
-      // Save webhook URL to localStorage if provided
+      if (typeof window !== 'undefined') {
+        if (window.fbq) {
+          window.fbq('trackCustom', 'QualificationResult', { 
+            qualified: !disqualified,
+            loanAmount: formData.loanAmount,
+            businessName: formData.businessName
+          });
+        }
+        
+        if (window.gtag) {
+          window.gtag('event', 'qualification_result', {
+            'event_category': 'form',
+            'event_label': disqualified ? 'Disqualified' : 'Qualified',
+            'value': disqualified ? 0 : 1
+          });
+        }
+      }
+      
       if (zapierWebhookUrl) {
         localStorage.setItem('prequalify_zapier_webhook', zapierWebhookUrl);
       }
       
-      // If we have a webhook URL, send the data to Zapier
       if (zapierWebhookUrl) {
         try {
           await fetch(zapierWebhookUrl, {
@@ -93,7 +153,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
             headers: {
               'Content-Type': 'application/json',
             },
-            mode: 'no-cors', // Handle CORS issues
+            mode: 'no-cors',
             body: JSON.stringify({
               form_type: 'pre_qualification',
               ...formData,
@@ -111,7 +171,6 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Only set submitSuccess if they qualify
       if (!disqualified) {
         setSubmitSuccess(true);
       }

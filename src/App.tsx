@@ -12,6 +12,7 @@ import Application from "./pages/Application";
 import ThankYou from "./pages/ThankYou";
 import DocumentCollection from "./pages/DocumentCollection";
 import PreQualification from "./pages/PreQualification";
+import TrackingScripts from "./components/common/TrackingScripts";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <TrackingScripts />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/pre-qualification" element={<PreQualification />} />

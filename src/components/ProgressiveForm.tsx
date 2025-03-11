@@ -1,4 +1,3 @@
-
 import { useForm } from '@/lib/formContext';
 import Step1 from './FormSteps/Step1';
 import Step2 from './FormSteps/Step2';
@@ -50,6 +49,23 @@ const FormStepContent = () => {
   useEffect(() => {
     console.log("Rendering step component:", currentStep, "isDisqualified:", isDisqualified);
   }, [currentStep, isDisqualified]);
+
+  // Track step views for analytics
+  useEffect(() => {
+    // Facebook Pixel tracking
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('trackCustom', 'ViewStep', { step: currentStep });
+    }
+    
+    // Google Analytics event tracking
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'view_step', {
+        'event_category': 'form',
+        'event_label': `Step ${currentStep}`,
+        'value': currentStep
+      });
+    }
+  }, [currentStep]);
 
   // Check if user is disqualified and has submitted the form
   // We only show the DisqualifiedView after they've submitted on Step 5
