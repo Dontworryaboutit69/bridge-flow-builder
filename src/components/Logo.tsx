@@ -1,13 +1,11 @@
+
 import { Link, useLocation } from 'react-router-dom';
 
 const Logo = ({ className = '' }: { className?: string }) => {
   const location = useLocation();
-  const isInnerPage = location.pathname === '/application' ||
-                      location.pathname === '/pre-qualification' ||
-                      location.pathname === '/documents' ||
-                      location.pathname === '/thank-you';
+  const isHomePage = location.pathname === '/';
   
-  if (isInnerPage) {
+  if (!isHomePage) {
     return (
       <div className={`flex items-center ${className}`}>
         <img 
