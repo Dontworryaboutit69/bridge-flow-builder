@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 
 type FormData = {
@@ -8,6 +7,7 @@ type FormData = {
   timeInBusiness: string;
   creditScore: string;
   industry: string;
+  capitalTimeframe: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -38,6 +38,7 @@ const initialFormData: FormData = {
   timeInBusiness: '',
   creditScore: '',
   industry: '',
+  capitalTimeframe: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -57,19 +58,16 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateFormData = (data: Partial<FormData>) => {
     setFormData(prev => ({ ...prev, ...data }));
     
-    // If this is revenue data update, check for disqualification
     if (data.monthlyRevenue) {
       setTimeout(() => checkQualification(), 0);
     }
     
-    // If this is time in business update, check for disqualification
     if (data.timeInBusiness) {
       setTimeout(() => checkQualification(), 0);
     }
   };
 
   const checkQualification = () => {
-    // Check if user is disqualified based on revenue or time in business
     const isRevenueDisqualified = formData.monthlyRevenue === 'Less than $15,000';
     const isTimeDisqualified = formData.timeInBusiness === 'Less than 6 months';
     
@@ -89,21 +87,20 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const isStepValid = () => {
-    // Basic validation logic based on current step
     switch (currentStep) {
       case 1:
         return !!formData.loanAmount;
       case 2:
-        return !!formData.businessName && !!formData.industry;
+        return !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
       case 3:
         return !!formData.monthlyRevenue && !!formData.timeInBusiness;
       case 4:
         return !!formData.firstName && !!formData.lastName && !!formData.email && !!formData.phone && validateEmail(formData.email) && validatePhone(formData.phone);
       case 5:
-        // Step 5 is now just review, so we check if all required info is present
         return !!formData.loanAmount && 
                !!formData.businessName && 
                !!formData.industry && 
+               !!formData.capitalTimeframe &&
                !!formData.monthlyRevenue && 
                !!formData.timeInBusiness && 
                !!formData.firstName && 
@@ -135,10 +132,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const submitForm = async () => {
     setIsSubmitting(true);
     try {
-      // In a real app, you would send the form data to your backend here
       console.log('Pre-qualification form submitted:', formData);
       
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       setSubmitSuccess(true);

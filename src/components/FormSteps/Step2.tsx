@@ -19,8 +19,20 @@ const Step2 = () => {
     'Other'
   ];
   
+  const capitalTimeframes = [
+    'ASAP (Within days)',
+    '1-2 weeks',
+    '1 month',
+    '2-3 months',
+    'No rush (3+ months)'
+  ];
+  
   const handleIndustrySelect = (industry: string) => {
     updateFormData({ industry });
+  };
+  
+  const handleTimeframeSelect = (capitalTimeframe: string) => {
+    updateFormData({ capitalTimeframe });
   };
   
   return (
@@ -66,6 +78,28 @@ const Step2 = () => {
                 onClick={() => handleIndustrySelect(industry)}
               >
                 <span className="text-sm font-medium">{industry}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2 mt-8">
+          <label className="block text-sm font-medium text-funding-dark">
+            How quickly do you need capital?
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {capitalTimeframes.map((timeframe, index) => (
+              <button
+                key={index}
+                type="button"
+                className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+                  formData.capitalTimeframe === timeframe
+                    ? 'border-funding-blue bg-funding-blue/5 text-funding-dark'
+                    : 'border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'
+                }`}
+                onClick={() => handleTimeframeSelect(timeframe)}
+              >
+                <span className="text-sm font-medium">{timeframe}</span>
               </button>
             ))}
           </div>

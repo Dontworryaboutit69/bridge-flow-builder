@@ -44,6 +44,14 @@ const Step5 = () => {
                   <span className="font-medium text-funding-dark">{formData.businessName}</span>
                 </li>
                 <li className="flex justify-between">
+                  <span className="text-funding-gray">Industry:</span>
+                  <span className="font-medium text-funding-dark">{formData.industry}</span>
+                </li>
+                <li className="flex justify-between">
+                  <span className="text-funding-gray">Needed By:</span>
+                  <span className="font-medium text-funding-dark">{formData.capitalTimeframe}</span>
+                </li>
+                <li className="flex justify-between">
                   <span className="text-funding-gray">Monthly Revenue:</span>
                   <span className="font-medium text-funding-dark">{formData.monthlyRevenue}</span>
                 </li>
