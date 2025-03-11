@@ -252,7 +252,7 @@ const ReviewSubmit = () => {
             </div>
           </div>
           
-          <div className="mt-10 flex justify-between">
+          <div className="mt-10 flex justify-between gap-4">
             <CustomButton 
               variant="outline" 
               onClick={prevStep}
