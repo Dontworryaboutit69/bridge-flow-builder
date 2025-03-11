@@ -25,7 +25,7 @@ const DocumentsLayout = ({
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-10 relative">
       <div className="border-b border-funding-light-gray pb-6 mb-6">
-        <DocumentHeader schedulingLink={schedulingLink} />
+        <DocumentHeader />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-10">
