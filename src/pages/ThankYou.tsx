@@ -6,8 +6,10 @@ import { CheckCircle, ArrowRight, FileText, CalendarClock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ThankYou = () => {
+  const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
+  
   const handleScheduleAppointment = () => {
-    window.location.href = 'https://calendly.com/growthpathadvisory/30min';
+    window.location.href = schedulingLink;
   };
 
   return (

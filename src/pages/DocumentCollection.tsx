@@ -53,6 +53,7 @@ const DocumentCollection = () => {
   ]);
 
   const [uploadingId, setUploadingId] = useState<string | null>(null);
+  const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
 
   const handleUpload = (id: string) => {
     // Simulate file upload
@@ -70,7 +71,7 @@ const DocumentCollection = () => {
     .every(doc => doc.uploaded);
 
   const handleScheduleAppointment = () => {
-    window.location.href = 'https://calendly.com/growthpathadvisory/30min';
+    window.location.href = schedulingLink;
   };
 
   return (

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, Phone, CalendarClock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 
@@ -11,7 +11,10 @@ const Navbar = () => {
   const location = useLocation();
   const isApplicationPage = location.pathname === '/application';
   const isPreQualificationPage = location.pathname === '/pre-qualification';
-  const isRestrictedPage = isApplicationPage || isPreQualificationPage;
+  const isDocumentsPage = location.pathname === '/documents';
+  const isRestrictedPage = isApplicationPage || isPreQualificationPage || isDocumentsPage;
+  
+  const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,13 +75,15 @@ const Navbar = () => {
               <Phone className="w-4 h-4 mr-2" />
               1-573-533-3894
             </a>
-            <Link 
-              to="/pre-qualification" 
+            <a 
+              href={schedulingLink}
+              target="_blank"
+              rel="noopener noreferrer" 
               className="bg-funding-blue text-white px-6 py-2.5 rounded-full font-medium flex items-center hover:bg-opacity-90 transition-all duration-200 group"
             >
-              Apply Now
-              <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+              Schedule Now
+              <CalendarClock className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </a>
           </nav>
         ) : (
           <a 
@@ -145,14 +150,16 @@ const Navbar = () => {
               <Phone className="w-5 h-5 mr-2" />
               1-573-533-3894
             </a>
-            <Link 
-              to="/pre-qualification" 
+            <a 
+              href={schedulingLink}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-funding-blue text-white px-6 py-3 rounded-full font-medium flex items-center justify-center hover:bg-opacity-90 transition-all duration-200"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Apply Now
-              <ChevronRight className="ml-1 w-5 h-5" />
-            </Link>
+              Schedule Now
+              <CalendarClock className="ml-1 w-5 h-5" />
+            </a>
           </nav>
         </div>
       )}

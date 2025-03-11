@@ -14,8 +14,10 @@ const Step5 = () => {
     submitSuccess 
   } = useForm();
   
+  const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
+  
   const handleScheduleAppointment = () => {
-    window.location.href = 'https://calendly.com/growthpathadvisory/30min';
+    window.location.href = schedulingLink;
   };
   
   return (
