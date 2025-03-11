@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { FileCheck, File, Upload, Loader2, X, Plus } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -18,6 +17,9 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       onUpload(document.id, e.target.files);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -46,7 +48,6 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
   };
 
   const removeDocument = () => {
-    // Create an empty FileList-like object
     const emptyFileList = new DataTransfer().files;
     onUpload(document.id, emptyFileList);
   };
@@ -159,7 +160,7 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
         ref={fileInputRef}
         className="hidden"
         onChange={handleFileSelect}
-        multiple={false} // We'll handle one file at a time
+        multiple={false}
         accept=".pdf,.jpg,.jpeg,.png"
       />
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DocumentsLayout from '@/components/DocumentCollection/DocumentsLayout';
@@ -18,6 +17,7 @@ const DocumentCollection = () => {
       required: true,
       uploadCount: 0,
       maxUploads: 3,
+      files: [],
     },
     {
       id: 'photo-id',
@@ -54,9 +54,8 @@ const DocumentCollection = () => {
 
   const handleUpload = useCallback((id: string, files: FileList) => {
     if (files.length === 0) {
-      // This is a "remove" operation
       setDocuments(docs => docs.map(doc => 
-        doc.id === id ? { ...doc, uploaded: false, uploadCount: 0 } : doc
+        doc.id === id ? { ...doc, uploaded: false, uploadCount: 0, files: [] } : doc
       ));
       toast({
         title: "Document removed",
@@ -65,7 +64,6 @@ const DocumentCollection = () => {
       return;
     }
     
-    // Validate file types and sizes
     const invalidFiles = Array.from(files).filter(file => {
       const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
       const maxSize = 10 * 1024 * 1024; // 10MB
@@ -95,26 +93,26 @@ const DocumentCollection = () => {
       return;
     }
     
-    // Simulate file upload
     setUploadingId(id);
     
-    // In a real application, you would create a FormData object and use fetch/axios to upload
     setTimeout(() => {
       setDocuments(docs => docs.map(doc => {
         if (doc.id === id) {
           if (doc.id === 'bank-statements') {
-            // For bank statements, we want to track the number of uploads
+            const currentFiles = doc.files || [];
+            const newFiles = Array.from(files);
+            const updatedFiles = [...currentFiles, ...newFiles];
             const newCount = Math.min((doc.uploadCount || 0) + 1, doc.maxUploads || 3);
             const isFullyUploaded = newCount >= (doc.maxUploads || 3);
             
             return { 
               ...doc, 
-              uploaded: isFullyUploaded, 
-              uploadCount: newCount 
+              uploaded: isFullyUploaded,
+              uploadCount: newCount,
+              files: updatedFiles
             };
           } else {
-            // For other documents, uploaded is binary
-            return { ...doc, uploaded: true };
+            return { ...doc, uploaded: true, files: Array.from(files) };
           }
         }
         return doc;
@@ -130,10 +128,7 @@ const DocumentCollection = () => {
   }, []);
 
   const handleSubmitDocuments = useCallback(() => {
-    // Here you would typically send all document references to your backend
     console.log('Documents submitted:', documents);
-    
-    // For the demo, we'll simulate success
     toast({
       title: "Documents submitted successfully",
       description: "Our team will review your documents shortly.",
