@@ -1,11 +1,11 @@
 
-import { ChevronRight, Phone } from 'lucide-react';
+import { ChevronRight, Phone, Shield, Check } from 'lucide-react';
 import CustomButton from './ui/CustomButton';
 
 const Hero = () => {
   return (
     <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
-      {/* Enhanced background with texture and gradient */}
+      {/* Background effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-funding-blue/5 to-white"></div>
         <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-funding-blue/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/4"></div>
@@ -75,19 +75,17 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Hero form card */}
+          {/* Qualification form card */}
           <div className="w-full lg:w-1/2 max-w-md mx-auto lg:max-w-none">
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-funding-light-gray/50 relative overflow-hidden">
-              <div className="absolute -top-3 -right-3 bg-funding-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-funding-light-gray/50 relative">
+              <div className="absolute -top-3 -right-3 bg-funding-blue/10 text-funding-blue text-xs font-bold px-3 py-1 rounded-full">
+                <Shield className="w-4 h-4 inline-block mr-1" />
                 Quick Pre-qualification
               </div>
               
-              <div className="absolute inset-0 bg-gradient-to-br from-white to-funding-light-gray/10 -z-10"></div>
-              <div className="absolute bottom-0 right-0 w-64 h-64 bg-soft-blue/10 rounded-full blur-3xl -z-10"></div>
-              
               <h3 className="text-xl font-bold text-funding-dark mb-6">See if you qualify for funding</h3>
               
-              <ul className="space-y-4 mb-6">
+              <ul className="space-y-4 mb-8">
                 {[
                   "Business generating $15k+ monthly revenue",
                   "In business for 6+ months",
@@ -95,26 +93,24 @@ const Hero = () => {
                   "All credit types considered"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start">
-                    <div className="bg-funding-blue/10 p-1 rounded-full mr-3 mt-0.5">
-                      <svg className="w-4 h-4 text-funding-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
+                    <div className="p-1 rounded-full bg-soft-green mr-3 mt-0.5">
+                      <Check className="w-4 h-4 text-green-600" />
                     </div>
                     <span className="text-funding-dark">{item}</span>
                   </li>
                 ))}
               </ul>
               
-              <a href="#apply-now" className="block">
+              <a href="#apply-now">
                 <CustomButton fullWidth size="lg">
                   Check Your Rate
                   <ChevronRight className="ml-1 w-5 h-5" />
                 </CustomButton>
               </a>
               
-              <div className="mt-4 flex items-center justify-center">
+              <div className="mt-6 flex items-center justify-center text-funding-gray">
                 <Phone className="w-4 h-4 text-funding-blue mr-2" />
-                <a href="tel:15735333894" className="text-sm text-funding-blue hover:underline">
+                <a href="tel:15735333894" className="text-sm hover:text-funding-blue transition-colors">
                   Call us at 1-573-533-3894
                 </a>
               </div>
