@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, FileCheck } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import DocumentUploadItem from './DocumentUploadItem';
 import { toast } from '@/hooks/use-toast';
 import { Document } from '@/types/documents';
+import { useNavigate } from 'react-router-dom';
 
 type DocumentUploadListProps = {
   documents: Document[];
@@ -14,6 +15,8 @@ type DocumentUploadListProps = {
 };
 
 const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocuments }: DocumentUploadListProps) => {
+  const navigate = useNavigate();
+  
   const allRequiredUploaded = documents
     .filter(doc => doc.required)
     .every(doc => doc.uploaded);
@@ -21,10 +24,17 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
   const handleSubmit = () => {
     if (allRequiredUploaded) {
       toast({
-        title: "Documents ready for submission",
+        title: "Documents successfully submitted",
         description: "Your documents are being processed for review.",
       });
+      
+      // Call the submission function first
       onSubmitDocuments();
+      
+      // Delay navigation to ensure toast is visible
+      setTimeout(() => {
+        navigate('/thank-you');
+      }, 1500);
     } else {
       toast({
         title: "Required documents missing",

@@ -45,6 +45,14 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
     }
   };
 
+  const removeDocument = () => {
+    // Create an empty FileList-like object
+    const emptyFileList = new DataTransfer().files;
+    onUpload(document.id, emptyFileList);
+  };
+
+  const isUploading = uploadingId === document.id;
+
   return (
     <div 
       className={`p-4 rounded-lg border ${document.uploaded ? 'bg-green-50 border-green-100' : hoveringOnDrop ? 'bg-funding-blue/5 border-funding-blue border-dashed' : 'bg-white border-funding-light-gray'}`}
@@ -67,8 +75,9 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
                   <FileCheck className="w-4 h-4 mr-1" /> Uploaded
                 </span>
                 <button 
-                  onClick={() => document.id && onUpload(document.id, new DataTransfer().files)}
+                  onClick={removeDocument}
                   className="text-red-500 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-red-50"
+                  aria-label="Remove document"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -77,8 +86,8 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
               <CustomButton
                 size="sm"
                 onClick={openFileDialog}
-                disabled={uploadingId === document.id}
-                isLoading={uploadingId === document.id}
+                disabled={isUploading}
+                isLoading={isUploading}
                 className="py-1 px-3 h-auto"
               >
                 <Upload className="w-4 h-4 mr-1" />
@@ -91,7 +100,9 @@ const DocumentUploadItem = ({ document, uploadingId, onUpload }: DocumentUploadI
           {!document.uploaded && (
             <div className="mt-3">
               <p className="text-xs text-funding-gray italic">
-                {document.id === 'bank-statements' ? 'You can upload multiple files' : 'Drag and drop file here or click to browse'}
+                {document.id === 'bank-statements' 
+                  ? 'Upload all 3 months of statements (multiple files allowed)' 
+                  : 'Drag and drop file here or click to browse'}
               </p>
             </div>
           )}

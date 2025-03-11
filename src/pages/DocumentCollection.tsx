@@ -112,18 +112,14 @@ const DocumentCollection = () => {
 
   const handleSubmitDocuments = useCallback(() => {
     // Here you would typically send all document references to your backend
+    console.log('Documents submitted:', documents);
     
-    // For the demo, we'll simulate success and navigate to a success page
-    setTimeout(() => {
-      toast({
-        title: "Documents submitted",
-        description: "Our team will review your documents shortly.",
-      });
-      
-      // In a real app, you might redirect to a confirmation page
-      // navigate('/documents-submitted');
-    }, 1000);
-  }, []);
+    // For the demo, we'll simulate success
+    toast({
+      title: "Documents submitted successfully",
+      description: "Our team will review your documents shortly.",
+    });
+  }, [documents]);
 
   return (
     <div className="min-h-screen flex flex-col">
