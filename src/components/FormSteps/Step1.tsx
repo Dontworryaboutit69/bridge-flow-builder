@@ -63,11 +63,12 @@ const Step1 = () => {
         ))}
       </div>
       
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex justify-center w-full">
         <CustomButton 
           onClick={handleContinue} 
           disabled={!isStepValid()}
-          className="group"
+          className="group mx-auto"
+          fullWidth={false}
         >
           Continue
           <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
