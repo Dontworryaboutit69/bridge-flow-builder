@@ -2,9 +2,11 @@
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Step1 = () => {
   const { formData, updateFormData, nextStep, isStepValid } = useForm();
+  const navigate = useNavigate();
   
   const loanAmounts = [
     '$5,000 - $25,000',
@@ -17,6 +19,16 @@ const Step1 = () => {
   
   const handleSelect = (amount: string) => {
     updateFormData({ loanAmount: amount });
+  };
+  
+  const handleContinue = () => {
+    if (window.location.pathname === '/') {
+      // If on landing page, navigate to pre-qualification page
+      navigate('/pre-qualification');
+    } else {
+      // If already on pre-qualification page, just move to next step
+      nextStep();
+    }
   };
   
   return (
@@ -51,7 +63,7 @@ const Step1 = () => {
       
       <div className="mt-10 flex justify-end">
         <CustomButton 
-          onClick={nextStep} 
+          onClick={handleContinue} 
           disabled={!isStepValid()}
           className="group"
         >

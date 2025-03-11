@@ -10,6 +10,8 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isApplicationPage = location.pathname === '/application';
+  const isPreQualificationPage = location.pathname === '/pre-qualification';
+  const isRestrictedPage = isApplicationPage || isPreQualificationPage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,7 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {isApplicationPage ? (
+        {isRestrictedPage ? (
           <div className="flex items-center">
             <img 
               src="/lovable-uploads/bc9b5dea-776a-46a3-b886-59da9c741e0f.png" 
@@ -42,8 +44,8 @@ const Navbar = () => {
           <Logo />
         )}
 
-        {/* Desktop Navigation - Only show full nav on non-application pages */}
-        {!isApplicationPage ? (
+        {/* Desktop Navigation - Only show full nav on non-restricted pages */}
+        {!isRestrictedPage ? (
           <nav className="hidden md:flex items-center space-x-8">
             <a 
               href="#how-it-works" 
@@ -70,13 +72,13 @@ const Navbar = () => {
               <Phone className="w-4 h-4 mr-2" />
               1-573-533-3894
             </a>
-            <a 
-              href="#apply-now" 
+            <Link 
+              to="/pre-qualification" 
               className="bg-funding-blue text-white px-6 py-2.5 rounded-full font-medium flex items-center hover:bg-opacity-90 transition-all duration-200 group"
             >
               Apply Now
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </a>
+            </Link>
           </nav>
         ) : (
           <a 
@@ -88,8 +90,8 @@ const Navbar = () => {
           </a>
         )}
 
-        {/* Mobile Menu Button - Only on non-application pages */}
-        {!isApplicationPage && (
+        {/* Mobile Menu Button - Only on non-restricted pages */}
+        {!isRestrictedPage && (
           <button 
             className="md:hidden text-funding-dark"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -99,8 +101,8 @@ const Navbar = () => {
           </button>
         )}
 
-        {/* Phone number for mobile on application page */}
-        {isApplicationPage && (
+        {/* Phone number for mobile on restricted pages */}
+        {isRestrictedPage && (
           <a 
             href="tel:15735333894" 
             className="md:hidden flex items-center text-funding-blue font-medium"
@@ -110,8 +112,8 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile Navigation - Only on non-application pages */}
-      {!isApplicationPage && isMobileMenuOpen && (
+      {/* Mobile Navigation - Only on non-restricted pages */}
+      {!isRestrictedPage && isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 top-[72px] bg-white z-40 animate-fade-in">
           <nav className="flex flex-col p-5 space-y-6">
             <a 
@@ -143,14 +145,14 @@ const Navbar = () => {
               <Phone className="w-5 h-5 mr-2" />
               1-573-533-3894
             </a>
-            <a 
-              href="#apply-now" 
+            <Link 
+              to="/pre-qualification" 
               className="bg-funding-blue text-white px-6 py-3 rounded-full font-medium flex items-center justify-center hover:bg-opacity-90 transition-all duration-200"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Apply Now
               <ChevronRight className="ml-1 w-5 h-5" />
-            </a>
+            </Link>
           </nav>
         </div>
       )}

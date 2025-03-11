@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Application from "./pages/Application";
 import ThankYou from "./pages/ThankYou";
 import DocumentCollection from "./pages/DocumentCollection";
+import PreQualification from "./pages/PreQualification";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/pre-qualification" element={<PreQualification />} />
           <Route path="/application" element={<Application />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/documents" element={<DocumentCollection />} />
