@@ -21,7 +21,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-6 leading-tight">
-              Get Funded in 24 Hours
+              Get Business Funding In 24 Hours or Less!
             </h1>
             
             <p className="text-xl text-funding-gray mb-8 max-w-xl mx-auto lg:mx-0">

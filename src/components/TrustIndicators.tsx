@@ -59,11 +59,11 @@ const TrustIndicators = () => {
         <div className="mt-16 text-center">
           <div className="glass-card py-8 px-6 max-w-4xl mx-auto">
             <p className="font-medium text-lg text-funding-dark mb-4">
-              "We've helped over 10,000 businesses secure more than $500 million in funding"
+              "Our lending partners have helped over 10,000 businesses secure more than $500 million in funding"
             </p>
             <div className="flex flex-wrap justify-center gap-8 mt-8">
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-bold text-funding-blue">98%</span>
+                <span className="text-3xl font-bold text-funding-blue">87%</span>
                 <span className="text-sm text-funding-gray mt-1">Approval Rate</span>
               </div>
               <div className="flex flex-col items-center">
@@ -71,7 +71,7 @@ const TrustIndicators = () => {
                 <span className="text-sm text-funding-gray mt-1">Average Approval Time</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-bold text-funding-blue">$250k</span>
+                <span className="text-3xl font-bold text-funding-blue">$57k</span>
                 <span className="text-sm text-funding-gray mt-1">Average Funding Amount</span>
               </div>
               <div className="flex flex-col items-center">
