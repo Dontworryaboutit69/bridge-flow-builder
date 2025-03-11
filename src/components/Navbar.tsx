@@ -35,15 +35,8 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {isRestrictedPage ? (
-          <div className="flex items-center">
-            <img 
-              src="/lovable-uploads/bc9b5dea-776a-46a3-b886-59da9c741e0f.png" 
-              alt="Growth Path Advisory Logo" 
-              className="h-10" 
-            />
-          </div>
-        ) : (
+        {/* Only show logo in Navbar if NOT on documents page in mobile view */}
+        {!(isDocumentsPage && window.innerWidth < 768) && (
           <div className="flex items-center">
             <Logo />
           </div>
