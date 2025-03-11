@@ -1,22 +1,20 @@
-
 import { Phone } from "lucide-react";
 import ProgressiveForm from "@/components/ProgressiveForm";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import { FormProvider, useForm } from "@/lib/formContext";
+import { useForm } from "@/lib/formContext";
 import ZapierSettings from "@/components/admin/ZapierSettings";
 import { useApplication } from "@/lib/applicationContext";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const PreQualificationContent = () => {
+const PreQualification = () => {
   const { zapierWebhookUrl: prequalWebhookUrl, setZapierWebhookUrl: setPrequalWebhookUrl } = useForm();
   const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
   
-  // Simple admin check using "?admin=true" in URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setIsAdmin(params.get('admin') === 'true');
@@ -40,7 +38,6 @@ const PreQualificationContent = () => {
         <ProgressiveForm />
       </main>
       
-      {/* Simple footer with just logo and phone support */}
       <footer className="bg-white py-8 border-t border-funding-light-gray">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <div className="flex flex-col md:flex-row items-center justify-between">
@@ -62,14 +59,6 @@ const PreQualificationContent = () => {
         </div>
       </footer>
     </div>
-  );
-};
-
-const PreQualification = () => {
-  return (
-    <FormProvider>
-      <PreQualificationContent />
-    </FormProvider>
   );
 };
 
