@@ -44,7 +44,9 @@ const Navbar = () => {
             />
           </div>
         ) : (
-          <Logo />
+          <div className="flex items-center">
+            <Logo />
+          </div>
         )}
 
         {/* Desktop Navigation - Only show full nav on non-restricted pages */}

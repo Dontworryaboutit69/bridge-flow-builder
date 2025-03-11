@@ -7,7 +7,6 @@ import HowItWorks from '@/components/sections/HowItWorks';
 import FundingProducts from '@/components/sections/FundingProducts';
 import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
-import CTASection from '@/components/sections/CTASection';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
 
