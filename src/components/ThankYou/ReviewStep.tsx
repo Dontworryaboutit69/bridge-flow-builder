@@ -24,11 +24,11 @@ const ReviewStep = ({ documentsSubmitted, onSchedule }: ReviewStepProps) => {
             variant="outline"
             size="default"
             onClick={onSchedule}
-            className="group flex items-center border-funding-blue/30 text-funding-blue hover:bg-funding-blue/5"
+            className="group flex items-center border-funding-blue/30 text-funding-blue hover:bg-funding-blue/5 max-w-full text-sm px-4 py-2 w-auto"
           >
-            <CalendarClock className="mr-2 w-4 h-4" />
-            Schedule a Consultation
-            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            <CalendarClock className="mr-2 w-4 h-4 flex-shrink-0" />
+            <span className="mr-1">Schedule a Consultation</span>
+            <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </div>
       </div>

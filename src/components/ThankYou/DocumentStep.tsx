@@ -12,10 +12,10 @@ const DocumentStep = ({ documentsSubmitted }: DocumentStepProps) => {
   if (documentsSubmitted) {
     return (
       <div className="flex items-start">
-        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-green-100 text-green-600 mr-5">
-          <CheckCircle className="w-5 h-5" />
+        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-green-100 text-green-600 font-medium text-xl mr-5">
+          <CheckCircle className="w-6 h-6" />
         </div>
-        <div className="text-left pt-1">
+        <div className="text-left pt-1 flex-1">
           <h4 className="font-medium text-lg text-funding-dark mb-1">Document Collection</h4>
           <p className="text-funding-gray">
             Your documents have been successfully submitted and are being reviewed by our team.
@@ -24,7 +24,7 @@ const DocumentStep = ({ documentsSubmitted }: DocumentStepProps) => {
       </div>
     );
   }
-
+  
   return (
     <div className="flex items-start">
       <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-funding-blue/10 text-funding-blue font-medium text-xl mr-5">
@@ -37,12 +37,12 @@ const DocumentStep = ({ documentsSubmitted }: DocumentStepProps) => {
         </p>
         <Link to="/documents">
           <Button 
-            className="group bg-funding-blue hover:bg-funding-blue/90 text-white"
+            className="group bg-funding-blue hover:bg-funding-blue/90 text-white text-sm px-4 py-2 w-auto"
             size="default"
           >
-            <FileText className="mr-2 w-5 h-5" />
-            Upload Documents Now
-            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            <FileText className="mr-2 w-4 h-4 flex-shrink-0" />
+            <span className="mr-1">Upload Documents Now</span>
+            <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </Link>
       </div>
