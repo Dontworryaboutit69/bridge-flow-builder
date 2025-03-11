@@ -57,7 +57,7 @@ function Calendar({
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
         Caption: (props: CaptionProps) => {
-          const { displayMonth, viewDate } = props;
+          const { displayMonth } = props;
           const month = displayMonth.getMonth();
           const year = displayMonth.getFullYear();
           
@@ -76,9 +76,9 @@ function Calendar({
               <Select
                 value={month.toString()}
                 onValueChange={(newMonth) => {
-                  const newDate = new Date(viewDate);
+                  const newDate = new Date(displayMonth);
                   newDate.setMonth(parseInt(newMonth));
-                  props.onViewChange?.({ view: 'month', month: newDate });
+                  props.goToMonth?.(newDate);
                 }}
               >
                 <SelectTrigger className="h-7 w-[110px] text-xs">
@@ -96,9 +96,9 @@ function Calendar({
               <Select
                 value={year.toString()}
                 onValueChange={(newYear) => {
-                  const newDate = new Date(viewDate);
+                  const newDate = new Date(displayMonth);
                   newDate.setFullYear(parseInt(newYear));
-                  props.onViewChange?.({ view: 'month', month: newDate });
+                  props.goToMonth?.(newDate);
                 }}
               >
                 <SelectTrigger className="h-7 w-[80px] text-xs">
