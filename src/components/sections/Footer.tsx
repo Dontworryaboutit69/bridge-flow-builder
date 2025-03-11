@@ -1,3 +1,4 @@
+
 import { Phone, Mail, MapPin } from 'lucide-react';
 import Logo from '@/components/Logo';
 
@@ -35,8 +36,6 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Team</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
             </ul>
           </div>
           
@@ -71,7 +70,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-800 text-center sm:text-left text-gray-500 text-sm">
           <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p>&copy; 2023 Growth Path Advisory. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Growth Path Advisory. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
