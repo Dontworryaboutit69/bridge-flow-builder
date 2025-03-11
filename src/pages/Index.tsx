@@ -49,14 +49,6 @@ const Index = () => {
         <Testimonials />
         <section id="apply-now" className="py-16 md:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-4xl font-bold text-funding-dark mb-4">
-                Ready to Get Funded?
-              </h2>
-              <p className="text-funding-gray max-w-2xl mx-auto mb-8">
-                Complete our quick application to check your pre-qualification options with no impact to your credit.
-              </p>
-            </div>
             <ProgressiveForm />
           </div>
         </section>
