@@ -1,3 +1,4 @@
+
 import { ChevronRight, Phone } from 'lucide-react';
 import CustomButton from './ui/CustomButton';
 
@@ -23,7 +24,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-funding-dark mb-6 leading-tight animate-slide-in">
-              Stop Waiting For Capital: Start The 2-Minute Application That's Already Funded 273 Businesses Like Yours In 24 Hours Or Less
+              Get Funded in 24 Hours or Less: 273 Businesses Already Have
             </h1>
             
             <p className="text-lg text-funding-gray mb-8 max-w-xl mx-auto md:mx-0 animate-slide-in" style={{ animationDelay: '0.1s' }}>
