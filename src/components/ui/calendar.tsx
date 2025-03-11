@@ -57,7 +57,7 @@ function Calendar({
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
         Caption: (props: CaptionProps) => {
-          const { displayMonth } = props;
+          const { displayMonth, goToMonth } = props;
           const month = displayMonth.getMonth();
           const year = displayMonth.getFullYear();
           
@@ -74,13 +74,17 @@ function Calendar({
           const handleMonthChange = (newMonth: string) => {
             const newDate = new Date(displayMonth);
             newDate.setMonth(parseInt(newMonth));
-            props.goToMonth(newDate);
+            if (goToMonth) {
+              goToMonth(newDate);
+            }
           };
           
           const handleYearChange = (newYear: string) => {
             const newDate = new Date(displayMonth);
             newDate.setFullYear(parseInt(newYear));
-            props.goToMonth(newDate);
+            if (goToMonth) {
+              goToMonth(newDate);
+            }
           };
           
           return (
