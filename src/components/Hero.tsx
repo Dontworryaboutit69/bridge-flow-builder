@@ -5,27 +5,28 @@ import CustomButton from './ui/CustomButton';
 const Hero = () => {
   return (
     <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
-      {/* Background effects */}
+      {/* Enhanced background effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-funding-blue/5 to-white"></div>
         <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-funding-blue/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/4"></div>
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-soft-green/5 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/4"></div>
+        <div className="absolute inset-0 diagonal-pattern opacity-[0.03]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-16">
-          {/* Hero content */}
+          {/* Hero content with improved breathing room */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <div className="inline-block bg-funding-blue/10 text-funding-blue font-medium text-sm px-4 py-1.5 rounded-full mb-6 animate-fade-in">
               Business Funding Made Simple
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-6 leading-tight">
-              Get Business Funding In 24 Hours or Less!
+              Get Business Funding <span className="text-funding-blue">In 24 Hours</span>
             </h1>
             
             <p className="text-xl text-funding-gray mb-8 max-w-xl mx-auto lg:mx-0">
-              Access $5,000 to $500,000 with minimal paperwork and flexible repayment terms. Join 250+ businesses who already got funded.
+              Access $5,000 to $500,000 with minimal paperwork and flexible repayment terms.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
@@ -33,11 +34,6 @@ const Hero = () => {
                 <CustomButton size="lg">
                   Get Funded Now
                   <ChevronRight className="ml-1 w-5 h-5" />
-                </CustomButton>
-              </a>
-              <a href="#how-it-works">
-                <CustomButton variant="outline" size="lg">
-                  How It Works
                 </CustomButton>
               </a>
             </div>
@@ -75,9 +71,9 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Qualification form card */}
+          {/* Qualification form card with enhanced visual separation */}
           <div className="w-full lg:w-1/2 max-w-md mx-auto lg:max-w-none">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-funding-light-gray/50 relative">
+            <div className="bg-white rounded-2xl p-8 shadow-soft border border-funding-light-gray/50 relative backdrop-blur-sm">
               <div className="absolute -top-3 -right-3 bg-funding-blue/10 text-funding-blue text-xs font-bold px-3 py-1 rounded-full">
                 <Shield className="w-4 h-4 inline-block mr-1" />
                 Quick Pre-qualification
