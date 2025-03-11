@@ -41,7 +41,6 @@ const PersonalInfo = () => {
     }
   };
 
-  // Toggle SSN visibility
   const toggleSSNVisibility = () => {
     setSsnMasked(!ssnMasked);
   };
@@ -59,7 +58,6 @@ const PersonalInfo = () => {
       
       <div className="glass-card p-6 md:p-8 bg-white">
         <div className="space-y-6">
-          {/* Basic Information */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label htmlFor="firstName" className="block text-sm font-medium text-funding-dark">
@@ -121,7 +119,6 @@ const PersonalInfo = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Date of Birth */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-funding-dark">
                 Date of Birth*
@@ -154,7 +151,6 @@ const PersonalInfo = () => {
               </Popover>
             </div>
 
-            {/* Credit Score */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-funding-dark">
                 Credit Score Range*
@@ -172,7 +168,6 @@ const PersonalInfo = () => {
             </div>
           </div>
 
-          {/* Personal Address */}
           <div className="space-y-2">
             <label htmlFor="address" className="block text-sm font-medium text-funding-dark">
               Street Address*
