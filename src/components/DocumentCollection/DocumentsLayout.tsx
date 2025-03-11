@@ -17,7 +17,7 @@ type DocumentsLayoutProps = {
 const DocumentsLayout = ({ documents, uploadingId, handleUpload, schedulingLink }: DocumentsLayoutProps) => {
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-      <DocumentHeader />
+      <DocumentHeader schedulingLink={schedulingLink} />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-10">
         <div className="col-span-2">
