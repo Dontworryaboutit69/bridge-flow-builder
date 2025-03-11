@@ -88,10 +88,10 @@ const ProgressiveForm = () => {
         <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
-              Get Funding in 3 Easy Steps
+              How It Works
             </h2>
             <p className="text-funding-gray max-w-xl mx-auto">
-              Complete this simple application to see if you qualify for business funding. It takes less than 2 minutes.
+              Traditional lenders waste your time. We deposit money in your bank account.
             </p>
           </div>
           

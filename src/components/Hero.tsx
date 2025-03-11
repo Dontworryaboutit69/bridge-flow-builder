@@ -24,7 +24,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-6 leading-tight animate-slide-in">
-              Get Fast Business Funding to Fuel Your Growth
+              Stop Waiting For Capital: Start The 2-Minute Application That's Already Funded 273 Businesses Like Yours In 24 Hours Or Less
             </h1>
             
             <p className="text-lg text-funding-gray mb-8 max-w-xl mx-auto md:mx-0 animate-slide-in" style={{ animationDelay: '0.1s' }}>
@@ -63,7 +63,7 @@ const Hero = () => {
                   ))}
                 </div>
                 <div className="ml-3 text-sm text-funding-gray">
-                  <span className="font-medium text-funding-dark">100+</span> happy clients
+                  <span className="font-medium text-funding-dark">273+</span> happy clients
                 </div>
               </div>
               
