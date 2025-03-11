@@ -1,7 +1,5 @@
 import { Phone } from "lucide-react";
 import ProgressiveForm from "@/components/ProgressiveForm";
-import Logo from "@/components/Logo";
-import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useForm } from "@/lib/formContext";
 import ZapierSettings from "@/components/admin/ZapierSettings";
