@@ -144,7 +144,8 @@ export const useFormNavigation = (
           checkQualification();
         }
         
-        setCurrentStep(prev => prev + 1);
+        // Fix: Instead of using a callback function, pass the direct value
+        setCurrentStep(currentStep + 1);
       } else {
         console.log(`Cannot move to next step - validation failed for step ${currentStep}`);
       }
@@ -156,7 +157,8 @@ export const useFormNavigation = (
   const prevStep = useCallback(() => {
     if (currentStep > 1) {
       console.log(`Moving from step ${currentStep} to ${currentStep - 1}`);
-      setCurrentStep(prev => prev - 1);
+      // Fix: Instead of using a callback function, pass the direct value
+      setCurrentStep(currentStep - 1);
     } else {
       console.log("Already at the first step");
     }
