@@ -1,30 +1,23 @@
-
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Step5 = () => {
-  const { 
-    formData, 
-    prevStep, 
-    isStepValid, 
-    submitForm, 
+  const {
+    formData,
+    prevStep,
+    isStepValid,
+    submitForm,
     isSubmitting,
     submitSuccess,
     isDisqualified
   } = useForm();
-  
   const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
-  
   const handleScheduleAppointment = () => {
     window.location.href = schedulingLink;
   };
-  
-  return (
-    <div className="w-full max-w-xl mx-auto animate-fade-in">
-      {!submitSuccess && !isDisqualified ? (
-        <>
+  return <div className="w-full max-w-xl mx-auto animate-fade-in">
+      {!submitSuccess && !isDisqualified ? <>
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
               Review Your Information
@@ -36,7 +29,7 @@ const Step5 = () => {
           
           <div className="space-y-6">
             <div className="glass-card p-5 border border-funding-blue/20">
-              <h4 className="font-medium text-funding-dark mb-2">Pre-Qualification Summary</h4>
+              <h4 className="font-medium text-funding-dark mb-2 text-center">Pre-Qualification Summary</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex justify-between items-baseline">
                   <span className="text-funding-gray">Funding Amount:</span>
@@ -79,13 +72,7 @@ const Step5 = () => {
             
             <div className="flex items-start">
               <div className="flex items-center h-5">
-                <input
-                  id="terms"
-                  type="checkbox"
-                  checked
-                  className="h-4 w-4 text-funding-blue rounded"
-                  readOnly
-                />
+                <input id="terms" type="checkbox" checked className="h-4 w-4 text-funding-blue rounded" readOnly />
               </div>
               <div className="ml-3 text-sm">
                 <label htmlFor="terms" className="text-funding-gray">
@@ -96,27 +83,15 @@ const Step5 = () => {
           </div>
           
           <div className="mt-10 flex justify-between gap-4">
-            <CustomButton 
-              variant="outline" 
-              onClick={prevStep}
-              className="group"
-              disabled={isSubmitting}
-            >
+            <CustomButton variant="outline" onClick={prevStep} className="group" disabled={isSubmitting}>
               <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
               Back
             </CustomButton>
-            <CustomButton 
-              onClick={submitForm}
-              disabled={!isStepValid() || isSubmitting}
-              className="group"
-              isLoading={isSubmitting}
-            >
+            <CustomButton onClick={submitForm} disabled={!isStepValid() || isSubmitting} className="group" isLoading={isSubmitting}>
               Check Pre-Qualification
             </CustomButton>
           </div>
-        </>
-      ) : submitSuccess && !isDisqualified ? (
-        <div className="text-center p-8 animate-fade-in">
+        </> : submitSuccess && !isDisqualified ? <div className="text-center p-8 animate-fade-in">
           <div className="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6">
             <Check className="w-10 h-10 text-green-600" />
           </div>
@@ -162,18 +137,12 @@ const Step5 = () => {
           
           <div className="max-w-md mx-auto">
             <Link to="/application">
-              <CustomButton 
-                size="lg"
-                className="w-full"
-              >
+              <CustomButton size="lg" className="w-full">
                 Start Full Application
               </CustomButton>
             </Link>
           </div>
-        </div>
-      ) : null /* If isDisqualified is true, nothing is rendered here as it's handled by DisqualifiedView */}
-    </div>
-  );
+        </div> : null /* If isDisqualified is true, nothing is rendered here as it's handled by DisqualifiedView */}
+    </div>;
 };
-
 export default Step5;
