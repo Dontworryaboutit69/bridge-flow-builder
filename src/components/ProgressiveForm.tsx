@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 const ProgressBar = () => {
   const { currentStep, totalSteps } = useForm();
   
-  // Add debug log to track current step
   useEffect(() => {
     console.log("Current step in progress bar:", currentStep);
   }, [currentStep]);
@@ -46,7 +45,6 @@ const FormStepContent = () => {
   const { currentStep, isDisqualified, submitForm } = useForm();
   const contentRef = useRef<HTMLDivElement>(null);
   
-  // Scroll to top of form content when step changes
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -55,14 +53,11 @@ const FormStepContent = () => {
     console.log("Rendering step component:", currentStep, "isDisqualified:", isDisqualified);
   }, [currentStep, isDisqualified]);
 
-  // Track step views for analytics
   useEffect(() => {
-    // Facebook Pixel tracking
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('trackCustom', 'ViewStep', { step: currentStep });
     }
     
-    // Google Analytics event tracking
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_step', {
         'event_category': 'form',
@@ -72,8 +67,6 @@ const FormStepContent = () => {
     }
   }, [currentStep]);
 
-  // Check if user is disqualified and has submitted the form
-  // We only show the DisqualifiedView after they've submitted on Step 5
   if (isDisqualified && currentStep === 5) {
     return <DisqualifiedView />;
   }
@@ -94,33 +87,26 @@ const FormWrapper = () => {
   const location = useLocation();
   const wrapperRef = useRef<HTMLDivElement>(null);
   
-  // Check if we're on pre-qualification page and if we came from homepage
   useEffect(() => {
     const isPrequalificationPage = location.pathname === '/pre-qualification';
-    const cameFromHomepage = location.state?.fromHomepage;
+    const hasLoanAmount = Boolean(formData.loanAmount);
     
     console.log("FormWrapper init:", { 
       isPrequalificationPage, 
-      cameFromHomepage, 
+      hasLoanAmount,
       loanAmount: formData.loanAmount, 
       currentStep 
     });
     
-    // If we're on pre-qualification and have a loan amount, start at step 2
-    // Only do this on initial load, not during form navigation
-    if (isPrequalificationPage && formData.loanAmount && 
-        cameFromHomepage && currentStep === 1) {
-      setTimeout(() => {
-        console.log("Setting current step to 2");
-        setCurrentStep(2);
-        
-        // Ensure the wrapper is scrolled to the top
-        if (wrapperRef.current) {
-          wrapperRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 300); // Small delay to allow for smooth transition
+    if (isPrequalificationPage && hasLoanAmount && currentStep === 1) {
+      console.log("Setting current step to 2 due to existing loan amount");
+      setCurrentStep(2);
+      
+      if (wrapperRef.current) {
+        wrapperRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-  }, [location.pathname, location.state, formData.loanAmount, setCurrentStep, currentStep]);
+  }, [location.pathname, formData.loanAmount, setCurrentStep, currentStep]);
   
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto" ref={wrapperRef}>
@@ -134,11 +120,10 @@ const ProgressiveForm = () => {
   const formRef = useRef<HTMLElement>(null);
   const { currentStep } = useForm();
   
-  // Scroll to top of form section when step changes
   useEffect(() => {
     if (formRef.current) {
       window.scrollTo({
-        top: formRef.current.offsetTop - 100, // Offset to account for navbar
+        top: formRef.current.offsetTop - 100,
         behavior: 'smooth'
       });
     }
@@ -146,7 +131,6 @@ const ProgressiveForm = () => {
   
   return (
     <section ref={formRef} className="py-16 bg-funding-light-gray/30 min-h-screen relative">
-      {/* Background texture patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptMC0xMnY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
         <div className="absolute -top-12 -left-12 w-64 h-64 bg-soft-peach/20 rounded-full blur-3xl"></div>
