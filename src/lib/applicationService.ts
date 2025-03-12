@@ -4,21 +4,21 @@ import { toast } from "sonner";
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
-  zapierWebhookUrl: string
+  webhookUrl: string
 ): Promise<boolean> => {
   try {
     // Log the application data
     console.log('Application submitted with data:', applicationData);
     
     // Save webhook URL to localStorage if provided
-    if (zapierWebhookUrl) {
-      localStorage.setItem('application_zapier_webhook', zapierWebhookUrl);
+    if (webhookUrl) {
+      localStorage.setItem('application_webhook', webhookUrl);
     }
     
-    // Send data to Zapier if webhook URL is available
-    if (zapierWebhookUrl) {
+    // Send data to webhook if URL is available
+    if (webhookUrl) {
       try {
-        await fetch(zapierWebhookUrl, {
+        await fetch(webhookUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -31,10 +31,10 @@ export const submitApplicationData = async (
             source_url: window.location.href,
           }),
         });
-        console.log('Application data sent to Zapier webhook successfully');
+        console.log('Application data sent to webhook successfully');
       } catch (error) {
-        console.error('Error sending application data to Zapier:', error);
-        toast("Error connecting to Zapier, but application saved locally");
+        console.error('Error sending application data to webhook:', error);
+        toast("Error connecting to Make.com, but application saved locally");
       }
     }
     

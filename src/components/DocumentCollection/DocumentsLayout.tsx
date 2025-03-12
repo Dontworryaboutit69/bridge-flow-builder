@@ -13,6 +13,7 @@ type DocumentsLayoutProps = {
   handleUpload: (id: string, files: FileList) => void;
   schedulingLink: string;
   onSubmitDocuments: () => void;
+  webhookUrl?: string;
 };
 
 const DocumentsLayout = ({ 
@@ -20,7 +21,8 @@ const DocumentsLayout = ({
   uploadingId, 
   handleUpload, 
   schedulingLink,
-  onSubmitDocuments
+  onSubmitDocuments,
+  webhookUrl
 }: DocumentsLayoutProps) => {
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-10 relative">
@@ -35,6 +37,7 @@ const DocumentsLayout = ({
             uploadingId={uploadingId}
             handleUpload={handleUpload}
             onSubmitDocuments={onSubmitDocuments}
+            webhookUrl={webhookUrl}
           />
           
           <DocumentSubmissionTips />

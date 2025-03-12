@@ -13,7 +13,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [isDisqualified, setIsDisqualified] = useState(false);
   const [zapierWebhookUrl, setZapierWebhookUrl] = useState<string>(
-    localStorage.getItem('prequalify_zapier_webhook') || ''
+    localStorage.getItem('prequalify_webhook') || ''
   );
   const totalSteps = 5;
 

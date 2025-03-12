@@ -1,11 +1,12 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DocumentsLayout from '@/components/DocumentCollection/DocumentsLayout';
 import DocumentPageFooter from '@/components/DocumentCollection/DocumentPageFooter';
 import { Document } from '@/types/documents';
 import { toast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
+import ZapierSettings from '@/components/admin/ZapierSettings';
 
 const DocumentCollection = () => {
   const navigate = useNavigate();
@@ -52,6 +53,21 @@ const DocumentCollection = () => {
 
   const [uploadingId, setUploadingId] = useState<string | null>(null);
   const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
+  const [webhookUrl, setWebhookUrl] = useState<string>(
+    localStorage.getItem('document_webhook') || ''
+  );
+  const [prequalWebhookUrl, setPrequalWebhookUrl] = useState<string>(
+    localStorage.getItem('prequalify_webhook') || ''
+  );
+  const [applicationWebhookUrl, setApplicationWebhookUrl] = useState<string>(
+    localStorage.getItem('application_webhook') || ''
+  );
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsAdmin(params.get('admin') === 'true');
+  }, []);
 
   const handleUpload = useCallback((id: string, files: FileList) => {
     if (files.length === 0) {
@@ -130,11 +146,14 @@ const DocumentCollection = () => {
 
   const handleSubmitDocuments = useCallback(() => {
     console.log('Documents submitted:', documents);
+    if (webhookUrl) {
+      localStorage.setItem('document_webhook', webhookUrl);
+    }
     toast({
       title: "Documents submitted successfully",
       description: "Our team will review your documents shortly.",
     });
-  }, [documents]);
+  }, [documents, webhookUrl]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -147,12 +166,32 @@ const DocumentCollection = () => {
           <div className="dot-pattern"></div>
         </div>
         
+        {isAdmin && (
+          <div className="max-w-7xl mx-auto px-5 md:px-10 mb-4 flex justify-end">
+            <ZapierSettings 
+              prequalWebhookUrl={prequalWebhookUrl}
+              applicationWebhookUrl={applicationWebhookUrl}
+              setPrequalWebhookUrl={url => {
+                setPrequalWebhookUrl(url);
+                localStorage.setItem('prequalify_webhook', url);
+              }}
+              setApplicationWebhookUrl={url => {
+                setApplicationWebhookUrl(url);
+                setWebhookUrl(url); // Use the same webhook for documents
+                localStorage.setItem('application_webhook', url);
+                localStorage.setItem('document_webhook', url);
+              }}
+            />
+          </div>
+        )}
+        
         <DocumentsLayout 
           documents={documents}
           uploadingId={uploadingId}
           handleUpload={handleUpload}
           schedulingLink={schedulingLink}
           onSubmitDocuments={handleSubmitDocuments}
+          webhookUrl={webhookUrl}
         />
       </main>
       

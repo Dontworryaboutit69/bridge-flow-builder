@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 
 export const useFormSubmission = (
   formData: FormData,
-  zapierWebhookUrl: string,
+  webhookUrl: string,
   checkQualification: () => boolean,
   setIsSubmitting: (value: boolean) => void,
   setSubmitSuccess: (value: boolean) => void
@@ -56,13 +56,13 @@ export const useFormSubmission = (
         }
       }
       
-      if (zapierWebhookUrl) {
-        localStorage.setItem('prequalify_zapier_webhook', zapierWebhookUrl);
+      if (webhookUrl) {
+        localStorage.setItem('prequalify_webhook', webhookUrl);
       }
       
-      if (zapierWebhookUrl) {
+      if (webhookUrl) {
         try {
-          await fetch(zapierWebhookUrl, {
+          await fetch(webhookUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -76,10 +76,10 @@ export const useFormSubmission = (
               is_qualified: !disqualified
             }),
           });
-          console.log('Data sent to Zapier webhook successfully');
+          console.log('Data sent to webhook successfully');
         } catch (error) {
-          console.error('Error sending data to Zapier:', error);
-          toast("Error connecting to Zapier, but qualification saved locally");
+          console.error('Error sending data to webhook:', error);
+          toast("Error connecting to webhook, but qualification saved locally");
         }
       }
       
@@ -95,7 +95,7 @@ export const useFormSubmission = (
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData, zapierWebhookUrl, checkQualification, setIsSubmitting, setSubmitSuccess]);
+  }, [formData, webhookUrl, checkQualification, setIsSubmitting, setSubmitSuccess]);
 
   return { submitForm };
 };

@@ -16,7 +16,7 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [zapierWebhookUrl, setZapierWebhookUrl] = useState<string>(
-    localStorage.getItem('application_zapier_webhook') || ''
+    localStorage.getItem('application_webhook') || ''
   );
   const totalSteps = 4;
 

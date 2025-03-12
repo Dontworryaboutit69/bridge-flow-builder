@@ -12,9 +12,16 @@ type DocumentUploadListProps = {
   uploadingId: string | null;
   handleUpload: (id: string, files: FileList) => void;
   onSubmitDocuments: () => void;
+  webhookUrl?: string;
 };
 
-const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocuments }: DocumentUploadListProps) => {
+const DocumentUploadList = ({ 
+  documents, 
+  uploadingId, 
+  handleUpload, 
+  onSubmitDocuments,
+  webhookUrl
+}: DocumentUploadListProps) => {
   const navigate = useNavigate();
   
   const allRequiredUploaded = documents
@@ -26,7 +33,7 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
       return doc.uploaded;
     });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Check for bank statements specifically
     const bankStatement = documents.find(doc => doc.id === 'bank-statements');
     if (bankStatement && bankStatement.required && bankStatement.maxUploads) {
@@ -41,6 +48,42 @@ const DocumentUploadList = ({ documents, uploadingId, handleUpload, onSubmitDocu
     }
     
     if (allRequiredUploaded) {
+      // Send data to webhook if URL is available
+      if (webhookUrl) {
+        try {
+          const documentSummary = documents.map(doc => ({
+            id: doc.id,
+            name: doc.name,
+            uploaded: doc.uploaded,
+            uploadCount: doc.uploadCount || 0,
+            required: doc.required,
+            filesCount: doc.files?.length || 0
+          }));
+          
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            mode: 'no-cors',
+            body: JSON.stringify({
+              form_type: 'document_collection',
+              documents: documentSummary,
+              submission_date: new Date().toISOString(),
+              source_url: window.location.href,
+            }),
+          });
+          console.log('Document data sent to webhook successfully');
+        } catch (error) {
+          console.error('Error sending document data to webhook:', error);
+          toast({
+            title: "Warning",
+            description: "Error connecting to Make.com, but documents saved locally",
+            variant: "destructive",
+          });
+        }
+      }
+      
       toast({
         title: "Documents successfully submitted",
         description: "Your documents are being processed for review.",

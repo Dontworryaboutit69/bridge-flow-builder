@@ -38,11 +38,11 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
     setPrequalWebhookUrl(prequalUrl);
     setApplicationWebhookUrl(applicationUrl);
     
-    localStorage.setItem('prequalify_zapier_webhook', prequalUrl);
-    localStorage.setItem('application_zapier_webhook', applicationUrl);
+    localStorage.setItem('prequalify_webhook', prequalUrl);
+    localStorage.setItem('application_webhook', applicationUrl);
     
     setSaved(true);
-    toast("Zapier webhook URLs saved successfully");
+    toast("Webhook URLs saved successfully");
   };
 
   return (
@@ -50,25 +50,25 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="flex items-center gap-2">
           <Settings className="h-4 w-4" />
-          <span>Zapier Settings</span>
+          <span>Integration Settings</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Zapier Integration Settings</DialogTitle>
+          <DialogTitle>Integration Settings</DialogTitle>
           <DialogDescription>
-            Configure webhook URLs to connect with Go High Level CRM via Zapier
+            Configure webhook URLs to connect with your CRM and Google Drive via Make.com
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="prequalUrl">Pre-qualification Webhook URL</Label>
+            <Label htmlFor="prequalUrl" className="text-lg font-bold">Pre-qualification Webhook URL</Label>
             <Input
               id="prequalUrl"
               value={prequalUrl}
               onChange={(e) => setPrequalUrl(e.target.value)}
-              placeholder="https://hooks.zapier.com/hooks/catch/..."
+              placeholder="https://hook.make.com/..."
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
@@ -77,12 +77,12 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="applicationUrl">Full Application Webhook URL</Label>
+            <Label htmlFor="applicationUrl" className="text-lg font-bold">Full Application Webhook URL</Label>
             <Input
               id="applicationUrl"
               value={applicationUrl}
               onChange={(e) => setApplicationUrl(e.target.value)}
-              placeholder="https://hooks.zapier.com/hooks/catch/..."
+              placeholder="https://hook.make.com/..."
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
