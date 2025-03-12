@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -9,12 +8,11 @@ import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
-
 const Index = () => {
   // Smooth scroll for anchor links
   useEffect(() => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
+      anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href')?.substring(1);
         if (targetId) {
@@ -28,16 +26,13 @@ const Index = () => {
         }
       });
     });
-
     return () => {
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.removeEventListener('click', function() {});
+        anchor.removeEventListener('click', function () {});
       });
     };
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
+  return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
       <Navbar />
       <main>
         <Hero />
@@ -55,14 +50,12 @@ const Index = () => {
         <Benefits />
         <Testimonials />
         <section id="apply-now" className="py-16 md:py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-5 md:px-10">
+          <div className="max-w-7xl mx-auto px-5 md:px-10 bg-gray-100">
             <ProgressiveForm />
           </div>
         </section>
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;

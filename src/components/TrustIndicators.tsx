@@ -1,9 +1,6 @@
-
 import { Shield, Clock, Award, BarChart } from 'lucide-react';
-
 const TrustIndicators = () => {
-  return (
-    <section className="py-16 bg-funding-light-gray/50">
+  return <section className="py-16 bg-funding-light-gray/50 bg-gray-100">
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
@@ -25,7 +22,9 @@ const TrustIndicators = () => {
             </p>
           </div>
           
-          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{
+          animationDelay: '0.1s'
+        }}>
             <div className="bg-funding-blue/10 p-3 rounded-full mb-4">
               <Shield className="h-6 w-6 text-funding-blue" />
             </div>
@@ -35,7 +34,9 @@ const TrustIndicators = () => {
             </p>
           </div>
           
-          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="bg-funding-blue/10 p-3 rounded-full mb-4">
               <BarChart className="h-6 w-6 text-funding-blue" />
             </div>
@@ -45,7 +46,9 @@ const TrustIndicators = () => {
             </p>
           </div>
           
-          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="glass-card p-6 flex flex-col items-center text-center animate-fade-in" style={{
+          animationDelay: '0.3s'
+        }}>
             <div className="bg-funding-blue/10 p-3 rounded-full mb-4">
               <Award className="h-6 w-6 text-funding-blue" />
             </div>
@@ -82,8 +85,6 @@ const TrustIndicators = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default TrustIndicators;

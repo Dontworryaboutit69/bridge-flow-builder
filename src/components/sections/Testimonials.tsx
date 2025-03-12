@@ -1,34 +1,26 @@
-
 import { ChevronRight } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
-
 const Testimonials = () => {
-  const testimonials = [
-    {
-      quote: "I was approved for $75,000 in less than 24 hours. The process was incredibly simple and straightforward.",
-      author: "Franklyn Jackson",
-      business: "Action Jackson Septic",
-      rating: 5,
-      gradient: "bg-gradient-to-br from-soft-blue/20 to-soft-purple/10"
-    },
-    {
-      quote: "After being rejected by three banks, Growth Path Advisory got me the funding I needed to expand my business. Forever grateful!",
-      author: "Arturo Rendon",
-      business: "AAffordable Landscape",
-      rating: 5,
-      gradient: "bg-gradient-to-br from-soft-peach/20 to-soft-yellow/10"
-    },
-    {
-      quote: "The team was professional and responsive. They found the perfect funding solution for my situation when no one else could.",
-      author: "Robin Thomas",
-      business: "Watch Me Grow Daycare",
-      rating: 5,
-      gradient: "bg-gradient-to-br from-soft-green/20 to-soft-blue/10"
-    }
-  ];
-
-  return (
-    <section id="testimonials" className="py-12 md:py-16 bg-gradient-to-br from-white to-funding-light-gray/50 relative overflow-hidden">
+  const testimonials = [{
+    quote: "I was approved for $75,000 in less than 24 hours. The process was incredibly simple and straightforward.",
+    author: "Franklyn Jackson",
+    business: "Action Jackson Septic",
+    rating: 5,
+    gradient: "bg-gradient-to-br from-soft-blue/20 to-soft-purple/10"
+  }, {
+    quote: "After being rejected by three banks, Growth Path Advisory got me the funding I needed to expand my business. Forever grateful!",
+    author: "Arturo Rendon",
+    business: "AAffordable Landscape",
+    rating: 5,
+    gradient: "bg-gradient-to-br from-soft-peach/20 to-soft-yellow/10"
+  }, {
+    quote: "The team was professional and responsive. They found the perfect funding solution for my situation when no one else could.",
+    author: "Robin Thomas",
+    business: "Watch Me Grow Daycare",
+    rating: 5,
+    gradient: "bg-gradient-to-br from-soft-green/20 to-soft-blue/10"
+  }];
+  return <section id="testimonials" className="py-12 md:py-16 bg-gradient-to-br from-white to-funding-light-gray/50 relative overflow-hidden bg-gray-100">
       {/* Background texture */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 -left-24 w-72 md:w-96 h-72 md:h-96 bg-soft-orange/10 rounded-full blur-3xl"></div>
@@ -47,30 +39,22 @@ const Testimonials = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div 
-              key={index} 
-              className={`glass-card p-6 md:p-8 animate-fade-in ${testimonial.gradient} hover-scale text-left md:text-left`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+          {testimonials.map((testimonial, index) => <div key={index} className={`glass-card p-6 md:p-8 animate-fade-in ${testimonial.gradient} hover-scale text-left md:text-left`} style={{
+          animationDelay: `${index * 0.1}s`
+        }}>
               <div className="flex justify-center md:justify-start mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                {[...Array(testimonial.rating)].map((_, i) => <svg key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                  </svg>
-                ))}
+                  </svg>)}
               </div>
               <p className="text-funding-dark mb-4 italic text-center md:text-left">"{testimonial.quote}"</p>
               <div className="mt-auto text-center md:text-left">
                 <p className="font-semibold text-funding-dark">{testimonial.author}</p>
                 <p className="text-funding-gray text-sm">{testimonial.business}</p>
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Testimonials;

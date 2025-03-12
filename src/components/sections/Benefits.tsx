@@ -1,12 +1,9 @@
-
 import { ChevronRight } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import BenefitCard from '@/components/cards/BenefitCard';
 import { benefits } from '@/data/benefits';
-
 const Benefits = () => {
-  return (
-    <section id="benefits" className="py-12 md:py-16 bg-gradient-to-br from-funding-light-gray/30 to-white relative overflow-hidden">
+  return <section id="benefits" className="py-12 md:py-16 bg-gradient-to-br from-funding-light-gray/30 to-white relative overflow-hidden bg-gray-100">
       {/* Background texture patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 -right-24 w-72 md:w-96 h-72 md:h-96 bg-soft-purple/10 rounded-full blur-3xl"></div>
@@ -26,13 +23,7 @@ const Benefits = () => {
         
         {/* Benefits grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {benefits.map((benefit, index) => (
-            <BenefitCard 
-              key={index} 
-              benefit={benefit} 
-              index={index}
-            />
-          ))}
+          {benefits.map((benefit, index) => <BenefitCard key={index} benefit={benefit} index={index} />)}
         </div>
         
         <div className="mt-12 md:mt-16 text-center">
@@ -42,8 +33,6 @@ const Benefits = () => {
           </CustomButton>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Benefits;
