@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -8,7 +9,13 @@ import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
+
 const Index = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Smooth scroll for anchor links
   useEffect(() => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -32,6 +39,7 @@ const Index = () => {
       });
     };
   }, []);
+
   return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
       <Navbar />
       <main>
@@ -58,4 +66,5 @@ const Index = () => {
       <Footer />
     </div>;
 };
+
 export default Index;
