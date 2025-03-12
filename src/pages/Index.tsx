@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
@@ -10,12 +10,30 @@ import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
 
-const Index = () => {
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+// Create a cross-browser compatible useIsomorphicLayoutEffect
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
+const Index = () => {
+  // More aggressive scroll reset using layout effect and multiple approaches
+  useIsomorphicLayoutEffect(() => {
+    // Immediate scroll
+    window.scrollTo(0, 0);
+    
+    // Delayed scroll as backup (sometimes needed for certain browsers/scenarios)
+    const timer = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+      });
+      
+      // Force scroll position with a small delay as a final fallback
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }, 50);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
   // Smooth scroll for anchor links
   useEffect(() => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -41,6 +59,8 @@ const Index = () => {
   }, []);
 
   return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
+      {/* Add an invisible marker at the top to ensure scroll position is correct */}
+      <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
       <Navbar />
       <main>
         <Hero />
