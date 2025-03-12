@@ -1,8 +1,13 @@
 
 import { useApplication } from '@/lib/applicationContext';
+import { isValidTextOnly } from '@/lib/validationUtils';
+import { useState } from 'react';
 
 const PersonalAddressSection = () => {
   const { applicationData, updateApplicationData } = useApplication();
+  const [errors, setErrors] = useState({
+    city: false,
+  });
 
   const states = [
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 
@@ -13,6 +18,18 @@ const PersonalAddressSection = () => {
     'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateApplicationData({ city: value });
+    
+    // Validate only if there's text
+    if (value && !isValidTextOnly(value)) {
+      setErrors(prev => ({ ...prev, city: true }));
+    } else {
+      setErrors(prev => ({ ...prev, city: false }));
+    }
+  };
 
   return (
     <>
@@ -38,11 +55,14 @@ const PersonalAddressSection = () => {
           <input
             type="text"
             id="city"
-            className="w-full px-4 py-3 rounded-lg border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
             placeholder="Enter city"
             value={applicationData.city}
-            onChange={(e) => updateApplicationData({ city: e.target.value })}
+            onChange={handleCityChange}
           />
+          {errors.city && (
+            <p className="text-red-500 text-sm mt-1">Please enter a valid city name</p>
+          )}
         </div>
         
         <div className="space-y-2">

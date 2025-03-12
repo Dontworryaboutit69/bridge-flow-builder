@@ -1,8 +1,12 @@
-
 import { useApplication } from '@/lib/applicationContext';
+import { isValidUrl, formatWebsiteUrl } from '@/lib/validationUtils';
+import { useState, useEffect } from 'react';
 
 const BusinessOperationsSection = () => {
   const { applicationData, updateApplicationData } = useApplication();
+  const [errors, setErrors] = useState({
+    website: false,
+  });
   
   const industries = [
     'Retail',
@@ -33,7 +37,31 @@ const BusinessOperationsSection = () => {
     '51-100 employees',
     '100+ employees'
   ];
-  
+
+  const handleWebsiteBlur = () => {
+    if (applicationData.websiteUrl) {
+      const formattedUrl = formatWebsiteUrl(applicationData.websiteUrl);
+      updateApplicationData({ websiteUrl: formattedUrl });
+      
+      if (!isValidUrl(formattedUrl)) {
+        setErrors(prev => ({ ...prev, website: true }));
+      } else {
+        setErrors(prev => ({ ...prev, website: false }));
+      }
+    }
+  };
+
+  const handleWebsiteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateApplicationData({ websiteUrl: value });
+    
+    if (value && !isValidUrl(value)) {
+      setErrors(prev => ({ ...prev, website: true }));
+    } else {
+      setErrors(prev => ({ ...prev, website: false }));
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -103,11 +131,15 @@ const BusinessOperationsSection = () => {
           <input
             type="url"
             id="websiteUrl"
-            className="w-full px-4 py-3 rounded-lg border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            className={`w-full px-4 py-3 rounded-lg border ${errors.website ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
             placeholder="https://www.example.com"
             value={applicationData.websiteUrl}
-            onChange={(e) => updateApplicationData({ websiteUrl: e.target.value })}
+            onChange={handleWebsiteChange}
+            onBlur={handleWebsiteBlur}
           />
+          {errors.website && (
+            <p className="text-red-500 text-sm mt-1">Please enter a valid website URL</p>
+          )}
         </div>
       </div>
     </div>

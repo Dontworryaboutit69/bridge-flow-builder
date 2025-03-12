@@ -1,8 +1,9 @@
 
 import { FormData } from './formTypes';
+import { isValidEmail, isValidTextOnly, isValidUrl } from './validationUtils';
 
 export const validateEmail = (email: string): boolean => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return isValidEmail(email);
 };
 
 export const validatePhone = (phone: string): boolean => {
@@ -16,13 +17,17 @@ export const isStepValid = (currentStep: number, formData: FormData): boolean =>
     case 1:
       return !!formData.loanAmount;
     case 2:
-      const isValid = !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
-      console.log(`Step 2 validation result: ${isValid}`, {
+      const isDataValid = !!formData.businessName && !!formData.industry && !!formData.capitalTimeframe;
+      const isBusinessNameValid = isValidTextOnly(formData.businessName || '');
+      
+      console.log(`Step 2 validation result: ${isDataValid && isBusinessNameValid}`, {
         businessName: !!formData.businessName,
         industry: !!formData.industry,
-        capitalTimeframe: !!formData.capitalTimeframe
+        capitalTimeframe: !!formData.capitalTimeframe,
+        isBusinessNameValid
       });
-      return isValid;
+      
+      return isDataValid && isBusinessNameValid;
     case 3:
       return !!formData.monthlyRevenue && !!formData.timeInBusiness;
     case 4:
@@ -31,7 +36,9 @@ export const isStepValid = (currentStep: number, formData: FormData): boolean =>
              !!formData.email && 
              !!formData.phone && 
              validateEmail(formData.email) && 
-             validatePhone(formData.phone);
+             validatePhone(formData.phone) &&
+             isValidTextOnly(formData.firstName || '') &&
+             isValidTextOnly(formData.lastName || '');
     case 5:
       return !!formData.loanAmount && 
              !!formData.businessName && 
@@ -44,7 +51,10 @@ export const isStepValid = (currentStep: number, formData: FormData): boolean =>
              !!formData.email && 
              !!formData.phone && 
              validateEmail(formData.email) && 
-             validatePhone(formData.phone);
+             validatePhone(formData.phone) &&
+             isValidTextOnly(formData.firstName || '') &&
+             isValidTextOnly(formData.lastName || '') &&
+             isValidTextOnly(formData.businessName || '');
     default:
       return false;
   }

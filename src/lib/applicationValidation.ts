@@ -1,5 +1,6 @@
 
 import { ApplicationData } from './applicationTypes';
+import { isValidEmail, isValidTextOnly, isValidUrl } from './validationUtils';
 
 export const validateApplicationStep = (step: number, data: ApplicationData): boolean => {
   // Basic validation logic based on current step
@@ -15,10 +16,14 @@ export const validateApplicationStep = (step: number, data: ApplicationData): bo
         !!data.state &&
         !!data.zipCode &&
         !!data.socialSecurityNumber &&
-        !!data.dateOfBirth
+        !!data.dateOfBirth &&
+        isValidTextOnly(data.firstName) && 
+        isValidTextOnly(data.lastName) &&
+        isValidEmail(data.email) &&
+        isValidTextOnly(data.city)
       );
     case 2: // Business Information
-      return (
+      const hasAllRequiredBusinessFields = (
         !!data.businessName &&
         !!data.businessType &&
         !!data.businessStartDate &&
@@ -31,6 +36,14 @@ export const validateApplicationStep = (step: number, data: ApplicationData): bo
         !!data.einNumber &&
         !!data.ownershipPercentage
       );
+
+      // Website validation (only if provided)
+      const isWebsiteValid = !data.websiteUrl || isValidUrl(data.websiteUrl);
+      
+      return hasAllRequiredBusinessFields && 
+        isValidTextOnly(data.businessCity) && 
+        isWebsiteValid;
+        
     case 3: // Financial Information
       return (
         !!data.monthlyRevenue &&

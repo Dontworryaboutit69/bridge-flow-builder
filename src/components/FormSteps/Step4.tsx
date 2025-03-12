@@ -2,9 +2,64 @@
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { isValidEmail, isValidTextOnly } from '@/lib/validationUtils';
+import { useState } from 'react';
 
 const Step4 = () => {
   const { formData, updateFormData, nextStep, prevStep, isStepValid } = useForm();
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    phone: false,
+  });
+  
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateFormData({ firstName: value });
+    
+    if (value && !isValidTextOnly(value)) {
+      setErrors(prev => ({ ...prev, firstName: true }));
+    } else {
+      setErrors(prev => ({ ...prev, firstName: false }));
+    }
+  };
+  
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateFormData({ lastName: value });
+    
+    if (value && !isValidTextOnly(value)) {
+      setErrors(prev => ({ ...prev, lastName: true }));
+    } else {
+      setErrors(prev => ({ ...prev, lastName: false }));
+    }
+  };
+  
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    updateFormData({ email: value });
+    
+    if (value && !isValidEmail(value)) {
+      setErrors(prev => ({ ...prev, email: true }));
+    } else {
+      setErrors(prev => ({ ...prev, email: false }));
+    }
+  };
+  
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const formatted = value.replace(/[^\d]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3').trim();
+    updateFormData({ phone: formatted });
+    
+    // Basic phone validation
+    const numbersOnly = value.replace(/[^\d]/g, '');
+    if (value && numbersOnly.length !== 10) {
+      setErrors(prev => ({ ...prev, phone: true }));
+    } else {
+      setErrors(prev => ({ ...prev, phone: false }));
+    }
+  };
   
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in">
@@ -26,11 +81,14 @@ const Step4 = () => {
             <input
               type="text"
               id="firstName"
-              className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+              className={`w-full px-4 py-3 rounded-xl border ${errors.firstName ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
               placeholder="Enter first name"
               value={formData.firstName}
-              onChange={(e) => updateFormData({ firstName: e.target.value })}
+              onChange={handleFirstNameChange}
             />
+            {errors.firstName && (
+              <p className="text-red-500 text-sm mt-1">Please enter a valid name (letters only)</p>
+            )}
           </div>
           
           <div className="space-y-2">
@@ -40,11 +98,14 @@ const Step4 = () => {
             <input
               type="text"
               id="lastName"
-              className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+              className={`w-full px-4 py-3 rounded-xl border ${errors.lastName ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
               placeholder="Enter last name"
               value={formData.lastName}
-              onChange={(e) => updateFormData({ lastName: e.target.value })}
+              onChange={handleLastNameChange}
             />
+            {errors.lastName && (
+              <p className="text-red-500 text-sm mt-1">Please enter a valid name (letters only)</p>
+            )}
           </div>
         </div>
 
@@ -55,11 +116,14 @@ const Step4 = () => {
           <input
             type="email"
             id="email"
-            className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
             placeholder="Enter your email"
             value={formData.email}
-            onChange={(e) => updateFormData({ email: e.target.value })}
+            onChange={handleEmailChange}
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">Please enter a valid email address</p>
+          )}
         </div>
         
         <div className="space-y-2">
@@ -69,11 +133,14 @@ const Step4 = () => {
           <input
             type="tel"
             id="phone"
-            className="w-full px-4 py-3 rounded-xl border border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30 outline-none transition-all"
+            className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/30' : 'border-funding-light-gray focus:border-funding-blue focus:ring-1 focus:ring-funding-blue/30'} outline-none transition-all`}
             placeholder="(XXX) XXX-XXXX"
             value={formData.phone}
-            onChange={(e) => updateFormData({ phone: e.target.value.replace(/[^\d]/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3').trim() })}
+            onChange={handlePhoneChange}
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">Please enter a valid 10-digit phone number</p>
+          )}
           <p className="text-xs text-funding-gray mt-1">
             Standard rates apply. We'll never spam you.
           </p>
@@ -106,7 +173,7 @@ const Step4 = () => {
         </CustomButton>
         <CustomButton 
           onClick={nextStep} 
-          disabled={!isStepValid()}
+          disabled={!isStepValid() || errors.firstName || errors.lastName || errors.email || errors.phone}
           className="group"
         >
           Continue
