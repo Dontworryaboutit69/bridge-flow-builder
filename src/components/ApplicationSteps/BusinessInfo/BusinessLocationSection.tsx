@@ -16,7 +16,7 @@ const BusinessLocationSection = () => {
   
   return (
     <div className="space-y-2">
-      <label htmlFor="businessAddress" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+      <label htmlFor="businessAddress" className="block text-lg font-bold text-funding-dark">
         Business Street Address*
       </label>
       <input
@@ -30,7 +30,7 @@ const BusinessLocationSection = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
         <div className="space-y-2">
-          <label htmlFor="businessCity" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+          <label htmlFor="businessCity" className="block text-lg font-bold text-funding-dark">
             City*
           </label>
           <input
@@ -44,7 +44,7 @@ const BusinessLocationSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="businessState" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+          <label htmlFor="businessState" className="block text-lg font-bold text-funding-dark">
             State*
           </label>
           <select
@@ -63,7 +63,7 @@ const BusinessLocationSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="businessZipCode" className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+          <label htmlFor="businessZipCode" className="block text-lg font-bold text-funding-dark">
             ZIP Code*
           </label>
           <input

@@ -17,7 +17,7 @@ const PersonalAddressSection = () => {
   return (
     <>
       <div className="space-y-2">
-        <label htmlFor="address" className="block text-sm font-medium text-funding-dark">
+        <label htmlFor="address" className="block text-lg font-bold text-funding-dark">
           Street Address*
         </label>
         <input
@@ -32,7 +32,7 @@ const PersonalAddressSection = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="space-y-2">
-          <label htmlFor="city" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="city" className="block text-lg font-bold text-funding-dark">
             City*
           </label>
           <input
@@ -46,7 +46,7 @@ const PersonalAddressSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="state" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="state" className="block text-lg font-bold text-funding-dark">
             State*
           </label>
           <select
@@ -63,7 +63,7 @@ const PersonalAddressSection = () => {
         </div>
         
         <div className="space-y-2">
-          <label htmlFor="zipCode" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="zipCode" className="block text-lg font-bold text-funding-dark">
             ZIP Code*
           </label>
           <input

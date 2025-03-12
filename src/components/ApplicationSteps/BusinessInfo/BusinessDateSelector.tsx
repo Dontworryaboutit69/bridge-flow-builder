@@ -31,7 +31,7 @@ const BusinessDateSelector = () => {
   
   return (
     <div className="space-y-2">
-      <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+      <label className="block text-lg font-bold text-funding-dark">
         Business Start Date*
       </label>
       <input

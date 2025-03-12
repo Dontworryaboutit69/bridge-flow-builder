@@ -58,7 +58,7 @@ const PersonalIdentitySection = () => {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark">
             Date of Birth*
           </label>
           <input
@@ -72,7 +72,7 @@ const PersonalIdentitySection = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-funding-dark">
+          <label className="block text-lg font-bold text-funding-dark">
             Credit Score Range*
           </label>
           <select
@@ -90,7 +90,7 @@ const PersonalIdentitySection = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="socialSecurityNumber" className="block text-sm font-medium text-funding-dark">
+          <label htmlFor="socialSecurityNumber" className="block text-lg font-bold text-funding-dark">
             Social Security Number*
           </label>
           <div className="relative">

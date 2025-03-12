@@ -1,3 +1,4 @@
+
 import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -24,7 +25,7 @@ const Step3 = () => {
       
       <div className="space-y-6">
         <div className="space-y-2">
-          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">Current Monthly Revenue</label>
+          <label className="block text-lg font-bold text-funding-dark">Current Monthly Revenue</label>
           <div className="grid grid-cols-2 gap-3">
             {revenueOptions.map((option, index) => <button key={index} type="button" className={`p-3 rounded-xl border text-center transition-all duration-200 ${formData.monthlyRevenue === option ? 'border-funding-blue bg-funding-blue/5 text-funding-dark' : 'border-funding-light-gray hover:border-funding-blue/30 text-funding-gray hover:text-funding-dark'}`} onClick={() => updateFormData({
             monthlyRevenue: option
@@ -35,7 +36,7 @@ const Step3 = () => {
         </div>
         
         <div className="space-y-2">
-          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+          <label className="block text-lg font-bold text-funding-dark">
             Time in Business
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -48,7 +49,7 @@ const Step3 = () => {
         </div>
         
         <div className="space-y-2">
-          <label className="block text-lg font-bold text-funding-dark text-center md:text-left md:text-sm md:font-medium">
+          <label className="block text-lg font-bold text-funding-dark">
             Credit Score
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

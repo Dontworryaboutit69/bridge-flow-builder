@@ -7,7 +7,7 @@ const PersonalContactSection = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div className="space-y-2">
-        <label htmlFor="firstName" className="block text-sm font-medium text-funding-dark">
+        <label htmlFor="firstName" className="block text-lg font-bold text-funding-dark">
           First Name*
         </label>
         <input
@@ -21,7 +21,7 @@ const PersonalContactSection = () => {
       </div>
       
       <div className="space-y-2">
-        <label htmlFor="lastName" className="block text-sm font-medium text-funding-dark">
+        <label htmlFor="lastName" className="block text-lg font-bold text-funding-dark">
           Last Name*
         </label>
         <input
@@ -35,7 +35,7 @@ const PersonalContactSection = () => {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="email" className="block text-sm font-medium text-funding-dark">
+        <label htmlFor="email" className="block text-lg font-bold text-funding-dark">
           Email Address*
         </label>
         <input
@@ -49,7 +49,7 @@ const PersonalContactSection = () => {
       </div>
       
       <div className="space-y-2">
-        <label htmlFor="phone" className="block text-sm font-medium text-funding-dark">
+        <label htmlFor="phone" className="block text-lg font-bold text-funding-dark">
           Phone Number*
         </label>
         <input
