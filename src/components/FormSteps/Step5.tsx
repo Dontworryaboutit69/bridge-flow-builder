@@ -2,6 +2,7 @@ import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
 const Step5 = () => {
   const {
     formData,
@@ -102,7 +103,7 @@ const Step5 = () => {
             Great news! Based on your information, you pre-qualify for business funding with Growth Path Advisory. The next step is to complete your full funding application.
           </p>
           
-          <div className="glass-card p-8 max-w-lg mx-auto mb-10 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
+          <div className="glass-card p-6 md:p-8 w-full max-w-lg mx-auto mb-10 bg-gradient-to-br from-funding-blue/5 to-funding-light-blue/10">
             <h4 className="font-medium text-lg text-funding-dark mb-6">Next Steps</h4>
             <ol className="space-y-5 text-left">
               <li className="flex items-start">
@@ -145,4 +146,5 @@ const Step5 = () => {
         </div> : null /* If isDisqualified is true, nothing is rendered here as it's handled by DisqualifiedView */}
     </div>;
 };
+
 export default Step5;
