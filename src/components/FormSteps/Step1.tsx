@@ -25,9 +25,10 @@ const Step1 = () => {
   
   const handleContinue = () => {
     if (location.pathname === '/') {
-      // When on homepage, navigate to pre-qualification with the amount in state
+      // When on homepage, navigate to pre-qualification with the amount saved in context
+      // This ensures the form data persists across the navigation
       navigate('/pre-qualification', { 
-        state: { fromHomepage: true },
+        state: { fromHomepage: true, loanAmount: formData.loanAmount },
         replace: false
       });
       
@@ -38,6 +39,15 @@ const Step1 = () => {
       nextStep();
     }
   };
+  
+  // If we navigate from homepage with a loan amount, make sure it stays selected
+  useEffect(() => {
+    const loanAmountFromState = location?.state?.loanAmount;
+    if (loanAmountFromState && !formData.loanAmount) {
+      console.log("Setting loan amount from navigation state:", loanAmountFromState);
+      updateFormData({ loanAmount: loanAmountFromState });
+    }
+  }, [location.state, formData.loanAmount, updateFormData]);
   
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in">

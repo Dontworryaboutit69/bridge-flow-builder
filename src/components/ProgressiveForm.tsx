@@ -1,3 +1,4 @@
+
 import { useForm } from '@/lib/formContext';
 import Step1 from './FormSteps/Step1';
 import Step2 from './FormSteps/Step2';
@@ -88,25 +89,35 @@ const FormWrapper = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    // Check both the normal form state and the location state for loanAmount
     const isPrequalificationPage = location.pathname === '/pre-qualification';
     const hasLoanAmount = Boolean(formData.loanAmount);
+    const loanAmountFromState = location?.state?.loanAmount;
+    const cameFromHomepage = location?.state?.fromHomepage;
     
     console.log("FormWrapper init:", { 
       isPrequalificationPage, 
       hasLoanAmount,
-      loanAmount: formData.loanAmount, 
+      loanAmountFromState, 
+      cameFromHomepage,
       currentStep 
     });
     
-    if (isPrequalificationPage && hasLoanAmount && currentStep === 1) {
+    // If we're on the prequalification page and either have loanAmount in formData
+    // or from the navigation state, and we're currently on step 1, move to step 2
+    if (isPrequalificationPage && (hasLoanAmount || loanAmountFromState) && currentStep === 1) {
       console.log("Setting current step to 2 due to existing loan amount");
-      setCurrentStep(2);
       
-      if (wrapperRef.current) {
-        wrapperRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+      // Small timeout to ensure the state has been fully processed
+      setTimeout(() => {
+        setCurrentStep(2);
+        
+        if (wrapperRef.current) {
+          wrapperRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
-  }, [location.pathname, formData.loanAmount, setCurrentStep, currentStep]);
+  }, [location.pathname, location.state, formData.loanAmount, setCurrentStep, currentStep]);
   
   return (
     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto" ref={wrapperRef}>
