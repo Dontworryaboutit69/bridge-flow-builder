@@ -56,23 +56,14 @@ const DocumentUploadList = ({
       // Get the current application ID from localStorage
       const applicationId = localStorage.getItem('current_application_id');
       
-      // For each document, save to Supabase documents table
+      // For each document, log the document data instead of saving to Supabase
+      // We'll use the Zapier webhook as the primary method of data storage
       for (const doc of documents) {
         if (doc.files && doc.files.length > 0) {
           for (const file of doc.files) {
             try {
-              const { error } = await supabase
-                .from('documents')
-                .insert({
-                  application_id: applicationId,
-                  document_type: doc.id,
-                  document_name: file.name,
-                  file_path: `${doc.id}/${file.name}` // Constructed path since File objects don't have a path property
-                });
-                
-              if (error) {
-                console.error(`Error saving document ${file.name} to Supabase:`, error);
-              }
+              // Log document details instead of attempting to save to a non-existent table
+              console.log(`Document info: ${doc.id}/${file.name}, Application ID: ${applicationId}`);
             } catch (error) {
               console.error(`Error processing document ${file.name}:`, error);
             }
@@ -80,7 +71,7 @@ const DocumentUploadList = ({
         }
       }
       
-      // Send data to webhook as a backup/integration
+      // Send data to webhook as the primary integration
       try {
         const documentSummary = documents.map(doc => ({
           id: doc.id,
@@ -110,7 +101,7 @@ const DocumentUploadList = ({
         console.error('Error sending document data to webhook:', error);
         toast({
           title: "Warning",
-          description: "Documents saved to database, but error connecting to Zapier",
+          description: "Documents could not be sent to Zapier",
           variant: "destructive",
         });
       }

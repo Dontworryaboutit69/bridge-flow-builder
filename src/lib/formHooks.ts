@@ -1,9 +1,7 @@
-
 import { useCallback } from 'react';
 import { FormData } from './formTypes';
 import { isStepValid as validateStep, checkQualification as validateQualification } from './formValidation';
 import { toast } from 'sonner';
-import { supabase } from "@/integrations/supabase/client";
 
 // Helper function to get question text for pre-qualification fields
 const getPreQualQuestionText = (field: string): string => {
@@ -80,33 +78,27 @@ export const useFormSubmission = (
         localStorage.setItem('prequalify_webhook', webhookUrl);
       }
       
-      // Save data to Supabase using type-safe approach
-      const { error: supabaseError } = await supabase
-        .from('prequalifications')
-        .insert({
-          loan_amount: formData.loanAmount,
-          business_name: formData.businessName,
-          monthly_revenue: formData.monthlyRevenue,
-          time_in_business: formData.timeInBusiness,
-          credit_score: formData.creditScore,
-          industry: formData.industry,
-          capital_timeframe: formData.capitalTimeframe,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          is_disqualified: disqualified,
-          zapier_webhook_url: webhookUrl
-        });
-        
-      if (supabaseError) {
-        console.error('Error saving to Supabase:', supabaseError);
-        toast("Data saved to Zapier, but there was an issue with database storage");
-      } else {
-        console.log('Pre-qualification data saved to Supabase successfully');
-      }
+      // Store the prequalification data in localStorage as a fallback
+      const prequalificationJson = JSON.stringify({
+        loan_amount: formData.loanAmount,
+        business_name: formData.businessName,
+        monthly_revenue: formData.monthlyRevenue,
+        time_in_business: formData.timeInBusiness,
+        credit_score: formData.creditScore,
+        industry: formData.industry,
+        capital_timeframe: formData.capitalTimeframe,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        is_disqualified: disqualified,
+        zapier_webhook_url: webhookUrl,
+        submission_date: new Date().toISOString()
+      });
       
-      // Zapier webhook still works - as a backup/integration, not the primary storage
+      localStorage.setItem('prequalification_data', prequalificationJson);
+      
+      // Zapier webhook as the primary method for data storage
       if (webhookUrl) {
         try {
           // Format data with questions and answers for each field
@@ -140,7 +132,7 @@ export const useFormSubmission = (
           console.log('Data sent to webhook successfully');
         } catch (error) {
           console.error('Error sending data to webhook:', error);
-          toast("Data saved to database, but there was an error connecting to webhook");
+          toast("There was an error connecting to webhook");
         }
       }
       
