@@ -17,18 +17,17 @@ const AdminLogin = () => {
     setIsLoading(true);
     
     try {
-      console.log('Login attempt with:', { email, password });
       // For demo purposes, use simple admin credentials
       if (email === 'admin@example.com' && password === 'admin123') {
         localStorage.setItem('admin_token', 'demo_admin_token');
-        toast.success("Admin login successful");
+        toast("Admin login successful");
         navigate('/admin/console');
       } else {
-        toast.error("Invalid credentials");
+        toast("Invalid credentials");
       }
     } catch (error) {
       console.error('Login error:', error);
-      toast.error("Login failed. Please try again.");
+      toast("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

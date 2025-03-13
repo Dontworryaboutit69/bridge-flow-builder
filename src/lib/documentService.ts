@@ -14,7 +14,7 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     console.log('Fetching documents for application:', applicationId);
     if (!applicationId) {
       console.error('Invalid application ID provided');
-      return getMockDocuments();
+      return [];
     }
     
     // Try to fetch from Supabase
@@ -25,7 +25,7 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     
     if (error) {
       console.error('Supabase error:', error);
-      return getMockDocuments();
+      throw error;
     }
     
     if (data && data.length > 0) {
@@ -41,12 +41,12 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     }
     
     console.log('No documents found for application:', applicationId);
-    // If no documents found, return mock data for testing purposes
-    return getMockDocuments();
+    // If no documents found, return empty array
+    return [];
   } catch (err) {
     console.error('Error fetching documents:', err);
-    // Return mock data as fallback
-    return getMockDocuments();
+    // Re-throw the error to be handled by the calling function
+    throw err;
   }
 };
 

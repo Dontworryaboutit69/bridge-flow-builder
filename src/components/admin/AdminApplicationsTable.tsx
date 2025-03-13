@@ -44,71 +44,12 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
         throw error;
       }
       
+      setApplications(data || []);
       console.log('Fetched applications:', data);
-      
-      // If no data, create mock data for testing
-      if (!data || data.length === 0) {
-        const mockData = [
-          {
-            id: 1,
-            created_at: new Date().toISOString(),
-            application_id: 'APP001',
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john@example.com',
-            business_name: 'Acme Inc',
-            loan_amount: '$50,000',
-            submission_date: new Date().toISOString()
-          },
-          {
-            id: 2,
-            created_at: new Date(Date.now() - 86400000).toISOString(),
-            application_id: 'APP002',
-            first_name: 'Jane',
-            last_name: 'Smith',
-            email: 'jane@example.com',
-            business_name: 'Jane\'s Bakery',
-            loan_amount: '$25,000',
-            submission_date: new Date(Date.now() - 86400000).toISOString()
-          }
-        ];
-        setApplications(mockData);
-        console.log('Using mock data:', mockData);
-      } else {
-        setApplications(data);
-      }
     } catch (err) {
       console.error('Error fetching applications:', err);
       setError('Failed to load applications. Please try again.');
       toast.error("Failed to load applications");
-      
-      // Create mock data for testing in case of error
-      const mockData = [
-        {
-          id: 1,
-          created_at: new Date().toISOString(),
-          application_id: 'APP001',
-          first_name: 'John',
-          last_name: 'Doe',
-          email: 'john@example.com',
-          business_name: 'Acme Inc',
-          loan_amount: '$50,000',
-          submission_date: new Date().toISOString()
-        },
-        {
-          id: 2,
-          created_at: new Date(Date.now() - 86400000).toISOString(),
-          application_id: 'APP002',
-          first_name: 'Jane',
-          last_name: 'Smith',
-          email: 'jane@example.com',
-          business_name: 'Jane\'s Bakery',
-          loan_amount: '$25,000',
-          submission_date: new Date(Date.now() - 86400000).toISOString()
-        }
-      ];
-      setApplications(mockData);
-      console.log('Using mock data due to error:', mockData);
     } finally {
       setLoading(false);
     }
@@ -211,7 +152,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     onClick={() => handleViewDetails(app.application_id)}
-                    className="text-funding-blue hover:text-funding-blue-dark inline-flex items-center p-2 rounded hover:bg-gray-100"
+                    className="text-funding-blue hover:text-funding-blue-dark inline-flex items-center"
                   >
                     View Details
                     <ChevronRight className="ml-1 h-4 w-4" />
