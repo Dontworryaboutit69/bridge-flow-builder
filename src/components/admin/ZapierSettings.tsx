@@ -25,6 +25,16 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
   const [open, setOpen] = useState(false);
   const [saved, setSaved] = useState(false);
 
+  // Use the webhook URL from the input if provided
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const webhookParam = params.get('webhook');
+    if (webhookParam) {
+      setPrequalUrl(webhookParam);
+      setApplicationUrl(webhookParam);
+    }
+  }, []);
+
   useEffect(() => {
     if (saved) {
       const timer = setTimeout(() => {

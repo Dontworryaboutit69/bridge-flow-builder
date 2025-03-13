@@ -13,12 +13,14 @@ export const submitApplicationData = async (
     // Save webhook URL to localStorage if provided
     if (webhookUrl) {
       localStorage.setItem('application_webhook', webhookUrl);
+      localStorage.setItem('prequalify_webhook', webhookUrl); // Use the same webhook for both forms
     }
     
     // Send data to webhook if URL is available
     if (webhookUrl) {
       try {
-        await fetch(webhookUrl, {
+        console.log('Sending application data to webhook:', webhookUrl);
+        const response = await fetch(webhookUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -36,6 +38,8 @@ export const submitApplicationData = async (
         console.error('Error sending application data to webhook:', error);
         toast("Error connecting to Make.com, but application saved locally");
       }
+    } else {
+      console.warn('No webhook URL provided for application submission');
     }
     
     // Simulate API call
