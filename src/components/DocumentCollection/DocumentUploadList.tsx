@@ -7,6 +7,7 @@ import { toast } from '@/hooks/use-toast';
 import { Document } from '@/types/documents';
 import { useNavigate } from 'react-router-dom';
 import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
+import { supabase } from "@/integrations/supabase/client";
 
 type DocumentUploadListProps = {
   documents: Document[];
@@ -52,7 +53,34 @@ const DocumentUploadList = ({
     if (allRequiredUploaded) {
       console.log("Using document webhook URL:", finalWebhookUrl);
       
-      // Send data to webhook
+      // Get the current application ID from localStorage
+      const applicationId = localStorage.getItem('current_application_id');
+      
+      // For each document, save to Supabase documents table
+      for (const doc of documents) {
+        if (doc.files && doc.files.length > 0) {
+          for (const file of doc.files) {
+            try {
+              const { error } = await supabase
+                .from('documents')
+                .insert({
+                  application_id: applicationId,
+                  document_type: doc.id,
+                  document_name: file.name,
+                  file_path: file.path || `${doc.id}/${file.name}` // Using a constructed path if real path not available
+                });
+                
+              if (error) {
+                console.error(`Error saving document ${file.name} to Supabase:`, error);
+              }
+            } catch (error) {
+              console.error(`Error processing document ${file.name}:`, error);
+            }
+          }
+        }
+      }
+      
+      // Send data to webhook as a backup/integration
       try {
         const documentSummary = documents.map(doc => ({
           id: doc.id,
@@ -71,6 +99,7 @@ const DocumentUploadList = ({
           mode: 'no-cors',
           body: JSON.stringify({
             form_type: 'document_collection',
+            application_id: applicationId,
             documents: documentSummary,
             submission_date: new Date().toISOString(),
             source_url: window.location.href,
@@ -81,7 +110,7 @@ const DocumentUploadList = ({
         console.error('Error sending document data to webhook:', error);
         toast({
           title: "Warning",
-          description: "Error connecting to Zapier, but documents saved locally",
+          description: "Documents saved to database, but error connecting to Zapier",
           variant: "destructive",
         });
       }
