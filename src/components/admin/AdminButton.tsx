@@ -22,8 +22,8 @@ const AdminButton = () => {
       const newCount = prev + 1;
       // If clicked 3 times in succession, navigate to admin
       if (newCount >= 3) {
-        // Use window.location.href for more reliable navigation on deployed sites
-        window.location.href = '/admin';
+        // Use React Router navigation for consistent behavior
+        navigate('/admin');
         toast("Navigating to admin portal");
         return 0;
       }
