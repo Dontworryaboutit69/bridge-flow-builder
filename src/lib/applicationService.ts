@@ -21,6 +21,10 @@ export const submitApplicationData = async (
     
     console.log('Using webhook URL:', finalWebhookUrl);
     
+    // Generate a unique ID for this application
+    const applicationId = `app_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
+    localStorage.setItem('current_application_id', applicationId);
+    
     // Store application data in localStorage as a fallback
     const applicationJson = JSON.stringify({
       // Personal Information
@@ -65,15 +69,12 @@ export const submitApplicationData = async (
       signature: applicationData.signature,
       
       // Additional info
+      application_id: applicationId,
       zapier_webhook_url: finalWebhookUrl,
       submission_date: new Date().toISOString()
     });
     
     localStorage.setItem('current_application_data', applicationJson);
-    
-    // Generate a unique ID for this application
-    const applicationId = `app_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
-    localStorage.setItem('current_application_id', applicationId);
     
     // Format data to send only the raw values without questions
     const formattedData: Record<string, any> = {
@@ -88,6 +89,61 @@ export const submitApplicationData = async (
       // Add to the raw data
       formattedData[field] = value;
     });
+    
+    // Save to Supabase
+    try {
+      console.log('Saving application data to Supabase...');
+      
+      const { error } = await supabase
+        .from('GrowthPath Application')
+        .insert({
+          first_name: applicationData.firstName,
+          last_name: applicationData.lastName,
+          email: applicationData.email,
+          phone: applicationData.phone,
+          address: applicationData.address,
+          city: applicationData.city,
+          state: applicationData.state,
+          zip_code: applicationData.zipCode,
+          social_security_number: applicationData.socialSecurityNumber,
+          date_of_birth: applicationData.dateOfBirth,
+          business_name: applicationData.businessName,
+          business_type: applicationData.businessType,
+          business_start_date: applicationData.businessStartDate,
+          industry: applicationData.industry,
+          time_in_business: applicationData.timeInBusiness,
+          employee_count: applicationData.employeeCount,
+          business_address: applicationData.businessAddress,
+          business_city: applicationData.businessCity,
+          business_state: applicationData.businessState,
+          business_zip_code: applicationData.businessZipCode,
+          website_url: applicationData.websiteUrl,
+          ein_number: applicationData.einNumber,
+          ownership_percentage: applicationData.ownershipPercentage,
+          bank_name: applicationData.bankName,
+          account_number: applicationData.accountNumber,
+          routing_number: applicationData.routingNumber,
+          monthly_revenue: applicationData.monthlyRevenue,
+          credit_score: applicationData.creditScore,
+          loan_amount: applicationData.loanAmount,
+          use_of_funds: applicationData.useOfFunds,
+          agree_to_terms: applicationData.agreeToTerms,
+          agree_information_correct: applicationData.agreeInformationCorrect,
+          signature: applicationData.signature,
+          application_id: applicationId,
+          webhook_url: finalWebhookUrl,
+          submission_date: new Date().toISOString()
+        });
+        
+      if (error) {
+        console.error('Error saving to Supabase:', error);
+      } else {
+        console.log('Application data saved to Supabase successfully');
+      }
+    } catch (error) {
+      console.error('Error saving application data to Supabase:', error);
+      // Don't fail if Supabase insert fails, still try the webhook
+    }
     
     // Send data to webhook
     try {

@@ -56,20 +56,50 @@ const DocumentUploadList = ({
       // Get the current application ID from localStorage
       const applicationId = localStorage.getItem('current_application_id');
       
-      // For each document, log the document data instead of saving to Supabase
-      // We'll use the Zapier webhook as the primary method of data storage
+      // Save document information to Supabase
       for (const doc of documents) {
         if (doc.files && doc.files.length > 0) {
           for (const file of doc.files) {
             try {
-              // Log document details instead of attempting to save to a non-existent table
-              console.log(`Document info: ${doc.id}/${file.name}, Application ID: ${applicationId}`);
+              // Add each document to the GrowthPath Documents Table
+              const { error } = await supabase
+                .from('GrowthPath Documents Table')
+                .insert({
+                  application_id: applicationId,
+                  document_type: doc.id,
+                  document_name: file.name,
+                  file_path: `documents/${applicationId}/${doc.id}/${file.name}`,
+                  file_size: file.size,
+                  file_type: file.type
+                });
+                
+              if (error) {
+                console.error(`Error saving document ${file.name} to Supabase:`, error);
+              } else {
+                console.log(`Document ${file.name} saved to Supabase successfully`);
+              }
             } catch (error) {
               console.error(`Error processing document ${file.name}:`, error);
             }
           }
         }
       }
+      
+      // Store document data in localStorage as a fallback
+      localStorage.setItem(`documents_${applicationId}`, JSON.stringify(
+        documents.map(doc => ({
+          document_type: doc.id,
+          document_name: doc.name,
+          uploaded: doc.uploaded,
+          upload_count: doc.uploadCount || 0,
+          required: doc.required,
+          files: doc.files ? doc.files.map(f => ({
+            name: f.name,
+            size: f.size,
+            type: f.type
+          })) : []
+        }))
+      ));
       
       // Send data to webhook as the primary integration
       try {
