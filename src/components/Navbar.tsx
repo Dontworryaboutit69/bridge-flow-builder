@@ -18,6 +18,10 @@ const Navbar = () => {
             </Link>
           </nav>
         </div>
+        {/* Add a right-side section for potential user controls later */}
+        <div className="flex items-center">
+          {/* Placeholder for future elements like login/user profile */}
+        </div>
       </div>
     </header>
   );
