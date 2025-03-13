@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <Logo />
-          <nav className="hidden md:flex ml-10 space-x-8">
+          <nav className="flex ml-10 space-x-8">
             <Link to="/" className="text-gray-900 hover:text-funding-blue">
               Home
             </Link>
@@ -18,7 +18,6 @@ const Navbar = () => {
             </Link>
           </nav>
         </div>
-        {/* Add a right-side section for potential user controls later */}
         <div className="flex items-center">
           {/* Placeholder for future elements like login/user profile */}
         </div>
