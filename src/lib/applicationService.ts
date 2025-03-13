@@ -3,7 +3,6 @@ import { ApplicationData } from './applicationTypes';
 import { toast } from "sonner";
 import { DEFAULT_WEBHOOK_URL } from './applicationContext';
 import { supabase } from "@/integrations/supabase/client";
-import { GrowthPathApplicationRow } from '@/types/supabase';
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
@@ -95,48 +94,46 @@ export const submitApplicationData = async (
     try {
       console.log('Saving application data to Supabase...');
       
-      const insertData = {
-        first_name: applicationData.firstName,
-        last_name: applicationData.lastName,
-        email: applicationData.email,
-        phone: applicationData.phone,
-        address: applicationData.address,
-        city: applicationData.city,
-        state: applicationData.state,
-        zip_code: applicationData.zipCode,
-        social_security_number: applicationData.socialSecurityNumber,
-        date_of_birth: applicationData.dateOfBirth,
-        business_name: applicationData.businessName,
-        business_type: applicationData.businessType,
-        business_start_date: applicationData.businessStartDate,
-        industry: applicationData.industry,
-        time_in_business: applicationData.timeInBusiness,
-        employee_count: applicationData.employeeCount,
-        business_address: applicationData.businessAddress,
-        business_city: applicationData.businessCity,
-        business_state: applicationData.businessState,
-        business_zip_code: applicationData.businessZipCode,
-        website_url: applicationData.websiteUrl,
-        ein_number: applicationData.einNumber,
-        ownership_percentage: applicationData.ownershipPercentage,
-        bank_name: applicationData.bankName,
-        account_number: applicationData.accountNumber,
-        routing_number: applicationData.routingNumber,
-        monthly_revenue: applicationData.monthlyRevenue,
-        credit_score: applicationData.creditScore,
-        loan_amount: applicationData.loanAmount,
-        use_of_funds: applicationData.useOfFunds,
-        agree_to_terms: applicationData.agreeToTerms,
-        agree_information_correct: applicationData.agreeInformationCorrect,
-        signature: applicationData.signature,
-        application_id: applicationId,
-        webhook_url: finalWebhookUrl,
-        submission_date: new Date().toISOString()
-      } as GrowthPathApplicationRow;
-      
       const { error } = await supabase
         .from('GrowthPath Application')
-        .insert(insertData);
+        .insert({
+          first_name: applicationData.firstName,
+          last_name: applicationData.lastName,
+          email: applicationData.email,
+          phone: applicationData.phone,
+          address: applicationData.address,
+          city: applicationData.city,
+          state: applicationData.state,
+          zip_code: applicationData.zipCode,
+          social_security_number: applicationData.socialSecurityNumber,
+          date_of_birth: applicationData.dateOfBirth,
+          business_name: applicationData.businessName,
+          business_type: applicationData.businessType,
+          business_start_date: applicationData.businessStartDate,
+          industry: applicationData.industry,
+          time_in_business: applicationData.timeInBusiness,
+          employee_count: applicationData.employeeCount,
+          business_address: applicationData.businessAddress,
+          business_city: applicationData.businessCity,
+          business_state: applicationData.businessState,
+          business_zip_code: applicationData.businessZipCode,
+          website_url: applicationData.websiteUrl,
+          ein_number: applicationData.einNumber,
+          ownership_percentage: applicationData.ownershipPercentage,
+          bank_name: applicationData.bankName,
+          account_number: applicationData.accountNumber,
+          routing_number: applicationData.routingNumber,
+          monthly_revenue: applicationData.monthlyRevenue,
+          credit_score: applicationData.creditScore,
+          loan_amount: applicationData.loanAmount,
+          use_of_funds: applicationData.useOfFunds,
+          agree_to_terms: applicationData.agreeToTerms,
+          agree_information_correct: applicationData.agreeInformationCorrect,
+          signature: applicationData.signature,
+          application_id: applicationId,
+          webhook_url: finalWebhookUrl,
+          submission_date: new Date().toISOString()
+        });
         
       if (error) {
         console.error('Error saving to Supabase:', error);

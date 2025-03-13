@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import CustomButton from "@/components/ui/CustomButton";
 import { toast } from 'sonner';
 import { ChevronRight, DownloadIcon, Loader2 } from 'lucide-react';
-import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type Application = {
   id: number;
@@ -46,20 +45,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
       }
       
       if (data && data.length > 0) {
-        // Convert to Application type
-        const formattedData: Application[] = data.map(app => ({
-          id: app.id,
-          created_at: app.created_at,
-          application_id: app.application_id || `app_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-          first_name: app.first_name || 'Unknown',
-          last_name: app.last_name || 'User',
-          email: app.email || 'No email',
-          business_name: app.business_name || 'No business name',
-          loan_amount: app.loan_amount || 'N/A',
-          submission_date: app.submission_date || app.created_at
-        }));
-        
-        setApplications(formattedData);
+        setApplications(data);
         console.log('Fetched applications:', data);
       } else {
         // If no data, try to get from localStorage as fallback
@@ -69,7 +55,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
         if (currentAppData) {
           const parsedData = JSON.parse(currentAppData);
           if (parsedData.application_id) {
-            setApplications([parsedData as Application]);
+            setApplications([parsedData]);
             console.log('Using application from localStorage:', parsedData);
           }
         } else {

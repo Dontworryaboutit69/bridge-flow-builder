@@ -1,7 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { FileIcon, FileText, Loader2 } from 'lucide-react';
-import { GrowthPathDocumentsRow } from '@/types/supabase';
 
 type DocumentsListProps = {
   applicationId: string;
@@ -43,16 +43,7 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         
         if (data && data.length > 0) {
           console.log('Documents found in Supabase:', data);
-          const formattedDocs = data.map(doc => ({
-            id: doc.id || '',
-            document_type: doc.document_type || 'unknown',
-            document_name: doc.document_name || 'Unnamed Document',
-            file_path: doc.file_path || '',
-            created_at: doc.created_at || new Date().toISOString(),
-            file_size: doc.file_size,
-            file_type: doc.file_type
-          }));
-          setDocuments(formattedDocs);
+          setDocuments(data);
         } else {
           console.log('No documents found in Supabase, checking localStorage');
           fallbackToLocalStorage();

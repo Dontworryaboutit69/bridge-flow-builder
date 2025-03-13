@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft } from 'lucide-react';
@@ -7,26 +8,14 @@ import DocumentsList from './DocumentsList';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type AdminApplicationDetailsProps = {
   applicationId: string;
   onBack: () => void;
 };
 
-type ApplicationData = {
-  [key: string]: any;
-  id?: number;
-  created_at?: string;
-  application_id: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  // ... other fields can be added as needed
-};
-
 const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ applicationId, onBack }) => {
-  const [application, setApplication] = useState<ApplicationData | null>(null);
+  const [application, setApplication] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [exportingPdf, setExportingPdf] = useState<boolean>(false);
@@ -54,14 +43,14 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
       
       if (data) {
         console.log('Application details:', data);
-        setApplication(data as ApplicationData);
+        setApplication(data);
       } else {
         // Try to get from localStorage as a fallback
         const savedAppData = localStorage.getItem('current_application_data');
         if (savedAppData) {
           const parsedData = JSON.parse(savedAppData);
           if (parsedData.application_id === applicationId) {
-            setApplication(parsedData as ApplicationData);
+            setApplication(parsedData);
           } else {
             setError("Application not found.");
           }
@@ -297,7 +286,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
             <p className="mt-1 text-lg font-semibold text-gray-900">
               {application.submission_date 
                 ? new Date(application.submission_date).toLocaleDateString() 
-                : new Date(application.created_at || "").toLocaleDateString()}
+                : new Date(application.created_at).toLocaleDateString()}
             </p>
           </div>
           <div>
