@@ -58,8 +58,7 @@ const Index = () => {
     };
   }, []);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
+  return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
       {/* Add an invisible marker at the top to ensure scroll position is correct */}
       <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
       <Navbar />
@@ -85,8 +84,7 @@ const Index = () => {
         </section>
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
 
 export default Index;

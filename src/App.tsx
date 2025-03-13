@@ -16,36 +16,33 @@ import TrackingScripts from "./components/common/TrackingScripts";
 import AdminButton from "./components/admin/AdminButton";
 import AdminConsole from "./pages/AdminConsole";
 
-// Create the query client outside of the component
 const queryClient = new QueryClient();
 
-const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ApplicationProvider>
-        <FormProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <TrackingScripts />
-              <AdminButton />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/pre-qualification" element={<PreQualification />} />
-                <Route path="/application" element={<Application />} />
-                <Route path="/thank-you" element={<ThankYou />} />
-                <Route path="/documents" element={<DocumentCollection />} />
-                <Route path="/admin" element={<AdminConsole />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </FormProvider>
-      </ApplicationProvider>
-    </QueryClientProvider>
-  );
-};
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ApplicationProvider>
+      <FormProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <TrackingScripts />
+            <AdminButton />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/pre-qualification" element={<PreQualification />} />
+              <Route path="/application" element={<Application />} />
+              <Route path="/thank-you" element={<ThankYou />} />
+              <Route path="/documents" element={<DocumentCollection />} />
+              <Route path="/admin" element={<AdminConsole />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </FormProvider>
+    </ApplicationProvider>
+  </QueryClientProvider>
+);
 
 export default App;
