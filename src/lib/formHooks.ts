@@ -1,8 +1,26 @@
-
 import { useCallback } from 'react';
 import { FormData } from './formTypes';
 import { isStepValid as validateStep, checkQualification as validateQualification } from './formValidation';
 import { toast } from 'sonner';
+
+// Helper function to get question text for pre-qualification fields
+const getPreQualQuestionText = (field: string): string => {
+  const questions: Record<string, string> = {
+    loanAmount: "How much funding do you need?",
+    businessName: "Business Name",
+    monthlyRevenue: "Current Monthly Revenue",
+    timeInBusiness: "Time in Business",
+    creditScore: "Credit Score",
+    industry: "Industry",
+    capitalTimeframe: "When do you need the capital?",
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email Address",
+    phone: "Phone Number"
+  };
+  
+  return questions[field] || field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+};
 
 export const useFormSubmission = (
   formData: FormData,
@@ -62,19 +80,33 @@ export const useFormSubmission = (
       
       if (webhookUrl) {
         try {
+          // Format data with questions and answers for each field
+          const formattedData: Record<string, any> = {
+            form_type: 'pre_qualification',
+            submission_date: new Date().toISOString(),
+            source_url: window.location.href,
+            is_qualified: !disqualified,
+            questions_and_answers: {}
+          };
+          
+          // Add both raw data and formatted Q&A
+          Object.entries(formData).forEach(([field, value]) => {
+            // Add to the raw data
+            formattedData[field] = value;
+            
+            // Also add to the questions_and_answers object
+            if (value !== undefined && value !== null && value !== '') {
+              formattedData.questions_and_answers[getPreQualQuestionText(field)] = value;
+            }
+          });
+          
           await fetch(webhookUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             mode: 'no-cors',
-            body: JSON.stringify({
-              form_type: 'pre_qualification',
-              ...formData,
-              submission_date: new Date().toISOString(),
-              source_url: window.location.href,
-              is_qualified: !disqualified
-            }),
+            body: JSON.stringify(formattedData),
           });
           console.log('Data sent to webhook successfully');
         } catch (error) {

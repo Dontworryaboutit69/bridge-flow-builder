@@ -13,8 +13,8 @@ const AdminButton = () => {
   const [showButton, setShowButton] = useState(false);
   const location = useLocation();
 
-  // Set the Make.com webhook URL
-  const makeWebhookUrl = "https://hook.integromat.com/{{2.rpc://hook}}";
+  // Set the Zapier webhook URL
+  const zapierWebhookUrl = "";
 
   useEffect(() => {
     // Only show when specifically triggered, not by default on homepage
@@ -41,20 +41,20 @@ const AdminButton = () => {
 
   // Auto-save the webhook URL if it's not set already
   useEffect(() => {
-    if (makeWebhookUrl && (!prequalWebhookUrl || !applicationWebhookUrl)) {
+    if (zapierWebhookUrl && (!prequalWebhookUrl || !applicationWebhookUrl)) {
       // Add a small delay to ensure contexts are properly initialized
       const timer = setTimeout(() => {
-        setPrequalWebhookUrl(makeWebhookUrl);
-        setApplicationWebhookUrl(makeWebhookUrl);
+        setPrequalWebhookUrl(zapierWebhookUrl);
+        setApplicationWebhookUrl(zapierWebhookUrl);
         
         // Save to localStorage for persistence
-        localStorage.setItem('prequalify_webhook', makeWebhookUrl);
-        localStorage.setItem('application_webhook', makeWebhookUrl);
+        localStorage.setItem('prequalify_webhook', zapierWebhookUrl);
+        localStorage.setItem('application_webhook', zapierWebhookUrl);
       }, 500);
       
       return () => clearTimeout(timer);
     }
-  }, [makeWebhookUrl, prequalWebhookUrl, applicationWebhookUrl, setPrequalWebhookUrl, setApplicationWebhookUrl]);
+  }, [zapierWebhookUrl, prequalWebhookUrl, applicationWebhookUrl, setPrequalWebhookUrl, setApplicationWebhookUrl]);
 
   if (!showButton) return null;
 
@@ -62,8 +62,8 @@ const AdminButton = () => {
     <div className="fixed top-20 right-5 z-50">
       <div className="bg-white p-3 rounded-lg shadow-lg">
         <ZapierSettings
-          prequalWebhookUrl={prequalWebhookUrl || makeWebhookUrl}
-          applicationWebhookUrl={applicationWebhookUrl || makeWebhookUrl}
+          prequalWebhookUrl={prequalWebhookUrl || zapierWebhookUrl}
+          applicationWebhookUrl={applicationWebhookUrl || zapierWebhookUrl}
           setPrequalWebhookUrl={setPrequalWebhookUrl}
           setApplicationWebhookUrl={setApplicationWebhookUrl}
         />

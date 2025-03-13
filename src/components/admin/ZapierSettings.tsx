@@ -67,28 +67,28 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
         <DialogHeader>
           <DialogTitle>Integration Settings</DialogTitle>
           <DialogDescription>
-            Configure webhook URLs to connect with your CRM and Google Drive via Make.com
+            Configure webhook URLs to connect with your CRM and Google Drive via Zapier
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
           <div className="bg-blue-50 p-4 rounded-md mb-4 text-sm">
-            <h3 className="font-bold text-blue-800 mb-1">How to set up Make.com webhooks:</h3>
+            <h3 className="font-bold text-blue-800 mb-1">How to set up Zapier webhooks:</h3>
             <ol className="list-decimal pl-5 space-y-1 text-blue-700">
-              <li>Log in to Make.com and create a new scenario</li>
-              <li>Add a "Webhooks" trigger as your first module</li>
-              <li>Select "Custom webhook" option</li>
-              <li>Copy the webhook URL and paste it below</li>
-              <li>Configure your Make.com scenario to process the received data</li>
+              <li>Log in to Zapier and create a new Zap</li>
+              <li>Choose "Webhooks by Zapier" as your trigger app</li>
+              <li>Select "Catch Hook" as the trigger event</li>
+              <li>Copy the webhook URL that Zapier provides and paste it below</li>
+              <li>Configure your Zap actions to process the received data</li>
             </ol>
             <div className="mt-2">
               <a 
-                href="https://www.make.com/en/help/tools/webhooks" 
+                href="https://zapier.com/help/create/code-webhooks/trigger-zaps-from-webhooks" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 flex items-center"
               >
-                View Make.com webhook instructions
+                View Zapier webhook instructions
                 <ExternalLink className="h-3 w-3 ml-1" />
               </a>
             </div>
@@ -100,7 +100,7 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
               id="prequalUrl"
               value={prequalUrl}
               onChange={(e) => setPrequalUrl(e.target.value)}
-              placeholder="https://hook.make.com/..."
+              placeholder="https://hooks.zapier.com/hooks/catch/..."
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
@@ -114,7 +114,7 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
               id="applicationUrl"
               value={applicationUrl}
               onChange={(e) => setApplicationUrl(e.target.value)}
-              placeholder="https://hook.make.com/..."
+              placeholder="https://hooks.zapier.com/hooks/catch/..."
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
