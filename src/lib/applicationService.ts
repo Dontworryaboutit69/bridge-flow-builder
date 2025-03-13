@@ -20,6 +20,10 @@ export const submitApplicationData = async (
     if (webhookUrl) {
       try {
         console.log('Sending application data to webhook:', webhookUrl);
+        
+        // Clean the webhook URL if it's the Make.com format with placeholders
+        const cleanWebhookUrl = webhookUrl.replace('{{2.rpc://hook}}', '');
+        
         const response = await fetch(webhookUrl, {
           method: 'POST',
           headers: {
