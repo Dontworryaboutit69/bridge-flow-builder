@@ -4,16 +4,40 @@ import { Button } from "@/components/ui/button";
 import { Settings } from 'lucide-react';
 import ZapierSettings from './ZapierSettings';
 import { useForm } from '@/lib/formContext';
-import { useApplication } from '@/lib/applicationContext';
+import { useApplication, DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
 import { useLocation } from 'react-router-dom';
 
-const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
-
 const AdminButton = () => {
-  const { zapierWebhookUrl: prequalWebhookUrl, setZapierWebhookUrl: setPrequalWebhookUrl } = useForm();
-  const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
-  const [showButton, setShowButton] = useState(false);
   const location = useLocation();
+  const [showButton, setShowButton] = useState(false);
+  
+  // Access form context conditionally to avoid errors when not in form context
+  const formContext = React.useMemo(() => {
+    try {
+      return useForm();
+    } catch (e) {
+      return {
+        zapierWebhookUrl: localStorage.getItem('prequalify_webhook') || DEFAULT_WEBHOOK_URL,
+        setZapierWebhookUrl: (url: string) => {
+          localStorage.setItem('prequalify_webhook', url);
+        }
+      };
+    }
+  }, []);
+  
+  // Access application context conditionally to avoid errors when not in application context
+  const applicationContext = React.useMemo(() => {
+    try {
+      return useApplication();
+    } catch (e) {
+      return {
+        zapierWebhookUrl: localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL,
+        setZapierWebhookUrl: (url: string) => {
+          localStorage.setItem('application_webhook', url);
+        }
+      };
+    }
+  }, []);
 
   useEffect(() => {
     // Only show when specifically triggered, not by default on homepage
@@ -42,21 +66,24 @@ const AdminButton = () => {
   useEffect(() => {
     // Add a small delay to ensure contexts are properly initialized
     const timer = setTimeout(() => {
+      const prequalWebhookUrl = formContext.zapierWebhookUrl;
+      const applicationWebhookUrl = applicationContext.zapierWebhookUrl;
+      
       if (!prequalWebhookUrl || prequalWebhookUrl === '') {
         console.log("Setting default prequalification webhook URL:", DEFAULT_WEBHOOK_URL);
-        setPrequalWebhookUrl(DEFAULT_WEBHOOK_URL);
+        formContext.setZapierWebhookUrl(DEFAULT_WEBHOOK_URL);
         localStorage.setItem('prequalify_webhook', DEFAULT_WEBHOOK_URL);
       }
       
       if (!applicationWebhookUrl || applicationWebhookUrl === '') {
         console.log("Setting default application webhook URL:", DEFAULT_WEBHOOK_URL);
-        setApplicationWebhookUrl(DEFAULT_WEBHOOK_URL);
+        applicationContext.setZapierWebhookUrl(DEFAULT_WEBHOOK_URL);
         localStorage.setItem('application_webhook', DEFAULT_WEBHOOK_URL);
       }
     }, 500);
     
     return () => clearTimeout(timer);
-  }, [prequalWebhookUrl, applicationWebhookUrl, setPrequalWebhookUrl, setApplicationWebhookUrl]);
+  }, [formContext, applicationContext]);
 
   if (!showButton) return null;
 
@@ -64,10 +91,10 @@ const AdminButton = () => {
     <div className="fixed top-20 right-5 z-50">
       <div className="bg-white p-3 rounded-lg shadow-lg">
         <ZapierSettings
-          prequalWebhookUrl={prequalWebhookUrl || DEFAULT_WEBHOOK_URL}
-          applicationWebhookUrl={applicationWebhookUrl || DEFAULT_WEBHOOK_URL}
-          setPrequalWebhookUrl={setPrequalWebhookUrl}
-          setApplicationWebhookUrl={setApplicationWebhookUrl}
+          prequalWebhookUrl={formContext.zapierWebhookUrl || DEFAULT_WEBHOOK_URL}
+          applicationWebhookUrl={applicationContext.zapierWebhookUrl || DEFAULT_WEBHOOK_URL}
+          setPrequalWebhookUrl={formContext.setZapierWebhookUrl}
+          setApplicationWebhookUrl={applicationContext.setZapierWebhookUrl}
         />
       </div>
     </div>

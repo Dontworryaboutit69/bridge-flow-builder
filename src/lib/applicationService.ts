@@ -1,67 +1,18 @@
 
 import { ApplicationData } from './applicationTypes';
 import { toast } from "sonner";
-
-// Helper function to get question text for a field
-const getQuestionText = (field: string): string => {
-  const questions: Record<string, string> = {
-    // Personal information
-    firstName: "First Name",
-    lastName: "Last Name",
-    email: "Email Address",
-    phone: "Phone Number",
-    address: "Street Address",
-    city: "City",
-    state: "State",
-    zipCode: "ZIP Code",
-    dateOfBirth: "Date of Birth",
-    ssn: "Social Security Number",
-    
-    // Business information
-    businessName: "Business Name",
-    businessType: "Business Type",
-    einNumber: "EIN Number",
-    ownershipPercentage: "Ownership Percentage",
-    businessStartDate: "Business Start Date",
-    businessAddress: "Business Street Address",
-    businessCity: "Business City",
-    businessState: "Business State",
-    businessZipCode: "Business ZIP Code",
-    employeeCount: "Number of Employees",
-    
-    // Financial information
-    monthlyRevenue: "Monthly Revenue",
-    creditScore: "Credit Score",
-    loanAmount: "Funding Amount Needed",
-    useOfFunds: "Primary Use of Funds",
-    bankName: "Bank Name",
-    accountType: "Account Type",
-    accountLength: "Account Length",
-    hasTaxLiens: "Has Tax Liens",
-    hasOtherLoans: "Has Other Loans",
-    
-    // Pre-qualification specific fields
-    industry: "Industry",
-    timeInBusiness: "Time in Business",
-    capitalTimeframe: "Capital Timeframe",
-    
-    // Application specific
-    signature: "Digital Signature"
-  };
-  
-  return questions[field] || field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-};
+import { DEFAULT_WEBHOOK_URL } from './applicationContext';
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
-  webhookUrl: string = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/"
+  webhookUrl: string = DEFAULT_WEBHOOK_URL
 ): Promise<boolean> => {
   try {
     // Log the application data
     console.log('Application submitted with data:', applicationData);
     
     // Use default webhook URL if none provided
-    const finalWebhookUrl = webhookUrl || "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
+    const finalWebhookUrl = webhookUrl || DEFAULT_WEBHOOK_URL;
     
     // Save webhook URL to localStorage
     localStorage.setItem('application_webhook', finalWebhookUrl);
@@ -85,8 +36,9 @@ export const submitApplicationData = async (
     // Send data to webhook
     try {
       console.log('Sending application data to webhook:', finalWebhookUrl);
+      console.log('Payload:', JSON.stringify(formattedData));
       
-      const response = await fetch(finalWebhookUrl, {
+      await fetch(finalWebhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

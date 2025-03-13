@@ -1,13 +1,12 @@
 
 import React from 'react';
-import { ArrowRight, FileCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import DocumentUploadItem from './DocumentUploadItem';
 import { toast } from '@/hooks/use-toast';
 import { Document } from '@/types/documents';
 import { useNavigate } from 'react-router-dom';
-
-const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
+import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
 
 type DocumentUploadListProps = {
   documents: Document[];

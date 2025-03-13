@@ -1,17 +1,18 @@
 
+import React, { useState, useEffect } from 'react';
 import { ApplicationProvider } from '@/lib/applicationContext';
 import { useApplication } from '@/lib/applicationContext';
 import Navbar from '@/components/Navbar';
-import Logo from '@/components/Logo';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PersonalInfo from '@/components/ApplicationSteps/PersonalInfo';
 import BusinessInfo from '@/components/ApplicationSteps/BusinessInfo';
 import FinancialInfo from '@/components/ApplicationSteps/FinancialInfo';
 import ReviewSubmit from '@/components/ApplicationSteps/ReviewSubmit';
-import { Phone, Mail, MapPin } from 'lucide-react';
-import { useForm, FormProvider } from '@/lib/formContext';
+import { Phone } from 'lucide-react';
+import { FormProvider } from '@/lib/formContext';
 import ZapierSettings from '@/components/admin/ZapierSettings';
-import { useState, useEffect } from 'react';
+import { useForm } from '@/lib/formContext';
+import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
 
 const ProgressBar = () => {
   const { currentStep, totalSteps } = useApplication();
@@ -121,9 +122,27 @@ const SimplifiedFooter = () => {
 };
 
 const Application = () => {
-  const formContext = useForm();
-  
   const [isAdmin, setIsAdmin] = useState(false);
+  
+  // Initialize webhook URLs with defaults
+  const [prequalWebhookUrl, setPrequalWebhookUrl] = useState<string>(
+    localStorage.getItem('prequalify_webhook') || DEFAULT_WEBHOOK_URL
+  );
+  const [applicationWebhookUrl, setApplicationWebhookUrl] = useState<string>(
+    localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL
+  );
+  
+  // Ensure webhook URL is set on load
+  useEffect(() => {
+    if (!prequalWebhookUrl) {
+      setPrequalWebhookUrl(DEFAULT_WEBHOOK_URL);
+      localStorage.setItem('prequalify_webhook', DEFAULT_WEBHOOK_URL);
+    }
+    if (!applicationWebhookUrl) {
+      setApplicationWebhookUrl(DEFAULT_WEBHOOK_URL);
+      localStorage.setItem('application_webhook', DEFAULT_WEBHOOK_URL);
+    }
+  }, [prequalWebhookUrl, applicationWebhookUrl]);
   
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -131,7 +150,6 @@ const Application = () => {
   }, []);
   
   return (
-    // Wrap with FormProvider to ensure pre-qualification data is accessible
     <FormProvider>
       <ApplicationProvider>
         <div className="min-h-screen flex flex-col">
@@ -148,10 +166,16 @@ const Application = () => {
               {isAdmin && (
                 <div className="mb-4 flex justify-end">
                   <ZapierSettings 
-                    prequalWebhookUrl={formContext.zapierWebhookUrl}
-                    applicationWebhookUrl={useApplication().zapierWebhookUrl}
-                    setPrequalWebhookUrl={formContext.setZapierWebhookUrl}
-                    setApplicationWebhookUrl={useApplication().setZapierWebhookUrl}
+                    prequalWebhookUrl={prequalWebhookUrl}
+                    applicationWebhookUrl={applicationWebhookUrl}
+                    setPrequalWebhookUrl={(url) => {
+                      setPrequalWebhookUrl(url);
+                      localStorage.setItem('prequalify_webhook', url);
+                    }}
+                    setApplicationWebhookUrl={(url) => {
+                      setApplicationWebhookUrl(url);
+                      localStorage.setItem('application_webhook', url);
+                    }}
                   />
                 </div>
               )}

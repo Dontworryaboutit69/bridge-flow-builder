@@ -10,7 +10,8 @@ import { submitApplicationData } from './applicationService';
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
 
-const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
+// Define the default webhook URL that will be used if none is specified
+export const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
 
 export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,6 +22,14 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL
   );
   const totalSteps = 4;
+
+  // Make sure the webhook URL is never empty
+  useEffect(() => {
+    if (!zapierWebhookUrl) {
+      setZapierWebhookUrl(DEFAULT_WEBHOOK_URL);
+      localStorage.setItem('application_webhook', DEFAULT_WEBHOOK_URL);
+    }
+  }, [zapierWebhookUrl]);
 
   const updateApplicationData = (data: Partial<ApplicationData>) => {
     setApplicationData(prev => ({ ...prev, ...data }));
