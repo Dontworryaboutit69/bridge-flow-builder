@@ -1,3 +1,4 @@
+
 import { Shield, Clock, Award, BarChart } from 'lucide-react';
 const TrustIndicators = () => {
   return <section className="py-16 bg-funding-light-gray/50 bg-gray-100">
@@ -73,11 +74,11 @@ const TrustIndicators = () => {
                 <span className="text-3xl font-bold text-funding-blue">24 hrs</span>
                 <span className="text-sm text-funding-gray mt-1">Average Approval Time</span>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center mx-auto sm:mx-0">
                 <span className="text-3xl font-bold text-funding-blue">$57k</span>
                 <span className="text-sm text-funding-gray mt-1">Average Funding Amount</span>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center mx-auto sm:mx-0">
                 <span className="text-3xl font-bold text-funding-blue">4.9/5</span>
                 <span className="text-sm text-funding-gray mt-1">Customer Rating</span>
               </div>
