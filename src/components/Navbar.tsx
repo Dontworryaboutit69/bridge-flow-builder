@@ -1,5 +1,7 @@
+
 import React from 'react';
 import Logo from './Logo';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -8,15 +10,14 @@ const Navbar = () => {
         <div className="flex items-center">
           <Logo />
           <nav className="hidden md:flex ml-10 space-x-8">
-            <a href="/" className="text-gray-900 hover:text-funding-blue">
+            <Link to="/" className="text-gray-900 hover:text-funding-blue">
               Home
-            </a>
-            <a href="/admin" className="text-gray-900 hover:text-funding-blue">
+            </Link>
+            <Link to="/admin" className="text-gray-900 hover:text-funding-blue">
               Admin Console
-            </a>
+            </Link>
           </nav>
         </div>
-        
       </div>
     </header>
   );
