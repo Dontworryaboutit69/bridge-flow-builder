@@ -21,7 +21,7 @@ export const submitApplicationData = async (
     
     console.log('Using webhook URL:', finalWebhookUrl);
     
-    // Save application data to Supabase
+    // Save application data to Supabase using type-safe approach
     const { data: applicationRecord, error: supabaseError } = await supabase
       .from('applications')
       .insert({
@@ -69,18 +69,17 @@ export const submitApplicationData = async (
         // Webhook URL for reference
         zapier_webhook_url: finalWebhookUrl
       })
-      .select('id')
-      .single();
+      .select();
       
     if (supabaseError) {
       console.error('Error saving application to Supabase:', supabaseError);
       toast("Application sent to Zapier, but there was an issue with database storage");
     } else {
-      console.log('Application data saved to Supabase successfully with ID:', applicationRecord?.id);
+      console.log('Application data saved to Supabase successfully with ID:', applicationRecord?.[0]?.id);
       
       // Store the application ID in localStorage for later reference (e.g., document uploads)
-      if (applicationRecord?.id) {
-        localStorage.setItem('current_application_id', applicationRecord.id);
+      if (applicationRecord && applicationRecord.length > 0) {
+        localStorage.setItem('current_application_id', applicationRecord[0].id);
       }
     }
     

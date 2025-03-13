@@ -67,7 +67,7 @@ const DocumentUploadList = ({
                   application_id: applicationId,
                   document_type: doc.id,
                   document_name: file.name,
-                  file_path: file.path || `${doc.id}/${file.name}` // Using a constructed path if real path not available
+                  file_path: `${doc.id}/${file.name}` // Constructed path since File objects don't have a path property
                 });
                 
               if (error) {

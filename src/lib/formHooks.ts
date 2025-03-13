@@ -80,7 +80,7 @@ export const useFormSubmission = (
         localStorage.setItem('prequalify_webhook', webhookUrl);
       }
       
-      // Save data to Supabase
+      // Save data to Supabase using type-safe approach
       const { error: supabaseError } = await supabase
         .from('prequalifications')
         .insert({
