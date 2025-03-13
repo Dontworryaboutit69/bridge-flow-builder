@@ -32,6 +32,7 @@ export type Database = {
           email: string | null
           employee_count: string | null
           first_name: string | null
+          form_type: string | null
           id: number
           industry: string | null
           last_name: string | null
@@ -42,9 +43,12 @@ export type Database = {
           routing_number: string | null
           signature: string | null
           social_security_number: string | null
+          source_url: string | null
           state: string | null
+          status: string | null
           submission_date: string | null
           time_in_business: string | null
+          updated_at: string | null
           use_of_funds: string | null
           webhook_url: string | null
           website_url: string | null
@@ -72,6 +76,7 @@ export type Database = {
           email?: string | null
           employee_count?: string | null
           first_name?: string | null
+          form_type?: string | null
           id?: number
           industry?: string | null
           last_name?: string | null
@@ -82,9 +87,12 @@ export type Database = {
           routing_number?: string | null
           signature?: string | null
           social_security_number?: string | null
+          source_url?: string | null
           state?: string | null
+          status?: string | null
           submission_date?: string | null
           time_in_business?: string | null
+          updated_at?: string | null
           use_of_funds?: string | null
           webhook_url?: string | null
           website_url?: string | null
@@ -112,6 +120,7 @@ export type Database = {
           email?: string | null
           employee_count?: string | null
           first_name?: string | null
+          form_type?: string | null
           id?: number
           industry?: string | null
           last_name?: string | null
@@ -122,9 +131,12 @@ export type Database = {
           routing_number?: string | null
           signature?: string | null
           social_security_number?: string | null
+          source_url?: string | null
           state?: string | null
+          status?: string | null
           submission_date?: string | null
           time_in_business?: string | null
+          updated_at?: string | null
           use_of_funds?: string | null
           webhook_url?: string | null
           website_url?: string | null
