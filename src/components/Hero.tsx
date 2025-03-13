@@ -1,10 +1,9 @@
-
 import { ChevronRight, Phone, Shield, Check } from 'lucide-react';
 import CustomButton from './ui/CustomButton';
 
 const Hero = () => {
   return (
-    <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+    <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
       {/* Enhanced background effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-funding-blue/5 to-white"></div>
@@ -123,3 +122,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
