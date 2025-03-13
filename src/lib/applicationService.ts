@@ -2,7 +2,6 @@ import { ApplicationData } from './applicationTypes';
 import { toast } from "sonner";
 import { DEFAULT_WEBHOOK_URL } from './applicationContext';
 import { supabase } from "@/integrations/supabase/client";
-import { GrowthPathApplicationRow } from '@/types/supabase';
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
@@ -94,7 +93,7 @@ export const submitApplicationData = async (
     try {
       console.log('Saving application data to Supabase...');
       
-      const insertData: Partial<GrowthPathApplicationRow> = {
+      const insertData = {
         first_name: applicationData.firstName,
         last_name: applicationData.lastName,
         email: applicationData.email,

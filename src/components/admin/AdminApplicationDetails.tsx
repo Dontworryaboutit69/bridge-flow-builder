@@ -7,7 +7,6 @@ import DocumentsList from './DocumentsList';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type AdminApplicationDetailsProps = {
   applicationId: string;
@@ -45,7 +44,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         .from('GrowthPath Application')
         .select('*')
         .eq('application_id', applicationId)
-        .single() as { data: GrowthPathApplicationRow | null, error: any };
+        .single();
       
       if (error) {
         console.error('Error fetching application details:', error);
@@ -297,7 +296,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
             <p className="mt-1 text-lg font-semibold text-gray-900">
               {application.submission_date 
                 ? new Date(application.submission_date).toLocaleDateString() 
-                : new Date(application.created_at).toLocaleDateString()}
+                : new Date(application.created_at || "").toLocaleDateString()}
             </p>
           </div>
           <div>

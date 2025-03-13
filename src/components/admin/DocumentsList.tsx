@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { FileIcon, FileText, Loader2 } from 'lucide-react';
@@ -29,26 +30,26 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         setLoading(true);
         
         // Try to fetch from Supabase first
-        const { data: documentsData, error: documentsError } = await supabase
+        const { data, error } = await supabase
           .from('GrowthPath Documents Table')
           .select('*')
-          .eq('application_id', applicationId) as { data: GrowthPathDocumentsRow[] | null, error: any };
+          .eq('application_id', applicationId);
         
-        if (documentsError) {
-          console.error('Supabase error:', documentsError);
+        if (error) {
+          console.error('Supabase error:', error);
           // Fall back to localStorage
           fallbackToLocalStorage();
           return;
         }
         
-        if (documentsData && documentsData.length > 0) {
-          console.log('Documents found in Supabase:', documentsData);
-          const formattedDocs = documentsData.map(doc => ({
-            id: doc.id,
+        if (data && data.length > 0) {
+          console.log('Documents found in Supabase:', data);
+          const formattedDocs = data.map(doc => ({
+            id: doc.id || '',
             document_type: doc.document_type || 'unknown',
             document_name: doc.document_name || 'Unnamed Document',
             file_path: doc.file_path || '',
-            created_at: doc.created_at,
+            created_at: doc.created_at || new Date().toISOString(),
             file_size: doc.file_size,
             file_type: doc.file_type
           }));
@@ -206,3 +207,4 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
 };
 
 export default DocumentsList;
+
