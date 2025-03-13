@@ -15,9 +15,10 @@ const NotFound = () => {
 
     // If this is an admin route, try to redirect to the admin login
     if (location.pathname.includes('/admin')) {
-      // Give the browser a moment to potentially handle the redirect
+      // Use absolute URL to ensure correct routing in production
+      const baseUrl = window.location.origin;
       const timer = setTimeout(() => {
-        window.location.href = '/admin';
+        window.location.href = `${baseUrl}/admin`;
       }, 100);
       
       return () => clearTimeout(timer);
