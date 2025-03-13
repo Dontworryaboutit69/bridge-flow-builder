@@ -12,18 +12,14 @@ const AdminButton = () => {
   const { zapierWebhookUrl: applicationWebhookUrl, setZapierWebhookUrl: setApplicationWebhookUrl } = useApplication();
   const [showButton, setShowButton] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   // Set the Make.com webhook URL
   const makeWebhookUrl = "https://hook.integromat.com/{{2.rpc://hook}}";
 
   useEffect(() => {
-    // Always show on homepage
-    if (isHomePage) {
-      setShowButton(true);
-    }
-
-    // Also check for special keyboard combination (Shift + Ctrl + A)
+    // Only show when specifically triggered, not by default on homepage
+    
+    // Check for special keyboard combination (Shift + Ctrl + A)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.shiftKey && e.ctrlKey && e.key === 'A') {
         setShowButton(prev => !prev);
@@ -41,7 +37,7 @@ const AdminButton = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isHomePage]);
+  }, []);
 
   // Auto-save the webhook URL if it's not set already
   useEffect(() => {
