@@ -39,6 +39,7 @@ export type ApplicationData = {
   // Documentation Agreement
   agreeToTerms: boolean;
   agreeInformationCorrect: boolean;
+  signature: string;
 };
 
 export type ApplicationContextType = {
@@ -97,4 +98,5 @@ export const initialApplicationData: ApplicationData = {
   // Documentation Agreement
   agreeToTerms: false,
   agreeInformationCorrect: false,
+  signature: '',
 };

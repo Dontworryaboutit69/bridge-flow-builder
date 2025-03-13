@@ -2,8 +2,9 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../ui/CustomButton';
 import { ArrowLeft, Check, CalendarClock } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '../ui/input';
 
 const ReviewSubmit = () => {
   const { 
@@ -194,6 +195,35 @@ const ReviewSubmit = () => {
               </div>
             </div>
             
+            <div className="glass-card p-6 md:p-8 bg-white border-t-4 border-funding-blue">
+              <h3 className="text-lg font-medium text-funding-dark mb-4 flex items-center">
+                <div className="w-6 h-6 rounded-full bg-funding-blue/10 text-funding-blue flex items-center justify-center mr-2">
+                  <span className="text-sm font-medium">4</span>
+                </div>
+                Digital Signature
+              </h3>
+              
+              <div className="space-y-4">
+                <p className="text-sm text-funding-gray">
+                  By typing your full name below, you are electronically signing this application.
+                </p>
+                
+                <div className="space-y-2">
+                  <label htmlFor="signature" className="block text-sm font-medium text-funding-dark">
+                    Full Name (as signature)
+                  </label>
+                  <Input
+                    id="signature"
+                    type="text"
+                    placeholder="Type your full legal name"
+                    value={applicationData.signature}
+                    onChange={(e) => updateApplicationData({ signature: e.target.value })}
+                    className="w-full border border-funding-light-gray focus:border-funding-blue"
+                  />
+                </div>
+              </div>
+            </div>
+            
             <div className="p-6 bg-yellow-50 border border-yellow-100 rounded-lg">
               <div className="flex items-start space-x-2">
                 <div className="flex-shrink-0 pt-0.5">
@@ -265,7 +295,7 @@ const ReviewSubmit = () => {
             </CustomButton>
             <CustomButton 
               onClick={submitApplication}
-              disabled={!isStepValid() || isSubmitting}
+              disabled={!isStepValid() || isSubmitting || !applicationData.signature}
               className="group"
               isLoading={isSubmitting}
               size="md"

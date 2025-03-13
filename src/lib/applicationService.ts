@@ -43,7 +43,10 @@ const getQuestionText = (field: string): string => {
     // Pre-qualification specific fields
     industry: "Industry",
     timeInBusiness: "Time in Business",
-    capitalTimeframe: "Capital Timeframe"
+    capitalTimeframe: "Capital Timeframe",
+    
+    // Application specific
+    signature: "Digital Signature"
   };
   
   return questions[field] || field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
@@ -63,23 +66,17 @@ export const submitApplicationData = async (
       localStorage.setItem('prequalify_webhook', webhookUrl); // Use the same webhook for both forms
     }
     
-    // Format data with questions and answers for each field
+    // Format data to send only the raw values without questions
     const formattedData: Record<string, any> = {
       form_type: 'full_application',
       submission_date: new Date().toISOString(),
       source_url: window.location.href,
-      questions_and_answers: {}
     };
     
-    // Add both raw data and formatted Q&A
+    // Add raw data (without questions and answers format)
     Object.entries(applicationData).forEach(([field, value]) => {
       // Add to the raw data
       formattedData[field] = value;
-      
-      // Also add to the questions_and_answers object
-      if (value !== undefined && value !== null && value !== '') {
-        formattedData.questions_and_answers[getQuestionText(field)] = value;
-      }
     });
     
     // Send data to webhook if URL is available
