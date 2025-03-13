@@ -14,7 +14,7 @@ const AdminButton = () => {
   const location = useLocation();
 
   // Set the Zapier webhook URL
-  const zapierWebhookUrl = "";
+  const zapierWebhookUrl = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
 
   useEffect(() => {
     // Only show when specifically triggered, not by default on homepage

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, FileCheck } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -20,7 +19,7 @@ const DocumentUploadList = ({
   uploadingId, 
   handleUpload, 
   onSubmitDocuments,
-  webhookUrl
+  webhookUrl = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/"
 }: DocumentUploadListProps) => {
   const navigate = useNavigate();
   
@@ -78,7 +77,7 @@ const DocumentUploadList = ({
           console.error('Error sending document data to webhook:', error);
           toast({
             title: "Warning",
-            description: "Error connecting to Make.com, but documents saved locally",
+            description: "Error connecting to Zapier, but documents saved locally",
             variant: "destructive",
           });
         }

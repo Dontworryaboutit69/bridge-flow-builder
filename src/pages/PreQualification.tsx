@@ -5,12 +5,14 @@ import Navbar from "@/components/Navbar";
 import { useForm, FormProvider } from "@/lib/formContext";
 import { useApplication } from "@/lib/applicationContext";
 import { useState, useEffect } from "react";
+import AdminButton from "@/components/admin/AdminButton";
 
 const PreQualification = () => {
   return (
     <FormProvider>
       <div className="flex flex-col min-h-screen">
         <Navbar />
+        <AdminButton />
         
         <main className="flex-grow pt-24">
           <ProgressiveForm />
