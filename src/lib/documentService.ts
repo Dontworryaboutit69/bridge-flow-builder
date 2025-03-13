@@ -11,12 +11,6 @@ export type Document = {
 
 export const fetchDocumentsForApplication = async (applicationId: string): Promise<Document[]> => {
   try {
-    console.log('Fetching documents for application:', applicationId);
-    if (!applicationId) {
-      console.error('Invalid application ID provided');
-      return [];
-    }
-    
     // Try to fetch from Supabase
     const { data, error } = await supabase
       .from('GrowthPath Documents Table')
@@ -29,7 +23,6 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     }
     
     if (data && data.length > 0) {
-      console.log('Documents found:', data.length);
       // Convert the data to match our Document type
       return data.map(doc => ({
         id: doc.id.toString(),
@@ -40,12 +33,9 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
       }));
     }
     
-    console.log('No documents found for application:', applicationId);
-    // If no documents found, return empty array
     return [];
   } catch (err) {
     console.error('Error fetching documents:', err);
-    // Re-throw the error to be handled by the calling function
     throw err;
   }
 };
