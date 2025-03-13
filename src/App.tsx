@@ -14,6 +14,7 @@ import DocumentCollection from "./pages/DocumentCollection";
 import PreQualification from "./pages/PreQualification";
 import TrackingScripts from "./components/common/TrackingScripts";
 import AdminButton from "./components/admin/AdminButton";
+import AdminLogin from "./pages/AdminLogin";
 import AdminConsole from "./pages/AdminConsole";
 
 const queryClient = new QueryClient();
@@ -34,7 +35,8 @@ const App = () => (
               <Route path="/application" element={<Application />} />
               <Route path="/thank-you" element={<ThankYou />} />
               <Route path="/documents" element={<DocumentCollection />} />
-              <Route path="/admin" element={<AdminConsole />} />
+              <Route path="/admin" element={<AdminLogin />} />
+              <Route path="/admin/console" element={<AdminConsole />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -23,38 +23,19 @@ const AdminConsole = () => {
       const adminToken = localStorage.getItem('admin_token');
       if (adminToken) {
         setIsLoggedIn(true);
+      } else {
+        // Redirect to admin login if not logged in
+        navigate('/admin');
       }
     };
     
     checkAdminLogin();
-  }, []);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      // For demo purposes, we'll use a simple admin check
-      // In production, you should use proper authentication
-      if (email === 'admin@example.com' && password === 'admin123') {
-        localStorage.setItem('admin_token', 'demo_admin_token');
-        setIsLoggedIn(true);
-        toast("Admin login successful");
-      } else {
-        toast("Invalid credentials");
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      toast("Login failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     setIsLoggedIn(false);
-    setSelectedApplicationId(null);
+    navigate('/admin');
   };
 
   const handleApplicationSelect = (applicationId: string) => {
@@ -65,63 +46,11 @@ const AdminConsole = () => {
     setSelectedApplicationId(null);
   };
 
-  // If not logged in, show the login form
+  // If not logged in, show loading while redirecting
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Admin Login
-          </h2>
-        </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <CustomButton
-                  type="submit"
-                  className="w-full"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Logging in...' : 'Login'}
-                </CustomButton>
-              </div>
-            </form>
-            
-            <div className="mt-6">
-              <div className="text-sm text-center">
-                <span className="text-gray-500">Default credentials:</span>
-                <p>Email: admin@example.com</p>
-                <p>Password: admin123</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-funding-blue"></div>
       </div>
     );
   }
