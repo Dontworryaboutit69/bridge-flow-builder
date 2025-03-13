@@ -12,6 +12,16 @@ const NotFound = () => {
       "404 Error: User attempted to access non-existent route:",
       location.pathname
     );
+
+    // If this is an admin route, try to redirect to the admin login
+    if (location.pathname.includes('/admin')) {
+      // Give the browser a moment to potentially handle the redirect
+      const timer = setTimeout(() => {
+        window.location.href = '/admin';
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
   }, [location.pathname]);
 
   // Check if the error is related to the admin path
