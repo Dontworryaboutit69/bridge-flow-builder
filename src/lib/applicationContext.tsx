@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   ApplicationData, 
   ApplicationContextType, 
@@ -10,7 +9,6 @@ import { submitApplicationData } from './applicationService';
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
 
-// Define the default webhook URL that will be used if none is specified
 export const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
 
 export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -23,7 +21,6 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   );
   const totalSteps = 4;
 
-  // Make sure the webhook URL is never empty
   useEffect(() => {
     if (!zapierWebhookUrl) {
       setZapierWebhookUrl(DEFAULT_WEBHOOK_URL);
@@ -56,7 +53,6 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const submitApplication = async () => {
     setIsSubmitting(true);
     try {
-      // Ensure we have a webhook URL
       const webhookToUse = zapierWebhookUrl || DEFAULT_WEBHOOK_URL;
       console.log("Using webhook URL for submission:", webhookToUse);
       
