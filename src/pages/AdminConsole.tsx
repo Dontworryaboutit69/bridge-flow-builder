@@ -1,20 +1,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import CustomButton from "@/components/ui/CustomButton";
 import { toast } from 'sonner';
-import AdminApplicationsTable from '@/components/admin/AdminApplicationsTable';
-import AdminApplicationDetails from '@/components/admin/AdminApplicationDetails';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  LayoutDashboard, 
+  Users, 
+  FileText, 
+  Settings,
+  ChevronRight,
+  Bell
+} from 'lucide-react';
+import AdminDashboard from '@/components/admin/AdminDashboard';
+import AdminApplicationsList from '@/components/admin/AdminApplicationsList';
+import AdminDocumentsList from '@/components/admin/AdminDocumentsList';
+import AdminSettings from '@/components/admin/AdminSettings';
 
 const AdminConsole = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Check if admin is logged in
@@ -35,7 +44,6 @@ const AdminConsole = () => {
     
     try {
       // For demo purposes, we'll use a simple admin check
-      // In production, you should use proper authentication
       if (email === 'admin@example.com' && password === 'admin123') {
         localStorage.setItem('admin_token', 'demo_admin_token');
         setIsLoggedIn(true);
@@ -54,15 +62,6 @@ const AdminConsole = () => {
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     setIsLoggedIn(false);
-    setSelectedApplicationId(null);
-  };
-
-  const handleApplicationSelect = (applicationId: string) => {
-    setSelectedApplicationId(applicationId);
-  };
-
-  const handleBackToList = () => {
-    setSelectedApplicationId(null);
   };
 
   // If not logged in, show the login form
@@ -128,20 +127,60 @@ const AdminConsole = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">GrowthPath Admin Console</h1>
-          <CustomButton onClick={handleLogout} variant="outline">Logout</CustomButton>
+      <div className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-gray-900">GrowthPath Admin Console</h1>
+            </div>
+            <div className="flex items-center">
+              <div className="mr-4 relative">
+                <Bell className="h-5 w-5 text-gray-500 cursor-pointer" />
+                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400"></span>
+              </div>
+              <CustomButton onClick={handleLogout} variant="outline" size="sm">Logout</CustomButton>
+            </div>
+          </div>
         </div>
-        
-        {selectedApplicationId ? (
-          <AdminApplicationDetails 
-            applicationId={selectedApplicationId} 
-            onBack={handleBackToList}
-          />
-        ) : (
-          <AdminApplicationsTable onSelectApplication={handleApplicationSelect} />
-        )}
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <Tabs defaultValue="dashboard" className="w-full">
+          <TabsList className="mb-6 grid w-full grid-cols-4">
+            <TabsTrigger value="dashboard" className="flex items-center justify-center gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              <span className="hidden sm:inline">Dashboard</span>
+            </TabsTrigger>
+            <TabsTrigger value="applications" className="flex items-center justify-center gap-2">
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Applications</span>
+            </TabsTrigger>
+            <TabsTrigger value="documents" className="flex items-center justify-center gap-2">
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Documents</span>
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center justify-center gap-2">
+              <Settings className="h-4 w-4" />
+              <span className="hidden sm:inline">Settings</span>
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="dashboard">
+            <AdminDashboard />
+          </TabsContent>
+          
+          <TabsContent value="applications">
+            <AdminApplicationsList />
+          </TabsContent>
+          
+          <TabsContent value="documents">
+            <AdminDocumentsList />
+          </TabsContent>
+          
+          <TabsContent value="settings">
+            <AdminSettings />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
