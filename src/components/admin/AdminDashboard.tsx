@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowUpRight, Users, FileText, DollarSign, Clock } from 'lucide-react';
+import { ArrowUpRight, Users, FileText, DollarSign, Clock, ChevronRight } from 'lucide-react';
 
 // Mock data for the dashboard
 const stats = [
