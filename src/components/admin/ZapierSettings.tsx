@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Settings, Check } from 'lucide-react';
+import { Settings, Check, ExternalLink } from 'lucide-react';
 import { toast } from "sonner";
 
 interface ZapierSettingsProps {
@@ -62,6 +62,28 @@ const ZapierSettings: React.FC<ZapierSettingsProps> = ({
         </DialogHeader>
         
         <div className="space-y-4 py-4">
+          <div className="bg-blue-50 p-4 rounded-md mb-4 text-sm">
+            <h3 className="font-bold text-blue-800 mb-1">How to set up Make.com webhooks:</h3>
+            <ol className="list-decimal pl-5 space-y-1 text-blue-700">
+              <li>Log in to Make.com and create a new scenario</li>
+              <li>Add a "Webhooks" trigger as your first module</li>
+              <li>Select "Custom webhook" option</li>
+              <li>Copy the webhook URL and paste it below</li>
+              <li>Configure your Make.com scenario to process the received data</li>
+            </ol>
+            <div className="mt-2">
+              <a 
+                href="https://www.make.com/en/help/tools/webhooks" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 flex items-center"
+              >
+                View Make.com webhook instructions
+                <ExternalLink className="h-3 w-3 ml-1" />
+              </a>
+            </div>
+          </div>
+          
           <div className="space-y-2">
             <Label htmlFor="prequalUrl" className="text-lg font-bold">Pre-qualification Webhook URL</Label>
             <Input
