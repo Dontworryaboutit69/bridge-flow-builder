@@ -1,7 +1,9 @@
+
 import { ApplicationData } from './applicationTypes';
 import { toast } from "sonner";
 import { DEFAULT_WEBHOOK_URL } from './applicationContext';
 import { supabase } from "@/integrations/supabase/client";
+import { GrowthPathApplicationRow } from '@/types/supabase';
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
@@ -130,7 +132,7 @@ export const submitApplicationData = async (
         application_id: applicationId,
         webhook_url: finalWebhookUrl,
         submission_date: new Date().toISOString()
-      };
+      } as GrowthPathApplicationRow;
       
       const { error } = await supabase
         .from('GrowthPath Application')

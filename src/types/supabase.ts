@@ -5,7 +5,7 @@
 export type GrowthPathApplicationRow = {
   id: number;
   created_at: string;
-  application_id: string;
+  application_id?: string;
   first_name?: string;
   last_name?: string;
   email?: string;

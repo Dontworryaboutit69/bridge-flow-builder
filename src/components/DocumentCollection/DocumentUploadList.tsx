@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -7,6 +8,7 @@ import { Document } from '@/types/documents';
 import { useNavigate } from 'react-router-dom';
 import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
 import { supabase } from "@/integrations/supabase/client";
+import { GrowthPathDocumentsRow } from '@/types/supabase';
 
 type DocumentUploadListProps = {
   documents: Document[];
@@ -68,7 +70,7 @@ const DocumentUploadList = ({
                 file_path: `documents/${applicationId}/${doc.id}/${file.name}`,
                 file_size: file.size,
                 file_type: file.type
-              };
+              } as GrowthPathDocumentsRow;
               
               const { error } = await supabase
                 .from('GrowthPath Documents Table')

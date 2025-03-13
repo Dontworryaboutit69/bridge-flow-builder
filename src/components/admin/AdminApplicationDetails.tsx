@@ -7,6 +7,7 @@ import DocumentsList from './DocumentsList';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type AdminApplicationDetailsProps = {
   applicationId: string;

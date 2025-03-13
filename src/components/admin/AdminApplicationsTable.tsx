@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import CustomButton from "@/components/ui/CustomButton";
 import { toast } from 'sonner';
 import { ChevronRight, DownloadIcon, Loader2 } from 'lucide-react';
+import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type Application = {
   id: number;
@@ -48,7 +50,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
         const formattedData: Application[] = data.map(app => ({
           id: app.id,
           created_at: app.created_at,
-          application_id: app.application_id || `app_${Date.now()}`,
+          application_id: app.application_id || `app_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
           first_name: app.first_name || 'Unknown',
           last_name: app.last_name || 'User',
           email: app.email || 'No email',

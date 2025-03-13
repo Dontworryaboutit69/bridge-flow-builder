@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { FileIcon, FileText, Loader2 } from 'lucide-react';
@@ -207,4 +206,3 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
 };
 
 export default DocumentsList;
-
