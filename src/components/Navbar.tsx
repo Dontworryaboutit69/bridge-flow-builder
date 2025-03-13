@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Logo from './Logo';
-import { Phone } from 'lucide-react';
+import { Phone, CalendarClock } from 'lucide-react';
 import CustomButton from './ui/CustomButton';
 
 const Navbar = () => {
@@ -11,24 +11,21 @@ const Navbar = () => {
         <div className="flex items-center">
           <Logo />
           <nav className="flex ml-10 space-x-8">
-            <a href="#how-it-works" className="text-gray-900 hover:text-funding-blue font-medium">
+            <a href="#how-it-works" className="text-gray-700 hover:text-funding-blue font-medium">
               How It Works
             </a>
-            <a href="#funding-products" className="text-gray-900 hover:text-funding-blue font-medium">
-              Funding Options
-            </a>
-            <a href="#benefits" className="text-gray-900 hover:text-funding-blue font-medium">
+            <a href="#benefits" className="text-gray-700 hover:text-funding-blue font-medium">
               Benefits
             </a>
-            <a href="#testimonials" className="text-gray-900 hover:text-funding-blue font-medium">
+            <a href="#testimonials" className="text-gray-700 hover:text-funding-blue font-medium">
               Testimonials
             </a>
           </nav>
         </div>
         <div className="flex items-center space-x-6">
-          <a href="tel:+1-800-555-0123" className="flex items-center text-funding-blue hover:text-funding-blue/80">
+          <a href="tel:+1-573-533-3894" className="flex items-center text-funding-blue hover:text-funding-blue/80">
             <Phone className="h-5 w-5 mr-2" />
-            <span className="text-funding-blue font-medium">(800) 555-0123</span>
+            <span className="text-funding-blue font-medium">1-573-533-3894</span>
           </a>
           <CustomButton 
             variant="primary" 
@@ -36,7 +33,8 @@ const Navbar = () => {
             href="#apply-now"
             className="rounded-full"
           >
-            Schedule a Call
+            <span>Schedule Now</span>
+            <CalendarClock className="h-5 w-5 ml-1" />
           </CustomButton>
         </div>
       </div>
