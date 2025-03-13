@@ -17,7 +17,14 @@ import AdminButton from "./components/admin/AdminButton";
 import AdminLogin from "./pages/AdminLogin";
 import AdminConsole from "./pages/AdminConsole";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
+
+// Add a basename to the router if the app is not served from the root
+const getBasename = () => {
+  // Check if we're in development or production
+  return process.env.NODE_ENV === 'development' ? '/' : '/';
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,7 +33,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename={getBasename()}>
             <TrackingScripts />
             <AdminButton />
             <Routes>

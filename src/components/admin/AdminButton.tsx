@@ -24,6 +24,7 @@ const AdminButton = () => {
       if (newCount >= 3) {
         // Use absolute URL to ensure correct routing in production
         const baseUrl = window.location.origin;
+        console.log("Navigating to admin portal at:", `${baseUrl}/admin`);
         window.location.href = `${baseUrl}/admin`;
         toast("Navigating to admin portal");
         return 0;
