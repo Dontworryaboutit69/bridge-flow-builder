@@ -1,71 +1,24 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
+import { ChevronLeft } from 'lucide-react';
 import CustomButton from "@/components/ui/CustomButton";
-import { toast } from 'sonner';
-import { ArrowLeft, DownloadIcon, Loader2, FileIcon } from 'lucide-react';
 import ApplicationDetailSection from './ApplicationDetailSection';
 import DocumentsList from './DocumentsList';
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import { toast } from 'sonner';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 type AdminApplicationDetailsProps = {
   applicationId: string;
   onBack: () => void;
 };
 
-type ApplicationData = {
-  // Personal Information
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  social_security_number: string;
-  date_of_birth: string;
-  
-  // Business Information
-  business_name: string;
-  business_type: string;
-  business_start_date: string;
-  industry: string;
-  time_in_business: string;
-  employee_count: string;
-  business_address: string;
-  business_city: string;
-  business_state: string;
-  business_zip_code: string;
-  website_url: string;
-  ein_number: string;
-  ownership_percentage: string;
-  
-  // Financial Information
-  bank_name: string;
-  account_number: string;
-  routing_number: string;
-  monthly_revenue: string;
-  credit_score: string;
-  loan_amount: string;
-  use_of_funds: string;
-  
-  // Agreement Information
-  agree_to_terms: boolean;
-  agree_information_correct: boolean;
-  signature: string;
-  
-  // Additional info
-  application_id: string;
-  submission_date: string;
-};
-
 const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ applicationId, onBack }) => {
-  const [application, setApplication] = useState<ApplicationData | null>(null);
+  const [application, setApplication] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [generatePdfLoading, setGeneratePdfLoading] = useState<boolean>(false);
+  const [exportingPdf, setExportingPdf] = useState<boolean>(false);
 
   useEffect(() => {
     fetchApplicationDetails();
@@ -74,8 +27,9 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
   const fetchApplicationDetails = async () => {
     try {
       setLoading(true);
+      setError(null);
       
-      // Fetch application details from Supabase
+      // Fetch from Supabase
       const { data, error } = await supabase
         .from('GrowthPath Application')
         .select('*')
@@ -83,159 +37,155 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         .single();
       
       if (error) {
+        console.error('Error fetching application details:', error);
         throw error;
       }
       
-      setApplication(data as ApplicationData);
-      console.log('Fetched application details:', data);
+      if (data) {
+        console.log('Application details:', data);
+        setApplication(data);
+      } else {
+        // Try to get from localStorage as a fallback
+        const savedAppData = localStorage.getItem('current_application_data');
+        if (savedAppData) {
+          const parsedData = JSON.parse(savedAppData);
+          if (parsedData.application_id === applicationId) {
+            setApplication(parsedData);
+          } else {
+            setError("Application not found.");
+          }
+        } else {
+          setError("Application not found.");
+        }
+      }
     } catch (err) {
-      console.error('Error fetching application details:', err);
-      setError('Failed to load application details. Please try again.');
-      toast("Failed to load application details");
+      console.error('Error:', err);
+      setError("Failed to load application details. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const formatDate = (dateString: string) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
-
-  const generatePDF = async () => {
+  const generatePdf = async () => {
     if (!application) return;
     
-    setGeneratePdfLoading(true);
-    
     try {
-      // Initialize jsPDF
+      setExportingPdf(true);
+      
       const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
       
       // Add header
       doc.setFontSize(20);
-      doc.setTextColor(40, 40, 40);
-      doc.text("GrowthPath Application", pageWidth / 2, 20, { align: 'center' });
+      doc.text("GrowthPath Application Details", 14, 20);
       
+      // Add application ID
       doc.setFontSize(12);
-      doc.text(`Application ID: ${application.application_id}`, pageWidth / 2, 30, { align: 'center' });
-      doc.text(`Submission Date: ${formatDate(application.submission_date)}`, pageWidth / 2, 38, { align: 'center' });
+      doc.text(`Application ID: ${application.application_id || 'N/A'}`, 14, 30);
+      doc.text(`Submission Date: ${new Date(application.submission_date || application.created_at).toLocaleDateString()}`, 14, 37);
       
-      // Add applicant info
+      // Personal Information
       doc.setFontSize(16);
-      doc.text("Personal Information", 14, 50);
+      doc.text("Personal Information", 14, 47);
       
-      const personalInfo = [
-        ["Full Name", `${application.first_name} ${application.last_name}`],
-        ["Email", application.email],
-        ["Phone", application.phone],
-        ["Address", `${application.address}, ${application.city}, ${application.state} ${application.zip_code}`],
-        ["SSN", `***-**-${application.social_security_number?.slice(-4) || '****'}`],
-        ["Date of Birth", application.date_of_birth]
-      ];
-      
-      // @ts-ignore
-      doc.autoTable({
-        startY: 55,
-        head: [],
-        body: personalInfo,
-        theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+      // Use autotable for better formatting
+      autoTable(doc, {
+        startY: 50,
+        head: [['Field', 'Value']],
+        body: [
+          ['Name', `${application.first_name || ''} ${application.last_name || ''}`],
+          ['Email', application.email || 'N/A'],
+          ['Phone', application.phone || 'N/A'],
+          ['Address', `${application.address || ''}, ${application.city || ''}, ${application.state || ''} ${application.zip_code || ''}`],
+          ['SSN', application.social_security_number ? '********' : 'N/A'], // Mask sensitive data
+          ['Date of Birth', application.date_of_birth || 'N/A']
+        ]
       });
       
-      // Add business info
+      // Business Information
+      const currentY = (doc as any).lastAutoTable.finalY + 10;
       doc.setFontSize(16);
-      // @ts-ignore
-      doc.text("Business Information", 14, doc.lastAutoTable.finalY + 15);
+      doc.text("Business Information", 14, currentY);
       
-      const businessInfo = [
-        ["Business Name", application.business_name],
-        ["Business Type", application.business_type],
-        ["Industry", application.industry],
-        ["Time in Business", application.time_in_business],
-        ["Employees", application.employee_count],
-        ["Business Address", `${application.business_address}, ${application.business_city}, ${application.business_state} ${application.business_zip_code}`],
-        ["Website", application.website_url],
-        ["EIN", application.ein_number],
-        ["Ownership %", application.ownership_percentage]
-      ];
-      
-      // @ts-ignore
-      doc.autoTable({
-        // @ts-ignore
-        startY: doc.lastAutoTable.finalY + 20,
-        head: [],
-        body: businessInfo,
-        theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+      autoTable(doc, {
+        startY: currentY + 3,
+        head: [['Field', 'Value']],
+        body: [
+          ['Business Name', application.business_name || 'N/A'],
+          ['Industry', application.industry || 'N/A'],
+          ['Business Type', application.business_type || 'N/A'],
+          ['Time in Business', application.time_in_business || 'N/A'],
+          ['Employee Count', application.employee_count || 'N/A'],
+          ['Business Address', `${application.business_address || ''}, ${application.business_city || ''}, ${application.business_state || ''} ${application.business_zip_code || ''}`],
+          ['Website', application.website_url || 'N/A'],
+          ['EIN Number', application.ein_number ? '********' : 'N/A'], // Mask sensitive data
+          ['Ownership %', application.ownership_percentage || 'N/A']
+        ]
       });
       
-      // Add financial info
+      // Financial Information
+      const financialY = (doc as any).lastAutoTable.finalY + 10;
       doc.setFontSize(16);
-      // @ts-ignore
-      doc.text("Financial Information", 14, doc.lastAutoTable.finalY + 15);
+      doc.text("Financial Information", 14, financialY);
       
-      const financialInfo = [
-        ["Bank Name", application.bank_name],
-        ["Monthly Revenue", application.monthly_revenue],
-        ["Credit Score", application.credit_score],
-        ["Loan Amount", application.loan_amount],
-        ["Use of Funds", application.use_of_funds]
-      ];
-      
-      // @ts-ignore
-      doc.autoTable({
-        // @ts-ignore
-        startY: doc.lastAutoTable.finalY + 20,
-        head: [],
-        body: financialInfo,
-        theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+      autoTable(doc, {
+        startY: financialY + 3,
+        head: [['Field', 'Value']],
+        body: [
+          ['Bank Name', application.bank_name || 'N/A'],
+          ['Account Number', application.account_number ? '********' : 'N/A'], // Mask sensitive data
+          ['Routing Number', application.routing_number ? '********' : 'N/A'], // Mask sensitive data
+          ['Monthly Revenue', application.monthly_revenue || 'N/A'],
+          ['Credit Score', application.credit_score || 'N/A'],
+          ['Loan Amount', application.loan_amount || 'N/A'],
+          ['Use of Funds', application.use_of_funds || 'N/A']
+        ]
       });
       
-      // Add footer
-      // @ts-ignore
-      const finalY = doc.lastAutoTable.finalY + 20;
+      // Footer
+      const finalY = (doc as any).lastAutoTable.finalY + 15;
       doc.setFontSize(10);
-      doc.text('This document contains confidential information. For authorized use only.', pageWidth / 2, finalY, { align: 'center' });
+      doc.setTextColor(100, 100, 100);
+      doc.text(`Generated on ${new Date().toLocaleString()}`, 14, finalY);
       
       // Save the PDF
-      doc.save(`GrowthPath_Application_${applicationId}.pdf`);
-      
-      toast("PDF generated successfully!");
-    } catch (err) {
-      console.error('Error generating PDF:', err);
-      toast("Failed to generate PDF");
+      doc.save(`GrowthPath-Application-${applicationId}.pdf`);
+      toast("PDF exported successfully");
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast("Failed to export PDF");
     } finally {
-      setGeneratePdfLoading(false);
+      setExportingPdf(false);
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-funding-blue" />
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <CustomButton onClick={onBack} variant="outline" size="sm" className="mr-4">
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to List
+          </CustomButton>
+          <h2 className="text-xl font-semibold">Loading application details...</h2>
+        </div>
+        <div className="bg-gray-100 animate-pulse h-64 rounded-lg"></div>
       </div>
     );
   }
 
-  if (error || !application) {
+  if (error) {
     return (
-      <div className="text-center p-6 bg-red-50 rounded-lg">
-        <p className="text-red-600">{error || "Application not found"}</p>
-        <div className="mt-4 flex space-x-4 justify-center">
-          <CustomButton onClick={onBack} variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Applications
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <CustomButton onClick={onBack} variant="outline" size="sm" className="mr-4">
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to List
           </CustomButton>
-          <CustomButton onClick={fetchApplicationDetails}>
+          <h2 className="text-xl font-semibold">Application Details</h2>
+        </div>
+        <div className="bg-red-50 p-6 rounded-lg text-red-600">
+          <p>{error}</p>
+          <CustomButton onClick={fetchApplicationDetails} className="mt-4">
             Try Again
           </CustomButton>
         </div>
@@ -243,96 +193,133 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
     );
   }
 
+  if (!application) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <CustomButton onClick={onBack} variant="outline" size="sm" className="mr-4">
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to List
+          </CustomButton>
+          <h2 className="text-xl font-semibold">Application Details</h2>
+        </div>
+        <div className="bg-gray-50 p-6 rounded-lg">
+          <p className="text-gray-500">No application data found.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Group data for each section
+  const personalData = [
+    { label: "First Name", value: application.first_name },
+    { label: "Last Name", value: application.last_name },
+    { label: "Email", value: application.email },
+    { label: "Phone", value: application.phone },
+    { label: "Address", value: application.address },
+    { label: "City", value: application.city },
+    { label: "State", value: application.state },
+    { label: "ZIP Code", value: application.zip_code },
+    { label: "SSN", value: application.social_security_number ? "********" : null },
+    { label: "Date of Birth", value: application.date_of_birth }
+  ];
+
+  const businessData = [
+    { label: "Business Name", value: application.business_name },
+    { label: "Business Type", value: application.business_type },
+    { label: "Start Date", value: application.business_start_date },
+    { label: "Industry", value: application.industry },
+    { label: "Time in Business", value: application.time_in_business },
+    { label: "Employee Count", value: application.employee_count },
+    { label: "Business Address", value: application.business_address },
+    { label: "City", value: application.business_city },
+    { label: "State", value: application.business_state },
+    { label: "ZIP Code", value: application.business_zip_code },
+    { label: "Website", value: application.website_url },
+    { label: "EIN Number", value: application.ein_number ? "********" : null },
+    { label: "Ownership %", value: application.ownership_percentage }
+  ];
+
+  const financialData = [
+    { label: "Bank Name", value: application.bank_name },
+    { label: "Account Number", value: application.account_number ? "********" : null },
+    { label: "Routing Number", value: application.routing_number ? "********" : null },
+    { label: "Monthly Revenue", value: application.monthly_revenue },
+    { label: "Credit Score", value: application.credit_score },
+    { label: "Loan Amount", value: application.loan_amount },
+    { label: "Use of Funds", value: application.use_of_funds }
+  ];
+
+  const agreementData = [
+    { label: "Agrees to Terms", value: application.agree_to_terms ? "Yes" : "No" },
+    { label: "Information is Correct", value: application.agree_information_correct ? "Yes" : "No" },
+    { label: "Signature", value: application.signature }
+  ];
+
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <CustomButton onClick={onBack} variant="outline" className="flex items-center">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Applications
-        </CustomButton>
-        
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <CustomButton onClick={onBack} variant="outline" size="sm" className="mr-4">
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to List
+          </CustomButton>
+          <h2 className="text-xl font-semibold">Application Details</h2>
+        </div>
         <CustomButton 
-          onClick={generatePDF} 
-          disabled={generatePdfLoading}
-          className="flex items-center"
+          onClick={generatePdf} 
+          disabled={exportingPdf}
+          size="sm"
         >
-          {generatePdfLoading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <DownloadIcon className="mr-2 h-4 w-4" />
-          )}
-          {generatePdfLoading ? 'Generating PDF...' : 'Download as PDF'}
+          {exportingPdf ? 'Exporting...' : 'Export as PDF'}
         </CustomButton>
       </div>
       
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
+      <div className="bg-white rounded-lg shadow p-6 mb-6">
+        <div className="flex flex-col md:flex-row justify-between">
           <div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Application Details
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Application ID: {application.application_id}
+            <h3 className="text-sm font-medium text-gray-500">Application ID</h3>
+            <p className="mt-1 text-lg font-semibold text-gray-900">{applicationId}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-500">Submission Date</h3>
+            <p className="mt-1 text-lg font-semibold text-gray-900">
+              {application.submission_date 
+                ? new Date(application.submission_date).toLocaleDateString() 
+                : new Date(application.created_at).toLocaleDateString()}
             </p>
           </div>
-          <div className="text-sm text-gray-500">
-            <p>Submitted on: {formatDate(application.submission_date)}</p>
+          <div>
+            <h3 className="text-sm font-medium text-gray-500">Status</h3>
+            <div className="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Submitted
+            </div>
           </div>
         </div>
+      </div>
+      
+      <div className="space-y-6">
+        <ApplicationDetailSection 
+          title="Personal Information" 
+          data={personalData} 
+        />
         
-        <div className="px-4 pb-5">
-          <div className="grid grid-cols-1 gap-6 mt-6">
-            <ApplicationDetailSection 
-              title="Personal Information"
-              data={[
-                { label: "First Name", value: application.first_name },
-                { label: "Last Name", value: application.last_name },
-                { label: "Email", value: application.email },
-                { label: "Phone", value: application.phone },
-                { label: "Address", value: application.address },
-                { label: "City", value: application.city },
-                { label: "State", value: application.state },
-                { label: "Zip Code", value: application.zip_code },
-                { label: "SSN", value: `***-**-${application.social_security_number?.slice(-4) || '****'}` },
-                { label: "Date of Birth", value: application.date_of_birth }
-              ]}
-            />
-            
-            <ApplicationDetailSection 
-              title="Business Information"
-              data={[
-                { label: "Business Name", value: application.business_name },
-                { label: "Business Type", value: application.business_type },
-                { label: "Start Date", value: application.business_start_date },
-                { label: "Industry", value: application.industry },
-                { label: "Time in Business", value: application.time_in_business },
-                { label: "Employee Count", value: application.employee_count },
-                { label: "Business Address", value: application.business_address },
-                { label: "Business City", value: application.business_city },
-                { label: "Business State", value: application.business_state },
-                { label: "Business Zip", value: application.business_zip_code },
-                { label: "Website", value: application.website_url },
-                { label: "EIN Number", value: application.ein_number },
-                { label: "Ownership %", value: application.ownership_percentage }
-              ]}
-            />
-            
-            <ApplicationDetailSection 
-              title="Financial Information"
-              data={[
-                { label: "Bank Name", value: application.bank_name },
-                { label: "Account Number", value: `****${application.account_number?.slice(-4) || '****'}` },
-                { label: "Routing Number", value: `****${application.routing_number?.slice(-4) || '****'}` },
-                { label: "Monthly Revenue", value: application.monthly_revenue },
-                { label: "Credit Score", value: application.credit_score },
-                { label: "Loan Amount", value: application.loan_amount },
-                { label: "Use of Funds", value: application.use_of_funds }
-              ]}
-            />
-            
-            <DocumentsList applicationId={applicationId} />
-          </div>
-        </div>
+        <ApplicationDetailSection 
+          title="Business Information" 
+          data={businessData} 
+        />
+        
+        <ApplicationDetailSection 
+          title="Financial Information" 
+          data={financialData} 
+        />
+        
+        <ApplicationDetailSection 
+          title="Agreement Information" 
+          data={agreementData} 
+        />
+        
+        <DocumentsList applicationId={applicationId} />
       </div>
     </div>
   );

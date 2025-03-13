@@ -8,11 +8,13 @@ type DocumentsListProps = {
 };
 
 type Document = {
-  id: string;
+  id: string | number;
   document_type: string;
   document_name: string;
   file_path: string;
   created_at: string;
+  file_size?: number;
+  file_type?: string;
 };
 
 const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
@@ -28,7 +30,7 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         
         // Try to fetch from Supabase first
         const { data, error } = await supabase
-          .from('documents')
+          .from('GrowthPath Documents Table')
           .select('*')
           .eq('application_id', applicationId);
         
@@ -40,8 +42,10 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         }
         
         if (data && data.length > 0) {
+          console.log('Documents found in Supabase:', data);
           setDocuments(data);
         } else {
+          console.log('No documents found in Supabase, checking localStorage');
           fallbackToLocalStorage();
         }
       } catch (err) {
@@ -57,8 +61,11 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
       try {
         const savedDocuments = localStorage.getItem(`documents_${applicationId}`);
         if (savedDocuments) {
-          setDocuments(JSON.parse(savedDocuments));
+          const parsedDocs = JSON.parse(savedDocuments);
+          console.log('Documents from localStorage:', parsedDocs);
+          setDocuments(parsedDocs);
         } else {
+          console.log('No documents found in localStorage, using mock data');
           // If we need to simulate documents for demo purposes
           const mockDocuments = getMockDocuments();
           setDocuments(mockDocuments);

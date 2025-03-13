@@ -44,8 +44,25 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
         throw error;
       }
       
-      setApplications(data || []);
-      console.log('Fetched applications:', data);
+      if (data && data.length > 0) {
+        setApplications(data);
+        console.log('Fetched applications:', data);
+      } else {
+        // If no data, try to get from localStorage as fallback
+        console.log('No applications found in Supabase, checking localStorage');
+        const currentAppData = localStorage.getItem('current_application_data');
+        
+        if (currentAppData) {
+          const parsedData = JSON.parse(currentAppData);
+          if (parsedData.application_id) {
+            setApplications([parsedData]);
+            console.log('Using application from localStorage:', parsedData);
+          }
+        } else {
+          // No applications found in Supabase or localStorage
+          console.log('No applications found in Supabase or localStorage');
+        }
+      }
     } catch (err) {
       console.error('Error fetching applications:', err);
       setError('Failed to load applications. Please try again.');
@@ -122,7 +139,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {applications.map((app) => (
-              <tr key={app.id} className="hover:bg-gray-50">
+              <tr key={app.id || app.application_id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div>
