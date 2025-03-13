@@ -12,18 +12,19 @@ import AdminApplicationDetails from '@/components/admin/AdminApplicationDetails'
 const AdminConsole = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Check if admin is logged in
   useEffect(() => {
     const checkAdminLogin = () => {
+      console.log('Checking admin login...');
       const adminToken = localStorage.getItem('admin_token');
       if (adminToken) {
+        console.log('Admin token found, user is logged in');
         setIsLoggedIn(true);
       } else {
+        console.log('No admin token found, redirecting to login');
         // Redirect to admin login if not logged in
         navigate('/admin');
       }
@@ -33,16 +34,24 @@ const AdminConsole = () => {
   }, [navigate]);
 
   const handleLogout = () => {
+    console.log('Logging out admin user');
     localStorage.removeItem('admin_token');
     setIsLoggedIn(false);
     navigate('/admin');
+    toast.success("Logged out successfully");
   };
 
   const handleApplicationSelect = (applicationId: string) => {
+    console.log('Selected application:', applicationId);
+    if (!applicationId) {
+      toast.error("Invalid application ID");
+      return;
+    }
     setSelectedApplicationId(applicationId);
   };
 
   const handleBackToList = () => {
+    console.log('Navigating back to applications list');
     setSelectedApplicationId(null);
   };
 

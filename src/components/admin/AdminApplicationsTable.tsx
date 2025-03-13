@@ -49,7 +49,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
     } catch (err) {
       console.error('Error fetching applications:', err);
       setError('Failed to load applications. Please try again.');
-      toast("Failed to load applications");
+      toast.error("Failed to load applications");
     } finally {
       setLoading(false);
     }
@@ -62,6 +62,11 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
       month: 'short',
       day: 'numeric'
     });
+  };
+
+  const handleViewDetails = (applicationId: string) => {
+    console.log('View details clicked for application:', applicationId);
+    onSelectApplication(applicationId);
   };
 
   if (loading) {
@@ -145,15 +150,13 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <CustomButton
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => onSelectApplication(app.application_id)}
+                  <button
+                    onClick={() => handleViewDetails(app.application_id)}
                     className="text-funding-blue hover:text-funding-blue-dark inline-flex items-center"
                   >
                     View Details
                     <ChevronRight className="ml-1 h-4 w-4" />
-                  </CustomButton>
+                  </button>
                 </td>
               </tr>
             ))}
