@@ -94,54 +94,70 @@ export const submitApplicationData = async (
     try {
       console.log('Saving application data to Supabase...');
       
-      const { error } = await supabase
+      // Prepare the data object for Supabase
+      const supabaseData = {
+        first_name: applicationData.firstName,
+        last_name: applicationData.lastName,
+        email: applicationData.email,
+        phone: applicationData.phone,
+        address: applicationData.address,
+        city: applicationData.city,
+        state: applicationData.state,
+        zip_code: applicationData.zipCode,
+        social_security_number: applicationData.socialSecurityNumber,
+        date_of_birth: applicationData.dateOfBirth,
+        business_name: applicationData.businessName,
+        business_type: applicationData.businessType,
+        business_start_date: applicationData.businessStartDate,
+        industry: applicationData.industry,
+        time_in_business: applicationData.timeInBusiness,
+        employee_count: applicationData.employeeCount,
+        business_address: applicationData.businessAddress,
+        business_city: applicationData.businessCity,
+        business_state: applicationData.businessState,
+        business_zip_code: applicationData.businessZipCode,
+        website_url: applicationData.websiteUrl,
+        ein_number: applicationData.einNumber,
+        ownership_percentage: applicationData.ownershipPercentage,
+        bank_name: applicationData.bankName,
+        account_number: applicationData.accountNumber,
+        routing_number: applicationData.routingNumber,
+        monthly_revenue: applicationData.monthlyRevenue,
+        credit_score: applicationData.creditScore,
+        loan_amount: applicationData.loanAmount,
+        use_of_funds: applicationData.useOfFunds,
+        agree_to_terms: applicationData.agreeToTerms,
+        agree_information_correct: applicationData.agreeInformationCorrect,
+        signature: applicationData.signature,
+        application_id: applicationId,
+        webhook_url: finalWebhookUrl,
+        submission_date: new Date().toISOString()
+      };
+      
+      console.log('Supabase data to insert:', supabaseData);
+      
+      const { data, error } = await supabase
         .from('GrowthPath Application')
-        .insert({
-          first_name: applicationData.firstName,
-          last_name: applicationData.lastName,
-          email: applicationData.email,
-          phone: applicationData.phone,
-          address: applicationData.address,
-          city: applicationData.city,
-          state: applicationData.state,
-          zip_code: applicationData.zipCode,
-          social_security_number: applicationData.socialSecurityNumber,
-          date_of_birth: applicationData.dateOfBirth,
-          business_name: applicationData.businessName,
-          business_type: applicationData.businessType,
-          business_start_date: applicationData.businessStartDate,
-          industry: applicationData.industry,
-          time_in_business: applicationData.timeInBusiness,
-          employee_count: applicationData.employeeCount,
-          business_address: applicationData.businessAddress,
-          business_city: applicationData.businessCity,
-          business_state: applicationData.businessState,
-          business_zip_code: applicationData.businessZipCode,
-          website_url: applicationData.websiteUrl,
-          ein_number: applicationData.einNumber,
-          ownership_percentage: applicationData.ownershipPercentage,
-          bank_name: applicationData.bankName,
-          account_number: applicationData.accountNumber,
-          routing_number: applicationData.routingNumber,
-          monthly_revenue: applicationData.monthlyRevenue,
-          credit_score: applicationData.creditScore,
-          loan_amount: applicationData.loanAmount,
-          use_of_funds: applicationData.useOfFunds,
-          agree_to_terms: applicationData.agreeToTerms,
-          agree_information_correct: applicationData.agreeInformationCorrect,
-          signature: applicationData.signature,
-          application_id: applicationId,
-          webhook_url: finalWebhookUrl,
-          submission_date: new Date().toISOString()
-        });
+        .insert(supabaseData)
+        .select();
         
       if (error) {
         console.error('Error saving to Supabase:', error);
+        // More detailed error logging
+        if (error.code) {
+          console.error('Error code:', error.code);
+        }
+        if (error.details) {
+          console.error('Error details:', error.details);
+        }
+        if (error.hint) {
+          console.error('Error hint:', error.hint);
+        }
       } else {
-        console.log('Application data saved to Supabase successfully');
+        console.log('Application data saved to Supabase successfully:', data);
       }
     } catch (error) {
-      console.error('Error saving application data to Supabase:', error);
+      console.error('Exception in Supabase save operation:', error);
       // Don't fail if Supabase insert fails, still try the webhook
     }
     
