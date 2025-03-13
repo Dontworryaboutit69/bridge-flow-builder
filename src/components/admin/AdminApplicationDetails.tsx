@@ -116,53 +116,67 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
       
-      // Add header
-      doc.setFontSize(20);
-      doc.setTextColor(40, 40, 40);
+      // Add header with logo and title
+      doc.setFontSize(22);
+      doc.setTextColor(0, 48, 87); // Dark blue color
       doc.text("GrowthPath Application", pageWidth / 2, 20, { align: 'center' });
       
+      // Add application metadata
       doc.setFontSize(12);
+      doc.setTextColor(70, 70, 70);
       doc.text(`Application ID: ${application.application_id}`, pageWidth / 2, 30, { align: 'center' });
       doc.text(`Submission Date: ${formatDate(application.submission_date)}`, pageWidth / 2, 38, { align: 'center' });
       
+      // Add divider
+      doc.setDrawColor(200, 200, 200);
+      doc.line(20, 42, pageWidth - 20, 42);
+      
       // Add applicant info
       doc.setFontSize(16);
+      doc.setTextColor(0, 48, 87); // Dark blue for section headers
       doc.text("Personal Information", 14, 50);
       
       const personalInfo = [
         ["Full Name", `${application.first_name} ${application.last_name}`],
         ["Email", application.email],
         ["Phone", application.phone],
-        ["Address", `${application.address}, ${application.city}, ${application.state} ${application.zip_code}`],
-        ["SSN", `***-**-${application.social_security_number?.slice(-4) || '****'}`],
-        ["Date of Birth", application.date_of_birth]
+        ["Address", `${application.address || ''}, ${application.city || ''}, ${application.state || ''} ${application.zip_code || ''}`],
+        ["SSN", application.social_security_number ? `***-**-${application.social_security_number.slice(-4)}` : 'N/A'],
+        ["Date of Birth", application.date_of_birth || 'N/A']
       ];
       
-      // @ts-ignore
+      // @ts-ignore - jspdf-autotable type definitions
       doc.autoTable({
         startY: 55,
         head: [],
         body: personalInfo,
         theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+        styles: { fontSize: 10, cellPadding: 4 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+        headStyles: { fillColor: [240, 240, 240] }
       });
       
       // Add business info
       doc.setFontSize(16);
+      doc.setTextColor(0, 48, 87);
       // @ts-ignore
       doc.text("Business Information", 14, doc.lastAutoTable.finalY + 15);
       
       const businessInfo = [
-        ["Business Name", application.business_name],
-        ["Business Type", application.business_type],
-        ["Industry", application.industry],
-        ["Time in Business", application.time_in_business],
-        ["Employees", application.employee_count],
-        ["Business Address", `${application.business_address}, ${application.business_city}, ${application.business_state} ${application.business_zip_code}`],
-        ["Website", application.website_url],
-        ["EIN", application.ein_number],
-        ["Ownership %", application.ownership_percentage]
+        ["Business Name", application.business_name || 'N/A'],
+        ["Business Type", application.business_type || 'N/A'],
+        ["Industry", application.industry || 'N/A'],
+        ["Time in Business", application.time_in_business || 'N/A'],
+        ["Employees", application.employee_count || 'N/A'],
+        ["Business Address", [
+          application.business_address, 
+          application.business_city, 
+          application.business_state, 
+          application.business_zip_code
+        ].filter(Boolean).join(', ') || 'N/A'],
+        ["Website", application.website_url || 'N/A'],
+        ["EIN", application.ein_number || 'N/A'],
+        ["Ownership %", application.ownership_percentage || 'N/A']
       ];
       
       // @ts-ignore
@@ -172,21 +186,25 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         head: [],
         body: businessInfo,
         theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+        styles: { fontSize: 10, cellPadding: 4 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+        headStyles: { fillColor: [240, 240, 240] }
       });
       
       // Add financial info
       doc.setFontSize(16);
+      doc.setTextColor(0, 48, 87);
       // @ts-ignore
       doc.text("Financial Information", 14, doc.lastAutoTable.finalY + 15);
       
       const financialInfo = [
-        ["Bank Name", application.bank_name],
-        ["Monthly Revenue", application.monthly_revenue],
-        ["Credit Score", application.credit_score],
-        ["Loan Amount", application.loan_amount],
-        ["Use of Funds", application.use_of_funds]
+        ["Bank Name", application.bank_name || 'N/A'],
+        ["Account Number", application.account_number ? `****${application.account_number.slice(-4)}` : 'N/A'],
+        ["Routing Number", application.routing_number ? `****${application.routing_number.slice(-4)}` : 'N/A'],
+        ["Monthly Revenue", application.monthly_revenue || 'N/A'],
+        ["Credit Score", application.credit_score || 'N/A'],
+        ["Loan Amount", application.loan_amount || 'N/A'],
+        ["Use of Funds", application.use_of_funds || 'N/A']
       ];
       
       // @ts-ignore
@@ -196,23 +214,50 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         head: [],
         body: financialInfo,
         theme: 'grid',
-        styles: { fontSize: 10 },
-        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } }
+        styles: { fontSize: 10, cellPadding: 4 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+        headStyles: { fillColor: [240, 240, 240] }
+      });
+      
+      // Add agreement info
+      doc.setFontSize(16);
+      doc.setTextColor(0, 48, 87);
+      // @ts-ignore
+      doc.text("Agreement Information", 14, doc.lastAutoTable.finalY + 15);
+      
+      const agreementInfo = [
+        ["Terms Agreed", application.agree_to_terms ? "Yes" : "No"],
+        ["Information Correct", application.agree_information_correct ? "Yes" : "No"],
+        ["Signature", application.signature ? "Signed" : "Not signed"]
+      ];
+      
+      // @ts-ignore
+      doc.autoTable({
+        // @ts-ignore
+        startY: doc.lastAutoTable.finalY + 20,
+        head: [],
+        body: agreementInfo,
+        theme: 'grid',
+        styles: { fontSize: 10, cellPadding: 4 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+        headStyles: { fillColor: [240, 240, 240] }
       });
       
       // Add footer
       // @ts-ignore
       const finalY = doc.lastAutoTable.finalY + 20;
       doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
       doc.text('This document contains confidential information. For authorized use only.', pageWidth / 2, finalY, { align: 'center' });
+      doc.text(`Generated on ${new Date().toLocaleDateString()}`, pageWidth / 2, finalY + 7, { align: 'center' });
       
       // Save the PDF
       doc.save(`GrowthPath_Application_${applicationId}.pdf`);
       
-      toast("PDF generated successfully!");
+      toast.success("PDF generated successfully!");
     } catch (err) {
       console.error('Error generating PDF:', err);
-      toast("Failed to generate PDF");
+      toast.error("Failed to generate PDF. Please try again.");
     } finally {
       setGeneratePdfLoading(false);
     }
@@ -293,7 +338,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
                 { label: "City", value: application.city },
                 { label: "State", value: application.state },
                 { label: "Zip Code", value: application.zip_code },
-                { label: "SSN", value: `***-**-${application.social_security_number?.slice(-4) || '****'}` },
+                { label: "SSN", value: application.social_security_number ? `***-**-${application.social_security_number.slice(-4)}` : 'N/A' },
                 { label: "Date of Birth", value: application.date_of_birth }
               ]}
             />
@@ -321,8 +366,8 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
               title="Financial Information"
               data={[
                 { label: "Bank Name", value: application.bank_name },
-                { label: "Account Number", value: `****${application.account_number?.slice(-4) || '****'}` },
-                { label: "Routing Number", value: `****${application.routing_number?.slice(-4) || '****'}` },
+                { label: "Account Number", value: application.account_number ? `****${application.account_number.slice(-4)}` : 'N/A' },
+                { label: "Routing Number", value: application.routing_number ? `****${application.routing_number.slice(-4)}` : 'N/A' },
                 { label: "Monthly Revenue", value: application.monthly_revenue },
                 { label: "Credit Score", value: application.credit_score },
                 { label: "Loan Amount", value: application.loan_amount },
