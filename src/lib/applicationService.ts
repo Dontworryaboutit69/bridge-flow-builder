@@ -54,17 +54,20 @@ const getQuestionText = (field: string): string => {
 
 export const submitApplicationData = async (
   applicationData: ApplicationData, 
-  webhookUrl: string
+  webhookUrl: string = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/"
 ): Promise<boolean> => {
   try {
     // Log the application data
     console.log('Application submitted with data:', applicationData);
     
-    // Save webhook URL to localStorage if provided
-    if (webhookUrl) {
-      localStorage.setItem('application_webhook', webhookUrl);
-      localStorage.setItem('prequalify_webhook', webhookUrl); // Use the same webhook for both forms
-    }
+    // Use default webhook URL if none provided
+    const finalWebhookUrl = webhookUrl || "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
+    
+    // Save webhook URL to localStorage
+    localStorage.setItem('application_webhook', finalWebhookUrl);
+    localStorage.setItem('prequalify_webhook', finalWebhookUrl); // Use the same webhook for both forms
+    
+    console.log('Using webhook URL:', finalWebhookUrl);
     
     // Format data to send only the raw values without questions
     const formattedData: Record<string, any> = {
@@ -79,26 +82,24 @@ export const submitApplicationData = async (
       formattedData[field] = value;
     });
     
-    // Send data to webhook if URL is available
-    if (webhookUrl) {
-      try {
-        console.log('Sending application data to webhook:', webhookUrl);
-        
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          mode: 'no-cors', // Handle CORS issues
-          body: JSON.stringify(formattedData),
-        });
-        console.log('Application data sent to webhook successfully');
-      } catch (error) {
-        console.error('Error sending application data to webhook:', error);
-        toast("Error connecting to Zapier, but application saved locally");
-      }
-    } else {
-      console.warn('No webhook URL provided for application submission');
+    // Send data to webhook
+    try {
+      console.log('Sending application data to webhook:', finalWebhookUrl);
+      
+      const response = await fetch(finalWebhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'no-cors', // Handle CORS issues
+        body: JSON.stringify(formattedData),
+      });
+      console.log('Application data sent to webhook successfully');
+      toast("Application submitted successfully!");
+    } catch (error) {
+      console.error('Error sending application data to webhook:', error);
+      toast("Error connecting to Zapier, but application saved locally");
+      return false;
     }
     
     // Simulate API call

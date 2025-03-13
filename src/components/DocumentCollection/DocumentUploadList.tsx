@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, FileCheck } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -5,6 +6,8 @@ import DocumentUploadItem from './DocumentUploadItem';
 import { toast } from '@/hooks/use-toast';
 import { Document } from '@/types/documents';
 import { useNavigate } from 'react-router-dom';
+
+const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
 
 type DocumentUploadListProps = {
   documents: Document[];
@@ -19,9 +22,10 @@ const DocumentUploadList = ({
   uploadingId, 
   handleUpload, 
   onSubmitDocuments,
-  webhookUrl = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/"
+  webhookUrl
 }: DocumentUploadListProps) => {
   const navigate = useNavigate();
+  const finalWebhookUrl = webhookUrl || DEFAULT_WEBHOOK_URL;
   
   const allRequiredUploaded = documents
     .filter(doc => doc.required)
@@ -47,40 +51,40 @@ const DocumentUploadList = ({
     }
     
     if (allRequiredUploaded) {
-      // Send data to webhook if URL is available
-      if (webhookUrl) {
-        try {
-          const documentSummary = documents.map(doc => ({
-            id: doc.id,
-            name: doc.name,
-            uploaded: doc.uploaded,
-            uploadCount: doc.uploadCount || 0,
-            required: doc.required,
-            filesCount: doc.files?.length || 0
-          }));
-          
-          await fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            mode: 'no-cors',
-            body: JSON.stringify({
-              form_type: 'document_collection',
-              documents: documentSummary,
-              submission_date: new Date().toISOString(),
-              source_url: window.location.href,
-            }),
-          });
-          console.log('Document data sent to webhook successfully');
-        } catch (error) {
-          console.error('Error sending document data to webhook:', error);
-          toast({
-            title: "Warning",
-            description: "Error connecting to Zapier, but documents saved locally",
-            variant: "destructive",
-          });
-        }
+      console.log("Using document webhook URL:", finalWebhookUrl);
+      
+      // Send data to webhook
+      try {
+        const documentSummary = documents.map(doc => ({
+          id: doc.id,
+          name: doc.name,
+          uploaded: doc.uploaded,
+          uploadCount: doc.uploadCount || 0,
+          required: doc.required,
+          filesCount: doc.files?.length || 0
+        }));
+        
+        await fetch(finalWebhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          mode: 'no-cors',
+          body: JSON.stringify({
+            form_type: 'document_collection',
+            documents: documentSummary,
+            submission_date: new Date().toISOString(),
+            source_url: window.location.href,
+          }),
+        });
+        console.log('Document data sent to webhook successfully');
+      } catch (error) {
+        console.error('Error sending document data to webhook:', error);
+        toast({
+          title: "Warning",
+          description: "Error connecting to Zapier, but documents saved locally",
+          variant: "destructive",
+        });
       }
       
       toast({

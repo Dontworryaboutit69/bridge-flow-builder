@@ -10,13 +10,15 @@ import { submitApplicationData } from './applicationService';
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
 
+const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
+
 export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [applicationData, setApplicationData] = useState<ApplicationData>(initialApplicationData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [zapierWebhookUrl, setZapierWebhookUrl] = useState<string>(
-    localStorage.getItem('application_webhook') || ''
+    localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL
   );
   const totalSteps = 4;
 
@@ -45,7 +47,11 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const submitApplication = async () => {
     setIsSubmitting(true);
     try {
-      const success = await submitApplicationData(applicationData, zapierWebhookUrl);
+      // Ensure we have a webhook URL
+      const webhookToUse = zapierWebhookUrl || DEFAULT_WEBHOOK_URL;
+      console.log("Using webhook URL for submission:", webhookToUse);
+      
+      const success = await submitApplicationData(applicationData, webhookToUse);
       if (success) {
         setSubmitSuccess(true);
       }
