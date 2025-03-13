@@ -8,6 +8,7 @@ import { Document } from '@/types/documents';
 import { useNavigate } from 'react-router-dom';
 import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
 import { supabase } from "@/integrations/supabase/client";
+import { GrowthPathDocumentsRow } from '@/types/supabase';
 
 type DocumentUploadListProps = {
   documents: Document[];
@@ -62,16 +63,18 @@ const DocumentUploadList = ({
           for (const file of doc.files) {
             try {
               // Add each document to the GrowthPath Documents Table
+              const insertData: Partial<GrowthPathDocumentsRow> = {
+                application_id: applicationId,
+                document_type: doc.id,
+                document_name: file.name,
+                file_path: `documents/${applicationId}/${doc.id}/${file.name}`,
+                file_size: file.size,
+                file_type: file.type
+              };
+              
               const { error } = await supabase
                 .from('GrowthPath Documents Table')
-                .insert({
-                  application_id: applicationId,
-                  document_type: doc.id,
-                  document_name: file.name,
-                  file_path: `documents/${applicationId}/${doc.id}/${file.name}`,
-                  file_size: file.size,
-                  file_type: file.type
-                });
+                .insert(insertData);
                 
               if (error) {
                 console.error(`Error saving document ${file.name} to Supabase:`, error);

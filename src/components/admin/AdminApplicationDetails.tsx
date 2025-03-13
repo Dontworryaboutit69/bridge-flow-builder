@@ -7,13 +7,14 @@ import DocumentsList from './DocumentsList';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type AdminApplicationDetailsProps = {
   applicationId: string;
   onBack: () => void;
 };
 
-interface ApplicationData {
+type ApplicationData = {
   [key: string]: any;
   id?: number;
   created_at?: string;
@@ -22,7 +23,7 @@ interface ApplicationData {
   last_name?: string;
   email?: string;
   // ... other fields can be added as needed
-}
+};
 
 const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ applicationId, onBack }) => {
   const [application, setApplication] = useState<ApplicationData | null>(null);
@@ -44,7 +45,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         .from('GrowthPath Application')
         .select('*')
         .eq('application_id', applicationId)
-        .single();
+        .single() as { data: GrowthPathApplicationRow | null, error: any };
       
       if (error) {
         console.error('Error fetching application details:', error);

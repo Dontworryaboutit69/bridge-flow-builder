@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import CustomButton from "@/components/ui/CustomButton";
 import { toast } from 'sonner';
 import { ChevronRight, DownloadIcon, Loader2 } from 'lucide-react';
+import { GrowthPathApplicationRow } from '@/types/supabase';
 
 type Application = {
   id: number;
@@ -38,14 +39,27 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
       const { data, error } = await supabase
         .from('GrowthPath Application')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false }) as { data: GrowthPathApplicationRow[] | null, error: any };
       
       if (error) {
         throw error;
       }
       
       if (data && data.length > 0) {
-        setApplications(data as Application[]);
+        // Convert to Application type
+        const formattedData: Application[] = data.map(app => ({
+          id: app.id,
+          created_at: app.created_at,
+          application_id: app.application_id,
+          first_name: app.first_name || 'Unknown',
+          last_name: app.last_name || 'User',
+          email: app.email || 'No email',
+          business_name: app.business_name || 'No business name',
+          loan_amount: app.loan_amount || 'N/A',
+          submission_date: app.submission_date || app.created_at
+        }));
+        
+        setApplications(formattedData);
         console.log('Fetched applications:', data);
       } else {
         // If no data, try to get from localStorage as fallback
