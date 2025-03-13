@@ -45,7 +45,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
       }
       
       if (data && data.length > 0) {
-        setApplications(data);
+        setApplications(data as Application[]);
         console.log('Fetched applications:', data);
       } else {
         // If no data, try to get from localStorage as fallback
@@ -55,7 +55,7 @@ const AdminApplicationsTable: React.FC<AdminApplicationsTableProps> = ({ onSelec
         if (currentAppData) {
           const parsedData = JSON.parse(currentAppData);
           if (parsedData.application_id) {
-            setApplications([parsedData]);
+            setApplications([parsedData as Application]);
             console.log('Using application from localStorage:', parsedData);
           }
         } else {

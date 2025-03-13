@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft } from 'lucide-react';
@@ -14,8 +13,19 @@ type AdminApplicationDetailsProps = {
   onBack: () => void;
 };
 
+interface ApplicationData {
+  [key: string]: any;
+  id?: number;
+  created_at?: string;
+  application_id: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  // ... other fields can be added as needed
+}
+
 const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ applicationId, onBack }) => {
-  const [application, setApplication] = useState<any | null>(null);
+  const [application, setApplication] = useState<ApplicationData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [exportingPdf, setExportingPdf] = useState<boolean>(false);
@@ -43,14 +53,14 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
       
       if (data) {
         console.log('Application details:', data);
-        setApplication(data);
+        setApplication(data as ApplicationData);
       } else {
         // Try to get from localStorage as a fallback
         const savedAppData = localStorage.getItem('current_application_data');
         if (savedAppData) {
           const parsedData = JSON.parse(savedAppData);
           if (parsedData.application_id === applicationId) {
-            setApplication(parsedData);
+            setApplication(parsedData as ApplicationData);
           } else {
             setError("Application not found.");
           }

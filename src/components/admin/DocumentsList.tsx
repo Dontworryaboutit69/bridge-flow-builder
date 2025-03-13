@@ -29,21 +29,21 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         setLoading(true);
         
         // Try to fetch from Supabase first
-        const { data, error } = await supabase
+        const { data: documentsData, error: documentsError } = await supabase
           .from('GrowthPath Documents Table')
           .select('*')
           .eq('application_id', applicationId);
         
-        if (error) {
-          console.error('Supabase error:', error);
+        if (documentsError) {
+          console.error('Supabase error:', documentsError);
           // Fall back to localStorage
           fallbackToLocalStorage();
           return;
         }
         
-        if (data && data.length > 0) {
-          console.log('Documents found in Supabase:', data);
-          setDocuments(data);
+        if (documentsData && documentsData.length > 0) {
+          console.log('Documents found in Supabase:', documentsData);
+          setDocuments(documentsData as Document[]);
         } else {
           console.log('No documents found in Supabase, checking localStorage');
           fallbackToLocalStorage();
