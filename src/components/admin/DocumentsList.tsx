@@ -26,9 +26,9 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
       try {
         setLoading(true);
         
-        // Try to fetch from Supabase first
+        // Try to fetch from Supabase first - use the correct table name
         const { data, error } = await supabase
-          .from('documents')
+          .from('GrowthPath Documents Table')
           .select('*')
           .eq('application_id', applicationId);
         
@@ -40,7 +40,15 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         }
         
         if (data && data.length > 0) {
-          setDocuments(data);
+          // Convert the data to match our Document type
+          const formattedDocs = data.map(doc => ({
+            id: doc.id.toString(),
+            document_type: doc.document_type || '',
+            document_name: doc.document_name || '',
+            file_path: doc.file_path || '',
+            created_at: doc.created_at
+          }));
+          setDocuments(formattedDocs);
         } else {
           fallbackToLocalStorage();
         }
