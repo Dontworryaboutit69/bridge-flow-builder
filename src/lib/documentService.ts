@@ -14,7 +14,7 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     console.log('Fetching documents for application:', applicationId);
     if (!applicationId) {
       console.error('Invalid application ID provided');
-      return [];
+      return getMockDocuments();
     }
     
     // Try to fetch from Supabase
@@ -25,7 +25,7 @@ export const fetchDocumentsForApplication = async (applicationId: string): Promi
     
     if (error) {
       console.error('Supabase error:', error);
-      throw error;
+      return getMockDocuments();
     }
     
     if (data && data.length > 0) {
