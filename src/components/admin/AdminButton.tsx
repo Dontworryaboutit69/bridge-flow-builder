@@ -22,10 +22,8 @@ const AdminButton = () => {
       const newCount = prev + 1;
       // If clicked 3 times in succession, navigate to admin
       if (newCount >= 3) {
-        // Use absolute URL to ensure correct routing in production
-        const baseUrl = window.location.origin;
-        console.log("Navigating to admin portal at:", `${baseUrl}/admin`);
-        window.location.href = `${baseUrl}/admin`;
+        // Use window.location.href for more reliable navigation on deployed sites
+        window.location.href = '/admin';
         toast("Navigating to admin portal");
         return 0;
       }

@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApplicationProvider } from "@/lib/applicationContext";
 import { FormProvider } from "@/lib/formContext";
 import Index from "./pages/Index";
@@ -17,14 +17,7 @@ import AdminButton from "./components/admin/AdminButton";
 import AdminLogin from "./pages/AdminLogin";
 import AdminConsole from "./pages/AdminConsole";
 
-// Create a new QueryClient instance
 const queryClient = new QueryClient();
-
-// Add a basename to the router if the app is not served from the root
-const getBasename = () => {
-  // Check if we're in development or production
-  return process.env.NODE_ENV === 'development' ? '/' : '/';
-};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -33,7 +26,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter basename={getBasename()}>
+          <BrowserRouter>
             <TrackingScripts />
             <AdminButton />
             <Routes>
