@@ -1,15 +1,23 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Card } from './ui/card';
 
 interface CrmEmbedProps {
   formId?: string;
   height?: string;
   className?: string;
+  onFormSubmit?: () => void;
 }
 
-const CrmEmbed = ({ formId = '8IL41omixTKGjsWh61T9', height = '600px', className = '' }: CrmEmbedProps) => {
+const CrmEmbed = ({ 
+  formId = '8IL41omixTKGjsWh61T9', 
+  height = '600px', 
+  className = '',
+  onFormSubmit 
+}: CrmEmbedProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [iframeHeight, setIframeHeight] = useState(height);
 
   useEffect(() => {
     // Load the form embed script
@@ -32,25 +40,26 @@ const CrmEmbed = ({ formId = '8IL41omixTKGjsWh61T9', height = '600px', className
         
         try {
           // Try to get the height from the iframe content
-          const iframeHeight = iframe.contentWindow?.document?.body?.scrollHeight;
-          if (iframeHeight && iframeHeight > 100) {
-            iframe.style.height = `${iframeHeight}px`;
-          } else {
-            iframe.style.height = height;
+          const contentHeight = iframe.contentWindow?.document?.body?.scrollHeight;
+          if (contentHeight && contentHeight > 100) {
+            setIframeHeight(`${contentHeight + 50}px`); // Add padding
           }
         } catch (e) {
           console.log('Could not access iframe content due to same-origin policy', e);
-          iframe.style.height = height;
         }
       }
     };
 
     // Set up a message listener for potential messages from the iframe
     const handleMessage = (event: MessageEvent) => {
+      // Handle form submission events if they exist
+      if (event.data && event.data.type === 'formSubmit' && formId === event.data.formId) {
+        if (onFormSubmit) onFormSubmit();
+      }
+      
+      // Handle height adjustment messages
       if (event.data && event.data.type === 'setHeight' && event.data.formId === formId) {
-        if (iframeRef.current) {
-          iframeRef.current.style.height = `${event.data.height}px`;
-        }
+        setIframeHeight(`${event.data.height + 50}px`); // Add padding
       }
     };
 
@@ -63,10 +72,10 @@ const CrmEmbed = ({ formId = '8IL41omixTKGjsWh61T9', height = '600px', className
       window.removeEventListener('message', handleMessage);
       clearInterval(timer);
     };
-  }, [formId, height]);
+  }, [formId, onFormSubmit]);
 
   return (
-    <div ref={containerRef} className={`crm-embed-container w-full rounded-lg ${className}`}>
+    <Card ref={containerRef} className={`crm-embed-container w-full overflow-hidden ${className}`}>
       <iframe 
         ref={iframeRef}
         src={`https://api.leadconnectorhq.com/widget/survey/${formId}`}
@@ -74,15 +83,14 @@ const CrmEmbed = ({ formId = '8IL41omixTKGjsWh61T9', height = '600px', className
           border: 'none', 
           width: '100%', 
           overflow: 'hidden', 
-          height,
-          borderRadius: '0.5rem',
+          height: iframeHeight,
         }}
         scrolling="no"
         id={formId}
         title="Business Funding Application Form"
-        className="w-full shadow-sm"
+        className="w-full"
       />
-    </div>
+    </Card>
   );
 };
 

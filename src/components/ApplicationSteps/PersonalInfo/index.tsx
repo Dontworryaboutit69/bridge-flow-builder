@@ -2,13 +2,25 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../../ui/CustomButton';
 import { ArrowRight } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '@/lib/formContext';
 import CrmEmbed from '../../CrmEmbed';
+import { toast } from '@/components/ui/use-toast';
 
 const PersonalInfo = () => {
-  const { nextStep, isStepValid } = useApplication();
+  const { nextStep } = useApplication();
   const { formData } = useForm();
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
+  const handleFormSubmit = () => {
+    setFormSubmitted(true);
+    toast({
+      title: "Information Saved",
+      description: "Your personal information has been successfully saved.",
+      variant: "default",
+      duration: 3000,
+    });
+  };
   
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -21,8 +33,11 @@ const PersonalInfo = () => {
         </p>
       </div>
       
-      <div className="glass-card p-6 md:p-8 bg-white">
-        <CrmEmbed height="800px" />
+      <div className="bg-white rounded-lg overflow-hidden">
+        <CrmEmbed 
+          height="1000px" 
+          onFormSubmit={handleFormSubmit}
+        />
       </div>
       
       <div className="mt-10 flex justify-end">
