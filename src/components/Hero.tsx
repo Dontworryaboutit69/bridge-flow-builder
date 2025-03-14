@@ -29,19 +29,10 @@ const Hero = () => {
               Access $5,000 to $500,000 with minimal paperwork and flexible repayment terms.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <CustomButton href="/pre-qualification" size="lg">
+            <div className="flex justify-center lg:justify-start mb-8">
+              <CustomButton href="#apply-now" size="lg">
                 Get Funded Now
                 <ChevronRight className="ml-1 w-5 h-5" />
-              </CustomButton>
-              
-              <CustomButton 
-                href="https://calendly.com/growthpath/30min" 
-                target="_blank"
-                variant="outline" 
-                size="lg">
-                Schedule a Call
-                <Phone className="ml-1 w-5 h-5" />
               </CustomButton>
             </div>
             
@@ -104,7 +95,7 @@ const Hero = () => {
                 ))}
               </ul>
               
-              <CustomButton href="/pre-qualification" fullWidth size="lg">
+              <CustomButton href="#apply-now" fullWidth size="lg">
                 Check Your Rate
                 <ChevronRight className="ml-1 w-5 h-5" />
               </CustomButton>

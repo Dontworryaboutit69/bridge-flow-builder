@@ -8,6 +8,7 @@ import { toast } from '@/components/ui/use-toast';
 const Step5 = () => {
   const { formData, resetForm, isDisqualified } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const schedulingLink = "https://api.leadconnectorhq.com/widget/bookings/soniab";
   
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -46,7 +47,7 @@ const Step5 = () => {
         </p>
         
         <CustomButton 
-          href="https://calendly.com/growthpath/30min" 
+          href={schedulingLink}
           target="_blank"
           className="group mx-auto"
           size="md"
@@ -92,7 +93,7 @@ const Step5 = () => {
         </CustomButton>
         
         <CustomButton 
-          href="https://calendly.com/growthpath/30min" 
+          href={schedulingLink}
           target="_blank"
           variant="outline" 
           size="md"
