@@ -1,5 +1,6 @@
 
 import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import { ApplicationData } from '@/types/admin';
 
 // Helper function to safely access nested properties
