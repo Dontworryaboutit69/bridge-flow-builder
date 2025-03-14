@@ -66,7 +66,7 @@ const Index = () => {
         <Hero />
         
         {/* Simple visual separator with minimal spacing */}
-        <div className="relative py-4">
+        <div className="relative py-2">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
             <div className="h-px w-full bg-gradient-to-r from-transparent via-funding-blue/30 to-transparent"></div>
           </div>
@@ -77,8 +77,8 @@ const Index = () => {
         <FundingProducts />
         <Benefits />
         <Testimonials />
-        <section id="apply-now" className="py-16 md:py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-5 md:px-10 bg-gray-100">
+        <section id="apply-now" className="py-12 md:py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-5 md:px-10">
             <ProgressiveForm />
           </div>
         </section>

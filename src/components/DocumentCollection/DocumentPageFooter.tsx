@@ -7,9 +7,9 @@ const DocumentPageFooter = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-funding-dark text-white py-12">
+    <footer className="bg-funding-dark text-white py-8">
       <div className="max-w-7xl mx-auto px-5 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
             <Logo className="mb-4 justify-start" />
             <p className="text-gray-400 mb-4">
@@ -38,7 +38,7 @@ const DocumentPageFooter = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Funding Options</h3>
+            <h3 className="text-lg font-semibold mb-3">Funding Options</h3>
             <ul className="space-y-2">
               <li><a href="/#funding-products" className="text-gray-400 hover:text-white">Term Loans</a></li>
               <li><a href="/#funding-products" className="text-gray-400 hover:text-white">Merchant Cash Advances</a></li>
@@ -49,7 +49,7 @@ const DocumentPageFooter = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <h3 className="text-lg font-semibold mb-3">Company</h3>
             <ul className="space-y-2">
               <li><a href="/#how-it-works" className="text-gray-400 hover:text-white">How It Works</a></li>
               <li><a href="/#benefits" className="text-gray-400 hover:text-white">Benefits</a></li>
@@ -60,8 +60,8 @@ const DocumentPageFooter = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
-            <ul className="space-y-3 text-gray-400">
+            <h3 className="text-lg font-semibold mb-3">Contact</h3>
+            <ul className="space-y-2 text-gray-400">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 mr-2 mt-0.5" />
                 <span><a href="tel:15735333894" className="hover:text-white">1-573-533-3894</a></span>
@@ -78,7 +78,7 @@ const DocumentPageFooter = () => {
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-gray-800 text-gray-400 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-6 pt-6 border-t border-gray-800 text-gray-400 flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {currentYear} Growth Path Advisory. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="/#terms" className="hover:text-white">Terms of Service</a>

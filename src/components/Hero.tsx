@@ -4,7 +4,7 @@ import CustomButton from './ui/CustomButton';
 
 const Hero = () => {
   return (
-    <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       {/* Enhanced background effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-funding-blue/5 to-white"></div>
@@ -14,22 +14,22 @@ const Hero = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-5 md:px-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-16">
+        <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-12">
           {/* Hero content with improved breathing room */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
-            <div className="inline-block bg-funding-blue/10 text-funding-blue font-medium text-sm px-4 py-1.5 rounded-full mb-6 animate-fade-in">
+            <div className="inline-block bg-funding-blue/10 text-funding-blue font-medium text-sm px-4 py-1.5 rounded-full mb-5 animate-fade-in">
               Business Funding Made Simple
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-5 leading-tight">
               Get Business Funding <span className="text-funding-blue">In 24 Hours</span>
             </h1>
             
-            <p className="text-xl text-funding-gray mb-8 max-w-xl mx-auto lg:mx-0">
+            <p className="text-xl text-funding-gray mb-6 max-w-xl mx-auto lg:mx-0">
               Access $5,000 to $500,000 with minimal paperwork and flexible repayment terms.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <a href="#apply-now">
                 <CustomButton size="lg">
                   Get Funded Now
@@ -38,7 +38,7 @@ const Hero = () => {
               </a>
             </div>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
               <div className="flex items-center">
                 <div className="flex -space-x-3">
                   {[
@@ -73,15 +73,15 @@ const Hero = () => {
           
           {/* Qualification form card with enhanced visual separation */}
           <div className="w-full lg:w-1/2 max-w-md mx-auto lg:max-w-none">
-            <div className="bg-white rounded-2xl p-8 shadow-soft border border-funding-light-gray/50 relative backdrop-blur-sm">
+            <div className="bg-white rounded-2xl p-6 shadow-soft border border-funding-light-gray/50 relative backdrop-blur-sm">
               <div className="absolute -top-3 -right-3 bg-funding-blue/10 text-funding-blue text-xs font-bold px-3 py-1 rounded-full">
                 <Shield className="w-4 h-4 inline-block mr-1" />
                 Quick Pre-qualification
               </div>
               
-              <h3 className="text-xl font-bold text-funding-dark mb-6">See if you qualify for funding</h3>
+              <h3 className="text-xl font-bold text-funding-dark mb-5">See if you qualify for funding</h3>
               
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-3 mb-6">
                 {[
                   "Business generating $15k+ monthly revenue",
                   "In business for 6+ months",
@@ -104,7 +104,7 @@ const Hero = () => {
                 </CustomButton>
               </a>
               
-              <div className="mt-6 flex items-center justify-center text-funding-gray">
+              <div className="mt-5 flex items-center justify-center text-funding-gray">
                 <Phone className="w-4 h-4 text-funding-blue mr-2" />
                 <a href="tel:15735333894" className="text-sm hover:text-funding-blue transition-colors">
                   Call us at 1-573-533-3894

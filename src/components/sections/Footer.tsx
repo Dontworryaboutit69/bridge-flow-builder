@@ -4,9 +4,9 @@ import Logo from '@/components/Logo';
 
 const Footer = () => {
   return (
-    <footer className="bg-funding-dark text-white py-12">
+    <footer className="bg-funding-dark text-white py-8">
       <div className="max-w-7xl mx-auto px-5 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
             <Logo className="w-40 mb-4" />
             <p className="text-gray-400 mb-4">
@@ -32,7 +32,7 @@ const Footer = () => {
           </div>
           
           <div className="col-span-1">
-            <h4 className="font-bold text-lg mb-4">Company</h4>
+            <h4 className="font-bold text-lg mb-3">Company</h4>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Team</a></li>
@@ -40,7 +40,7 @@ const Footer = () => {
           </div>
           
           <div className="col-span-1">
-            <h4 className="font-bold text-lg mb-4">Funding</h4>
+            <h4 className="font-bold text-lg mb-3">Funding</h4>
             <ul className="space-y-2">
               <li><a href="#funding-products" className="text-gray-400 hover:text-white transition-colors">Term Loans</a></li>
               <li><a href="#funding-products" className="text-gray-400 hover:text-white transition-colors">Merchant Cash Advances</a></li>
@@ -50,7 +50,7 @@ const Footer = () => {
           </div>
           
           <div className="col-span-1">
-            <h4 className="font-bold text-lg mb-4">Contact</h4>
+            <h4 className="font-bold text-lg mb-3">Contact</h4>
             <ul className="space-y-2">
               <li className="flex items-start">
                 <Phone className="w-5 h-5 mr-2 text-funding-blue" />
@@ -68,7 +68,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-gray-800 text-center sm:text-left text-gray-500 text-sm">
+        <div className="mt-8 pt-6 border-t border-gray-800 text-center sm:text-left text-gray-500 text-sm">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} Growth Path Advisory. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">
