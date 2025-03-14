@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import CustomButton from "@/components/ui/CustomButton";
 import ApplicationDetailSection from './ApplicationDetailSection';
 import DocumentsList from './DocumentsList';
@@ -25,12 +25,18 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
   } = useApplicationDetails(applicationId);
 
   const handleGeneratePdf = async () => {
-    if (!application) return;
+    if (!application) {
+      console.error("Cannot generate PDF: Application data is missing");
+      return;
+    }
     
     setGeneratePdfLoading(true);
+    console.log("Generating PDF for application:", application);
     
     try {
       await generateApplicationPDF(application);
+    } catch (err) {
+      console.error("Error in handleGeneratePdf:", err);
     } finally {
       setGeneratePdfLoading(false);
     }
@@ -50,7 +56,7 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
         <p className="text-red-600">{error || "Application not found"}</p>
         <div className="mt-4 flex space-x-4 justify-center">
           <CustomButton onClick={onBack} variant="outline">
-            <Loader2 className="mr-2 h-4 w-4" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Applications
           </CustomButton>
           <CustomButton onClick={fetchApplicationDetails}>

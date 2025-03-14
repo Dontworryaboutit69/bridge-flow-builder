@@ -3,56 +3,12 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { toast } from 'sonner';
 import { formatDate } from '@/lib/documentUtils';
-
-type ApplicationData = {
-  // Personal Information
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  social_security_number: string;
-  date_of_birth: string;
-  
-  // Business Information
-  business_name: string;
-  business_type: string;
-  business_start_date: string;
-  industry: string;
-  time_in_business: string;
-  employee_count: string;
-  business_address: string;
-  business_city: string;
-  business_state: string;
-  business_zip_code: string;
-  website_url: string;
-  ein_number: string;
-  ownership_percentage: string;
-  
-  // Financial Information
-  bank_name: string;
-  account_number: string;
-  routing_number: string;
-  monthly_revenue: string;
-  credit_score: string;
-  loan_amount: string;
-  use_of_funds: string;
-  
-  // Agreement Information
-  agree_to_terms: boolean;
-  agree_information_correct: boolean;
-  signature: string;
-  
-  // Additional info
-  application_id: string;
-  submission_date: string;
-};
+import { ApplicationData } from '@/types/admin';
 
 export const generateApplicationPDF = async (application: ApplicationData): Promise<void> => {
   try {
+    console.log('Generating PDF for application:', application);
+    
     // Initialize jsPDF
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -65,8 +21,8 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     // Add application metadata
     doc.setFontSize(12);
     doc.setTextColor(70, 70, 70);
-    doc.text(`Application ID: ${application.application_id}`, pageWidth / 2, 30, { align: 'center' });
-    doc.text(`Submission Date: ${formatDate(application.submission_date)}`, pageWidth / 2, 38, { align: 'center' });
+    doc.text(`Application ID: ${application.application_id || 'N/A'}`, pageWidth / 2, 30, { align: 'center' });
+    doc.text(`Submission Date: ${application.submission_date ? formatDate(application.submission_date) : 'N/A'}`, pageWidth / 2, 38, { align: 'center' });
     
     // Add divider
     doc.setDrawColor(200, 200, 200);
@@ -78,9 +34,9 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     doc.text("Personal Information", 14, 50);
     
     const personalInfo = [
-      ["Full Name", `${application.first_name} ${application.last_name}`],
-      ["Email", application.email],
-      ["Phone", application.phone],
+      ["Full Name", `${application.first_name || ''} ${application.last_name || ''}`],
+      ["Email", application.email || 'N/A'],
+      ["Phone", application.phone || 'N/A'],
       ["Address", `${application.address || ''}, ${application.city || ''}, ${application.state || ''} ${application.zip_code || ''}`],
       ["SSN", application.social_security_number ? `***-**-${application.social_security_number.slice(-4)}` : 'N/A'],
       ["Date of Birth", application.date_of_birth || 'N/A']
@@ -193,7 +149,7 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, pageWidth / 2, finalY + 7, { align: 'center' });
     
     // Save the PDF
-    doc.save(`GrowthPath_Application_${application.application_id}.pdf`);
+    doc.save(`GrowthPath_Application_${application.application_id || 'download'}.pdf`);
     
     toast.success("PDF generated successfully!");
     return Promise.resolve();
