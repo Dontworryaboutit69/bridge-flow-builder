@@ -16,25 +16,26 @@ const ProgressBar = () => {
     console.log("Current step in progress bar:", currentStep);
   }, [currentStep]);
   
+  // Updated progress bar to match the design in the image
   return (
-    <div className="w-full mb-8">
-      <div className="flex justify-between mb-2">
+    <div className="w-full mb-10">
+      <div className="flex justify-between mb-3">
         {Array.from({ length: totalSteps }, (_, i) => (
           <div 
             key={i}
-            className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium
+            className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-medium
               ${i + 1 <= currentStep 
-                ? 'bg-funding-blue text-white' 
-                : 'bg-funding-light-gray text-funding-gray'
+                ? 'bg-[#0056db] text-white shadow-md' 
+                : 'bg-gray-100 text-gray-400 border border-gray-200'
               }`}
           >
             {i + 1}
           </div>
         ))}
       </div>
-      <div className="w-full bg-funding-light-gray h-1 rounded-full">
+      <div className="w-full bg-gray-100 h-1.5 rounded-full">
         <div 
-          className="bg-funding-blue h-1 rounded-full transition-all duration-300"
+          className="bg-[#0056db] h-1.5 rounded-full transition-all duration-300"
           style={{ width: `${(currentStep / totalSteps) * 100}%` }}
         ></div>
       </div>
@@ -73,7 +74,7 @@ const FormStepContent = () => {
   }
   
   return (
-    <div className="form-step" ref={contentRef}>
+    <div className="form-step animate-fade-in-up" ref={contentRef}>
       {currentStep === 1 && <Step1 />}
       {currentStep === 2 && <Step2 />}
       {currentStep === 3 && <Step3 />}
@@ -120,7 +121,7 @@ const FormWrapper = () => {
   }, [location.pathname, location.state, formData.loanAmount, setCurrentStep, currentStep]);
   
   return (
-    <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 max-w-2xl mx-auto" ref={wrapperRef}>
+    <div className="bg-white rounded-2xl shadow-md p-8 md:p-12 max-w-2xl mx-auto border border-gray-100" ref={wrapperRef}>
       <ProgressBar />
       <FormStepContent />
     </div>
@@ -141,19 +142,19 @@ const ProgressiveForm = () => {
   }, [currentStep]);
   
   return (
-    <section ref={formRef} className="py-16 bg-funding-light-gray/30 min-h-screen relative">
+    <section ref={formRef} className="py-16 bg-gray-50 min-h-screen relative">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptMC0xMnY2aDZ2LTZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
-        <div className="absolute -top-12 -left-12 w-64 h-64 bg-soft-peach/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-soft-blue/20 rounded-full blur-3xl"></div>
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-green-100/30 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1a2a43] mb-4">
             Get Prequalified For Funding
           </h2>
-          <p className="text-funding-gray max-w-xl mx-auto">
+          <p className="text-[#5e6577] max-w-xl mx-auto text-lg">
             Only takes 2 minutes to qualify for $15,000 - $5M in business funding.
           </p>
         </div>

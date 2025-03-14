@@ -33,7 +33,7 @@ const Step5 = () => {
   if (isDisqualified) {
     return (
       <div className="w-full max-w-xl mx-auto animate-fade-in text-center">
-        <div className="mb-6 flex justify-center">
+        <div className="mb-8 flex justify-center">
           <div className="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center">
             <Calendar className="w-8 h-8 text-yellow-600" />
           </div>
@@ -64,17 +64,18 @@ const Step5 = () => {
     }, 500);
   };
   
+  // Improved success view to match the image
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in text-center">
-      <div className="mb-6 flex justify-center">
-        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-          <CheckCircle2 className="w-8 h-8 text-green-600" />
+      <div className="mb-8 flex justify-center">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+          <CheckCircle2 className="w-10 h-10 text-green-600" />
         </div>
       </div>
-      <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
+      <h2 className="text-3xl md:text-4xl font-bold text-[#1a2a43] mb-4">
         Congratulations! You're Pre-Qualified
       </h2>
-      <p className="text-funding-gray mb-8 max-w-md mx-auto">
+      <p className="text-[#5e6577] mb-10 max-w-lg mx-auto text-lg leading-relaxed">
         Based on your information, you pre-qualify for business funding. Complete your application to finalize your funding request.
       </p>
       
@@ -82,21 +83,23 @@ const Step5 = () => {
         <CustomButton 
           variant="primary" 
           onClick={handleStartApplication}
-          className="group"
+          className="py-4 text-lg"
           isLoading={isLoading}
+          fullWidth
         >
           Complete Your Application
-          <ArrowUpRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          <ArrowUpRight className="ml-1 w-5 h-5" />
         </CustomButton>
         
         <CustomButton 
           href="https://calendly.com/growthpath/30min" 
           target="_blank"
-          variant="outline"
-          className="group"
+          variant="outline" 
+          className="py-4 text-lg"
+          fullWidth
         >
           Schedule a Call First
-          <Calendar className="ml-1 w-4 h-4" />
+          <Calendar className="ml-1 w-5 h-5" />
         </CustomButton>
       </div>
     </div>

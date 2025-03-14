@@ -1,3 +1,4 @@
+
 import { useEffect, useLayoutEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -55,7 +56,7 @@ const Index = () => {
       });
     };
   }, []);
-  return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
+  return <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Add an invisible marker at the top to ensure scroll position is correct */}
       <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
       <Navbar />
@@ -65,7 +66,7 @@ const Index = () => {
         {/* Simple visual separator with minimal spacing */}
         <div className="relative py-2">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-funding-blue/30 to-transparent"></div>
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#0056db]/30 to-transparent"></div>
           </div>
         </div>
         
@@ -74,9 +75,16 @@ const Index = () => {
         <FundingProducts />
         <Benefits />
         <Testimonials />
-        <section id="apply-now" className="py-12 md:py-16 bg-white">
+        <section id="apply-now" className="py-12 md:py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1a2a43] mb-3">
+                Get Pre-Qualified Now
+              </h2>
+              <p className="text-[#5e6577] mb-6 text-lg">
+                Find out how much funding your business qualifies for
+              </p>
+            </div>
             <ProgressiveForm />
           </div>
         </section>

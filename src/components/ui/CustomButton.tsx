@@ -31,10 +31,10 @@ const CustomButton = ({
   target,
   rel,
 }: ButtonProps) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 relative btn-hover-effect';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 relative';
   
   const variantStyles = {
-    primary: 'bg-[#0056db] text-white hover:bg-[#0049c2]',
+    primary: 'bg-[#0056db] text-white hover:bg-[#0049c2] shadow-sm',
     secondary: 'bg-funding-light-gray text-funding-dark hover:bg-funding-light-gray/80',
     outline: 'bg-transparent border-2 border-[#0056db] text-[#0056db] hover:bg-[#0056db]/5',
     ghost: 'bg-transparent text-[#0056db] hover:bg-[#0056db]/5',

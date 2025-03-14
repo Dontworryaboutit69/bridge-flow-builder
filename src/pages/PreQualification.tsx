@@ -10,15 +10,15 @@ import AdminButton from "@/components/admin/AdminButton";
 const PreQualification = () => {
   return (
     <FormProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gray-50">
         <Navbar />
         <AdminButton />
         
-        <main className="flex-grow pt-24">
+        <main className="flex-grow pt-20">
           <ProgressiveForm />
         </main>
         
-        <footer className="bg-white py-8 border-t border-funding-light-gray">
+        <footer className="bg-white py-8 border-t border-gray-100">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="mb-6 md:mb-0">
@@ -28,11 +28,11 @@ const PreQualification = () => {
                   className="h-10" 
                 />
               </div>
-              <div className="flex items-center text-funding-blue">
+              <div className="flex items-center text-[#0056db]">
                 <Phone className="w-5 h-5 mr-2" />
                 <span className="font-medium">1-573-533-3894</span>
               </div>
-              <div className="text-sm text-funding-gray mt-6 md:mt-0">
+              <div className="text-sm text-[#5e6577] mt-6 md:mt-0">
                 © {new Date().getFullYear()} Growth Path Advisory. All rights reserved.
               </div>
             </div>
