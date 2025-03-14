@@ -72,27 +72,37 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
       ["Date of Birth", safeValue(application.date_of_birth)]
     ];
     
+    // Track current Y position
+    let yPosition = 55;
+    
     try {
       // @ts-ignore - jspdf-autotable type definitions
-      doc.autoTable({
-        startY: 55,
+      const personalResult = doc.autoTable({
+        startY: yPosition,
         head: [],
         body: personalInfo,
         theme: 'grid',
         styles: { fontSize: 10, cellPadding: 4 },
         columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
-        headStyles: { fillColor: [240, 240, 240] }
+        headStyles: { fillColor: [240, 240, 240] },
+        didDrawPage: (data: any) => {
+          yPosition = data.cursor.y;
+        }
       });
+      
+      // Update position if available from result
+      if (personalResult && typeof personalResult.lastAutoTable?.finalY === 'number') {
+        yPosition = personalResult.lastAutoTable.finalY;
+      }
     } catch (tableErr) {
       console.error('Error creating personal info table:', tableErr);
     }
     
-    // Add business info
+    // Add business info with manual Y position tracking
+    yPosition += 15;
     doc.setFontSize(16);
     doc.setTextColor(0, 48, 87);
-    
-    const currentY = doc.lastAutoTable?.finalY + 15 || 120;
-    doc.text("Business Information", 14, currentY);
+    doc.text("Business Information", 14, yPosition);
     
     const businessInfo = [
       ["Business Name", safeValue(application.business_name)],
@@ -113,26 +123,32 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     
     try {
       // @ts-ignore
-      doc.autoTable({
-        // @ts-ignore
-        startY: currentY + 5,
+      const businessResult = doc.autoTable({
+        startY: yPosition + 5,
         head: [],
         body: businessInfo,
         theme: 'grid',
         styles: { fontSize: 10, cellPadding: 4 },
         columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
-        headStyles: { fillColor: [240, 240, 240] }
+        headStyles: { fillColor: [240, 240, 240] },
+        didDrawPage: (data: any) => {
+          yPosition = data.cursor.y;
+        }
       });
+      
+      // Update position if available from result
+      if (businessResult && typeof businessResult.lastAutoTable?.finalY === 'number') {
+        yPosition = businessResult.lastAutoTable.finalY;
+      }
     } catch (tableErr) {
       console.error('Error creating business info table:', tableErr);
     }
     
-    // Add financial info
+    // Add financial info with manual Y position tracking
+    yPosition += 15;
     doc.setFontSize(16);
     doc.setTextColor(0, 48, 87);
-    
-    const financialY = doc.lastAutoTable?.finalY + 15 || 180;
-    doc.text("Financial Information", 14, financialY);
+    doc.text("Financial Information", 14, yPosition);
     
     const financialInfo = [
       ["Bank Name", safeValue(application.bank_name)],
@@ -146,25 +162,32 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     
     try {
       // @ts-ignore
-      doc.autoTable({
-        startY: financialY + 5,
+      const financialResult = doc.autoTable({
+        startY: yPosition + 5,
         head: [],
         body: financialInfo,
         theme: 'grid',
         styles: { fontSize: 10, cellPadding: 4 },
         columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
-        headStyles: { fillColor: [240, 240, 240] }
+        headStyles: { fillColor: [240, 240, 240] },
+        didDrawPage: (data: any) => {
+          yPosition = data.cursor.y;
+        }
       });
+      
+      // Update position if available from result
+      if (financialResult && typeof financialResult.lastAutoTable?.finalY === 'number') {
+        yPosition = financialResult.lastAutoTable.finalY;
+      }
     } catch (tableErr) {
       console.error('Error creating financial info table:', tableErr);
     }
     
-    // Add agreement info
+    // Add agreement info with manual Y position tracking
+    yPosition += 15;
     doc.setFontSize(16);
     doc.setTextColor(0, 48, 87);
-    
-    const agreementY = doc.lastAutoTable?.finalY + 15 || 240;
-    doc.text("Agreement Information", 14, agreementY);
+    doc.text("Agreement Information", 14, yPosition);
     
     const agreementInfo = [
       ["Terms Agreed", application.agree_to_terms ? "Yes" : "No"],
@@ -174,25 +197,33 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     
     try {
       // @ts-ignore
-      doc.autoTable({
-        startY: agreementY + 5,
+      const agreementResult = doc.autoTable({
+        startY: yPosition + 5,
         head: [],
         body: agreementInfo,
         theme: 'grid',
         styles: { fontSize: 10, cellPadding: 4 },
         columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
-        headStyles: { fillColor: [240, 240, 240] }
+        headStyles: { fillColor: [240, 240, 240] },
+        didDrawPage: (data: any) => {
+          yPosition = data.cursor.y;
+        }
       });
+      
+      // Update position if available from result
+      if (agreementResult && typeof agreementResult.lastAutoTable?.finalY === 'number') {
+        yPosition = agreementResult.lastAutoTable.finalY;
+      }
     } catch (tableErr) {
       console.error('Error creating agreement info table:', tableErr);
     }
     
-    // Add footer
-    const finalY = doc.lastAutoTable?.finalY + 20 || 270;
+    // Add footer with manual Y positioning
+    yPosition += 20;
     doc.setFontSize(10);
     doc.setTextColor(100, 100, 100);
-    doc.text('This document contains confidential information. For authorized use only.', pageWidth / 2, finalY, { align: 'center' });
-    doc.text(`Generated on ${new Date().toLocaleDateString()}`, pageWidth / 2, finalY + 7, { align: 'center' });
+    doc.text('This document contains confidential information. For authorized use only.', pageWidth / 2, yPosition, { align: 'center' });
+    doc.text(`Generated on ${new Date().toLocaleDateString()}`, pageWidth / 2, yPosition + 7, { align: 'center' });
     
     // Save the PDF with a safe filename
     const safeFilename = `GrowthPath_Application_${safeValue(application.application_id, 'download').replace(/[^a-z0-9]/gi, '_')}.pdf`;
