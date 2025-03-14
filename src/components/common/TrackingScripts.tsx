@@ -11,15 +11,23 @@ const TrackingScripts: React.FC = () => {
   useEffect(() => {
     // Facebook pixel page view tracking
     if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'PageView');
-      console.log('Facebook Pixel PageView tracked:', location.pathname);
+      try {
+        window.fbq('track', 'PageView');
+        console.log('Facebook Pixel PageView tracked:', location.pathname);
+      } catch (error) {
+        console.error('Error tracking Facebook Pixel PageView:', error);
+      }
     }
     
     // Google Analytics page view tracking
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('config', window.GA_MEASUREMENT_ID, {
-        page_path: location.pathname + location.search,
-      });
+      try {
+        window.gtag('config', window.GA_MEASUREMENT_ID, {
+          page_path: location.pathname + location.search,
+        });
+      } catch (error) {
+        console.error('Error tracking Google Analytics PageView:', error);
+      }
     }
     
     console.log('Page view tracked:', location.pathname);
