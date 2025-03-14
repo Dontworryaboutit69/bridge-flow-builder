@@ -1,148 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApplicationProvider } from '@/lib/applicationContext';
-import { useApplication } from '@/lib/applicationContext';
 import Navbar from '@/components/Navbar';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import PersonalInfo from '@/components/ApplicationSteps/PersonalInfo';
-import BusinessInfo from '@/components/ApplicationSteps/BusinessInfo';
-import FinancialInfo from '@/components/ApplicationSteps/FinancialInfo';
-import ReviewSubmit from '@/components/ApplicationSteps/ReviewSubmit';
-import { Phone } from 'lucide-react';
 import { FormProvider } from '@/lib/formContext';
-import ZapierSettings from '@/components/admin/ZapierSettings';
-import { useForm } from '@/lib/formContext';
-import { DEFAULT_WEBHOOK_URL } from '@/lib/applicationContext';
-
-const ProgressBar = () => {
-  const { currentStep, totalSteps } = useApplication();
-  
-  const steps = [
-    "Personal Information",
-    "Business Information",
-    "Financial Information",
-    "Review & Submit"
-  ];
-  
-  return (
-    <div className="w-full max-w-3xl mx-auto mb-10">
-      <div className="hidden md:flex justify-between mb-2">
-        {steps.map((step, index) => (
-          <div 
-            key={index}
-            className={`flex flex-col items-center w-1/4 ${index < currentStep ? 'text-funding-blue' : 'text-funding-gray'}`}
-          >
-            <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium mb-2
-              ${index + 1 <= currentStep 
-                ? 'bg-funding-blue text-white' 
-                : 'bg-funding-light-gray text-funding-gray'
-              }`}
-            >
-              {index + 1}
-            </div>
-            <span className="text-sm text-center">{step}</span>
-          </div>
-        ))}
-      </div>
-      
-      <div className="md:hidden mb-4">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium">Step {currentStep} of {totalSteps}</span>
-          <span className="text-sm font-medium">{steps[currentStep - 1]}</span>
-        </div>
-      </div>
-      
-      <div className="w-full bg-funding-light-gray h-2 rounded-full overflow-hidden">
-        <div 
-          className="bg-funding-blue h-2 rounded-full transition-all duration-300"
-          style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-        ></div>
-      </div>
-    </div>
-  );
-};
-
-const ApplicationContent = () => {
-  const { currentStep } = useApplication();
-  
-  return (
-    <TransitionGroup>
-      <CSSTransition
-        key={currentStep}
-        timeout={300}
-        classNames="form-step"
-      >
-        <div className="form-step">
-          {currentStep === 1 && <PersonalInfo />}
-          {currentStep === 2 && <BusinessInfo />}
-          {currentStep === 3 && <FinancialInfo />}
-          {currentStep === 4 && <ReviewSubmit />}
-        </div>
-      </CSSTransition>
-    </TransitionGroup>
-  );
-};
-
-const ApplicationWrapper = () => {
-  return (
-    <div className="bg-white rounded-2xl shadow-soft p-6 md:p-10 mb-16">
-      <ProgressBar />
-      <ApplicationContent />
-    </div>
-  );
-};
-
-const SimplifiedFooter = () => {
-  return (
-    <footer className="bg-funding-dark text-white py-8">
-      <div className="max-w-7xl mx-auto px-5 md:px-10">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center mb-4 md:mb-0">
-            <img 
-              src="/lovable-uploads/bc9b5dea-776a-46a3-b886-59da9c741e0f.png" 
-              alt="Growth Path Advisory Logo" 
-              className="h-8" 
-            />
-          </div>
-          
-          <div>
-            <div className="flex items-center justify-center">
-              <Phone className="h-5 w-5 mr-2" />
-              <a href="tel:+15735333894" className="text-white hover:text-gray-300">1-573-533-3894</a>
-            </div>
-          </div>
-          
-          <div className="mt-4 md:mt-0 text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} Growth Path Advisory. All rights reserved.
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
+import ApplicationWrapper from '@/components/Application/ApplicationWrapper';
+import SimplifiedFooter from '@/components/Application/SimplifiedFooter';
+import AdminControls from '@/components/Application/AdminControls';
 
 const Application = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  
-  // Initialize webhook URLs with defaults
-  const [prequalWebhookUrl, setPrequalWebhookUrl] = useState<string>(
-    localStorage.getItem('prequalify_webhook') || DEFAULT_WEBHOOK_URL
-  );
-  const [applicationWebhookUrl, setApplicationWebhookUrl] = useState<string>(
-    localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL
-  );
-  
-  // Ensure webhook URL is set on load
-  useEffect(() => {
-    if (!prequalWebhookUrl) {
-      setPrequalWebhookUrl(DEFAULT_WEBHOOK_URL);
-      localStorage.setItem('prequalify_webhook', DEFAULT_WEBHOOK_URL);
-    }
-    if (!applicationWebhookUrl) {
-      setApplicationWebhookUrl(DEFAULT_WEBHOOK_URL);
-      localStorage.setItem('application_webhook', DEFAULT_WEBHOOK_URL);
-    }
-  }, [prequalWebhookUrl, applicationWebhookUrl]);
   
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -163,22 +29,7 @@ const Application = () => {
             </div>
             
             <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
-              {isAdmin && (
-                <div className="mb-4 flex justify-end">
-                  <ZapierSettings 
-                    prequalWebhookUrl={prequalWebhookUrl}
-                    applicationWebhookUrl={applicationWebhookUrl}
-                    setPrequalWebhookUrl={(url) => {
-                      setPrequalWebhookUrl(url);
-                      localStorage.setItem('prequalify_webhook', url);
-                    }}
-                    setApplicationWebhookUrl={(url) => {
-                      setApplicationWebhookUrl(url);
-                      localStorage.setItem('application_webhook', url);
-                    }}
-                  />
-                </div>
-              )}
+              <AdminControls isAdmin={isAdmin} />
               
               <div className="text-center mb-10">
                 <h1 className="text-3xl md:text-4xl font-bold text-funding-dark mb-4">
