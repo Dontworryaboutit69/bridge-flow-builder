@@ -36,14 +36,14 @@ const CustomButton = ({
   const variantStyles = {
     primary: 'bg-[#0056db] text-white hover:bg-[#0049c2] shadow-sm',
     secondary: 'bg-funding-light-gray text-funding-dark hover:bg-funding-light-gray/80',
-    outline: 'bg-transparent border-2 border-[#0056db] text-[#0056db] hover:bg-[#0056db]/5',
+    outline: 'bg-transparent border border-[#0056db] text-[#0056db] hover:bg-[#0056db]/5',
     ghost: 'bg-transparent text-[#0056db] hover:bg-[#0056db]/5',
   };
   
   const sizeStyles = {
-    sm: 'text-sm px-6 py-2.5 rounded-full',
-    md: 'px-8 py-3.5 text-base rounded-full',
-    lg: 'px-10 py-4 text-lg rounded-full',
+    sm: 'text-sm px-4 py-2 rounded-md',
+    md: 'px-6 py-2.5 text-base rounded-md',
+    lg: 'px-8 py-3 text-base rounded-md',
   };
   
   const widthStyles = fullWidth ? 'w-full' : '';

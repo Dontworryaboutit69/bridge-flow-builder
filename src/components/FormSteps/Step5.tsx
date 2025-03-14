@@ -49,6 +49,7 @@ const Step5 = () => {
           href="https://calendly.com/growthpath/30min" 
           target="_blank"
           className="group mx-auto"
+          size="md"
         >
           Schedule a Call
           <ArrowUpRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -64,42 +65,41 @@ const Step5 = () => {
     }, 500);
   };
   
-  // Improved success view to match the image
   return (
     <div className="w-full max-w-xl mx-auto animate-fade-in text-center">
-      <div className="mb-8 flex justify-center">
-        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-          <CheckCircle2 className="w-10 h-10 text-green-600" />
+      <div className="mb-6 flex justify-center">
+        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+          <CheckCircle2 className="w-8 h-8 text-green-600" />
         </div>
       </div>
-      <h2 className="text-3xl md:text-4xl font-bold text-[#1a2a43] mb-4">
+      <h2 className="text-3xl font-bold text-[#1a2a43] mb-3">
         Congratulations! You're Pre-Qualified
       </h2>
-      <p className="text-[#5e6577] mb-10 max-w-lg mx-auto text-lg leading-relaxed">
+      <p className="text-[#5e6577] mb-8 max-w-lg mx-auto text-base leading-relaxed">
         Based on your information, you pre-qualify for business funding. Complete your application to finalize your funding request.
       </p>
       
-      <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
         <CustomButton 
           variant="primary" 
           onClick={handleStartApplication}
-          className="py-4 text-lg"
           isLoading={isLoading}
+          size="md"
           fullWidth
         >
           Complete Your Application
-          <ArrowUpRight className="ml-1 w-5 h-5" />
+          <ArrowUpRight className="ml-1 w-4 h-4" />
         </CustomButton>
         
         <CustomButton 
           href="https://calendly.com/growthpath/30min" 
           target="_blank"
           variant="outline" 
-          className="py-4 text-lg"
+          size="md"
           fullWidth
         >
           Schedule a Call First
-          <Calendar className="ml-1 w-5 h-5" />
+          <Calendar className="ml-1 w-4 h-4" />
         </CustomButton>
       </div>
     </div>
