@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import { Document } from '@/types/documents';
 import { Link } from 'react-router-dom';
@@ -22,6 +22,36 @@ const SubmitSection = ({
   onSubmit
 }: SubmitSectionProps) => {
   const { getStepLink } = useApplication();
+  const [submitted, setSubmitted] = useState(false);
+  
+  const handleSubmit = () => {
+    onSubmit();
+    setSubmitted(true);
+  };
+
+  if (submitted) {
+    return (
+      <div className="mt-6 pt-6 border-t border-funding-light-gray text-center">
+        <div className="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-4">
+          <Check className="w-8 h-8 text-green-600" />
+        </div>
+        <h3 className="text-xl font-bold text-funding-dark mb-2">
+          Documents Submitted Successfully!
+        </h3>
+        <p className="text-funding-gray mb-6">
+          Your documents have been received and are being reviewed by our team.
+        </p>
+        <CustomButton 
+          href="/thank-you?docs_submitted=true"
+          className="rounded-full"
+          size="md"
+        >
+          View Application Status
+          <ArrowRight className="ml-1 w-4 h-4" />
+        </CustomButton>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-6 pt-6 border-t border-funding-light-gray">
@@ -43,7 +73,7 @@ const SubmitSection = ({
             className="group rounded-full"
             size="md"
             disabled={!allRequiredUploaded}
-            onClick={onSubmit}
+            onClick={handleSubmit}
           >
             Submit Documents
             <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

@@ -57,6 +57,12 @@ export type ApplicationContextType = {
   zapierWebhookUrl: string;
   setZapierWebhookUrl: (url: string) => void;
   getStepLink: (step: number) => string;
+  formIds: {
+    personalInfo: string;
+    businessInfo: string;
+    financialInfo: string;
+    documents: string;
+  };
 };
 
 export const initialApplicationData: ApplicationData = {
@@ -67,3 +73,4 @@ export const initialApplicationData: ApplicationData = {
   businessName: '',
   businessType: '',
 };
+

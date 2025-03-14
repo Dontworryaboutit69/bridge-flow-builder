@@ -34,6 +34,15 @@ export const ApplicationProvider: React.FC<ApplicationProviderProps> = ({
   const [zapierWebhookUrl, setZapierWebhookUrl] = useState<string>(
     localStorage.getItem('application_webhook') || DEFAULT_WEBHOOK_URL
   );
+  
+  // Form IDs for each step
+  const formIds = {
+    personalInfo: "8IL41omixTKGjsWh61T9", // Replace with actual form IDs
+    businessInfo: "dHoTF5Jdw3bUaLUJB2vn", // Replace with actual form IDs
+    financialInfo: "yEPrgj0AWmA0dJrAoLKa", // Replace with actual form IDs
+    documents: "nwNTfdAx1lyFn4mAQVkD"      // Replace with actual form IDs
+  };
+  
   const totalSteps = 4;
 
   useEffect(() => {
@@ -110,6 +119,7 @@ export const ApplicationProvider: React.FC<ApplicationProviderProps> = ({
         zapierWebhookUrl,
         setZapierWebhookUrl,
         getStepLink,
+        formIds,
       }}
     >
       {children}
