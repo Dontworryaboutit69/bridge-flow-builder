@@ -14,14 +14,12 @@ const ApplicationActionsBar: React.FC<ApplicationActionsBarProps> = ({
   onGeneratePdf, 
   isGeneratingPdf 
 }) => {
-  const handleBack = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleBack = () => {
     console.log("Back button clicked");
     onBack();
   };
   
-  const handleGeneratePdf = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleGeneratePdf = () => {
     console.log("Generate PDF button clicked");
     onGeneratePdf();
   };
