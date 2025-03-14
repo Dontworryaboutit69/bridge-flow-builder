@@ -2,29 +2,14 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../../ui/CustomButton';
 import { ArrowRight } from 'lucide-react';
-import PersonalContactSection from './PersonalContactSection';
-import PersonalAddressSection from './PersonalAddressSection';
-import PersonalIdentitySection from './PersonalIdentitySection';
 import { useEffect } from 'react';
 import { useForm } from '@/lib/formContext';
+import CrmEmbed from '../../CrmEmbed';
 
 const PersonalInfo = () => {
-  const { applicationData, updateApplicationData, nextStep, isStepValid } = useApplication();
+  const { nextStep, isStepValid } = useApplication();
   const { formData } = useForm();
   
-  // Autopopulate from pre-qualification data if available
-  useEffect(() => {
-    // Only populate if the personal fields are empty
-    if (!applicationData.firstName && formData.firstName) {
-      updateApplicationData({
-        firstName: formData.firstName || '',
-        lastName: formData.lastName || '',
-        email: formData.email || '',
-        phone: formData.phone || '',
-      });
-    }
-  }, [formData, applicationData, updateApplicationData]);
-
   return (
     <div className="w-full max-w-3xl mx-auto">
       <div className="text-center mb-8">
@@ -37,17 +22,12 @@ const PersonalInfo = () => {
       </div>
       
       <div className="glass-card p-6 md:p-8 bg-white">
-        <div className="space-y-6">
-          <PersonalContactSection />
-          <PersonalIdentitySection />
-          <PersonalAddressSection />
-        </div>
+        <CrmEmbed height="800px" />
       </div>
       
       <div className="mt-10 flex justify-end">
         <CustomButton 
           onClick={nextStep} 
-          disabled={!isStepValid()}
           className="group"
         >
           Continue to Business Information

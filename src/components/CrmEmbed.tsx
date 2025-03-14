@@ -66,15 +66,21 @@ const CrmEmbed = ({ formId = '8IL41omixTKGjsWh61T9', height = '600px', className
   }, [formId, height]);
 
   return (
-    <div ref={containerRef} className={`crm-embed-container w-full ${className}`}>
+    <div ref={containerRef} className={`crm-embed-container w-full rounded-lg ${className}`}>
       <iframe 
         ref={iframeRef}
         src={`https://api.leadconnectorhq.com/widget/survey/${formId}`}
-        style={{ border: 'none', width: '100%', overflow: 'hidden', height }}
+        style={{ 
+          border: 'none', 
+          width: '100%', 
+          overflow: 'hidden', 
+          height,
+          borderRadius: '0.5rem',
+        }}
         scrolling="no"
         id={formId}
-        title="CRM Application Form"
-        className="w-full"
+        title="Business Funding Application Form"
+        className="w-full shadow-sm"
       />
     </div>
   );
