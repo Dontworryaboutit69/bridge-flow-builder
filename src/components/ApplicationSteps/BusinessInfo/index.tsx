@@ -2,31 +2,34 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import BusinessDetailsSection from './BusinessDetailsSection';
-import BusinessLocationSection from './BusinessLocationSection';
-import BusinessOperationsSection from './BusinessOperationsSection';
-import BusinessDateSelector from './BusinessDateSelector';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '@/lib/formContext';
+import CrmEmbed from '../../CrmEmbed';
+import { toast } from '@/components/ui/use-toast';
 
 const BusinessInfo = () => {
-  const { applicationData, updateApplicationData, nextStep, prevStep, isStepValid } = useApplication();
+  const { nextStep, prevStep } = useApplication();
   const { formData } = useForm();
+  const [formSubmitted, setFormSubmitted] = useState(false);
   
   // Autopopulate from pre-qualification data if available
   useEffect(() => {
     // Only populate if the business fields are empty
-    if (!applicationData.businessName && formData.businessName) {
-      updateApplicationData({
-        businessName: formData.businessName || '',
-        industry: formData.industry || '',
-        timeInBusiness: formData.timeInBusiness || '',
-        monthlyRevenue: formData.monthlyRevenue || '',
-        creditScore: formData.creditScore || '',
-        loanAmount: formData.loanAmount || ''
-      });
+    if (formData.businessName) {
+      console.log("Business data available for pre-population:", formData);
+      // Note: The CRM form handles its own data, so we don't need to update applicationData here
     }
-  }, [formData, applicationData, updateApplicationData]);
+  }, [formData]);
+  
+  const handleFormSubmit = () => {
+    setFormSubmitted(true);
+    toast({
+      title: "Business Information Saved",
+      description: "Your business information has been successfully saved.",
+      variant: "default",
+      duration: 3000,
+    });
+  };
   
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -39,20 +42,12 @@ const BusinessInfo = () => {
         </p>
       </div>
       
-      <div className="glass-card p-6 md:p-8 bg-white">
-        <div className="space-y-6">
-          {/* Business Details Section */}
-          <BusinessDetailsSection />
-          
-          {/* Business Start Date Section */}
-          <BusinessDateSelector />
-          
-          {/* Business Operations Section */}
-          <BusinessOperationsSection />
-          
-          {/* Business Location Section */}
-          <BusinessLocationSection />
-        </div>
+      <div className="bg-white rounded-lg overflow-hidden">
+        <CrmEmbed 
+          formId="Zpokq763avf7gpY0mHEd"
+          height="1200px" 
+          onFormSubmit={handleFormSubmit}
+        />
       </div>
       
       <div className="mt-10 flex justify-between">
@@ -66,7 +61,6 @@ const BusinessInfo = () => {
         </CustomButton>
         <CustomButton 
           onClick={nextStep} 
-          disabled={!isStepValid()}
           className="group"
         >
           Continue to Financial Information
