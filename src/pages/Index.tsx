@@ -1,4 +1,3 @@
-
 import { useEffect, useLayoutEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -13,28 +12,26 @@ import { Link } from 'react-router-dom';
 
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
 const Index = () => {
   // More aggressive scroll reset using layout effect and multiple approaches
   useIsomorphicLayoutEffect(() => {
     // Immediate scroll
     window.scrollTo(0, 0);
-    
+
     // Delayed scroll as backup (sometimes needed for certain browsers/scenarios)
     const timer = setTimeout(() => {
       window.scrollTo({
         top: 0,
         behavior: 'auto'
       });
-      
+
       // Force scroll position with a small delay as a final fallback
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }, 50);
-    
     return () => clearTimeout(timer);
   }, []);
-  
+
   // Smooth scroll for anchor links
   useEffect(() => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -58,7 +55,6 @@ const Index = () => {
       });
     };
   }, []);
-
   return <div className="min-h-screen bg-gradient-to-b from-white via-funding-light-gray/5 to-white">
       {/* Add an invisible marker at the top to ensure scroll position is correct */}
       <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
@@ -80,22 +76,7 @@ const Index = () => {
         <Testimonials />
         <section id="apply-now" className="py-12 md:py-16 bg-white">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
-                Apply for Funding
-              </h2>
-              <p className="text-funding-gray mb-6">
-                Choose your preferred application method
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-                <a href="#apply-now" className="btn-primary px-6 py-3 rounded-lg bg-funding-blue text-white font-medium hover:bg-funding-blue-dark transition-colors">
-                  Quick Pre-Qualification
-                </a>
-                <Link to="/crm-application" className="btn-outline px-6 py-3 rounded-lg border border-funding-blue text-funding-blue font-medium hover:bg-funding-blue/5 transition-colors">
-                  Full CRM Application
-                </Link>
-              </div>
-            </div>
+            
             <ProgressiveForm />
           </div>
         </section>
@@ -103,5 +84,4 @@ const Index = () => {
       <Footer />
     </div>;
 };
-
 export default Index;
