@@ -3,7 +3,6 @@ import { useForm } from '@/lib/formContext';
 import CustomButton from '../ui/CustomButton';
 import { CheckCircle2, Calendar, ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast } from '@/components/ui/use-toast';
 
 const Step5 = () => {
@@ -47,7 +46,6 @@ const Step5 = () => {
         </p>
         
         <CustomButton 
-          as="a" 
           href="https://calendly.com/growthpath/30min" 
           target="_blank"
           className="group mx-auto"
@@ -82,7 +80,7 @@ const Step5 = () => {
       
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <CustomButton 
-          variant="default" 
+          variant="primary" 
           onClick={handleStartApplication}
           className="group"
           isLoading={isLoading}
@@ -92,7 +90,6 @@ const Step5 = () => {
         </CustomButton>
         
         <CustomButton 
-          as="a" 
           href="https://calendly.com/growthpath/30min" 
           target="_blank"
           variant="outline"
