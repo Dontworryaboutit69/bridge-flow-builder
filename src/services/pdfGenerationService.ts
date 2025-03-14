@@ -11,8 +11,7 @@ import {
   generateBusinessInfoData,
   generateFinancialInfoData,
   generateAgreementInfoData,
-  addSectionHeader,
-  addDataTable
+  addSectionHeader
 } from '@/utils/pdfUtils';
 
 export const generateApplicationPDF = async (application: ApplicationData): Promise<void> => {
@@ -54,22 +53,75 @@ export const generateApplicationPDF = async (application: ApplicationData): Prom
     // Add personal information section
     yPosition = addSectionHeader(doc, "Personal Information", yPosition);
     const personalInfo = generatePersonalInfoData(application);
-    yPosition = addDataTable(doc, personalInfo, yPosition);
+    
+    // Add the personal info table
+    // @ts-ignore - jspdf-autotable extends jsPDF
+    doc.autoTable({
+      startY: yPosition,
+      head: [],
+      body: personalInfo,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 4 },
+      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+      headStyles: { fillColor: [240, 240, 240] },
+      didDrawPage: (data: any) => {
+        yPosition = data.cursor.y + 10;
+      }
+    });
     
     // Add business info section
     yPosition = addSectionHeader(doc, "Business Information", yPosition);
     const businessInfo = generateBusinessInfoData(application);
-    yPosition = addDataTable(doc, businessInfo, yPosition);
+    
+    // Add the business info table
+    // @ts-ignore - jspdf-autotable extends jsPDF
+    doc.autoTable({
+      startY: yPosition,
+      head: [],
+      body: businessInfo,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 4 },
+      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+      headStyles: { fillColor: [240, 240, 240] },
+      didDrawPage: (data: any) => {
+        yPosition = data.cursor.y + 10;
+      }
+    });
     
     // Add financial info section
     yPosition = addSectionHeader(doc, "Financial Information", yPosition);
     const financialInfo = generateFinancialInfoData(application);
-    yPosition = addDataTable(doc, financialInfo, yPosition);
+    
+    // Add the financial info table
+    // @ts-ignore - jspdf-autotable extends jsPDF
+    doc.autoTable({
+      startY: yPosition,
+      head: [],
+      body: financialInfo,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 4 },
+      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+      headStyles: { fillColor: [240, 240, 240] },
+      didDrawPage: (data: any) => {
+        yPosition = data.cursor.y + 10;
+      }
+    });
     
     // Add agreement info section
     yPosition = addSectionHeader(doc, "Agreement Information", yPosition);
     const agreementInfo = generateAgreementInfoData(application);
-    yPosition = addDataTable(doc, agreementInfo, yPosition);
+    
+    // Add the agreement info table
+    // @ts-ignore - jspdf-autotable extends jsPDF
+    doc.autoTable({
+      startY: yPosition,
+      head: [],
+      body: agreementInfo,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 4 },
+      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
+      headStyles: { fillColor: [240, 240, 240] }
+    });
     
     // Add footer
     doc.setFontSize(10);

@@ -1,6 +1,5 @@
 
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
 import { ApplicationData } from '@/types/admin';
 
 // Helper function to safely access nested properties
@@ -88,35 +87,5 @@ export const addSectionHeader = (doc: jsPDF, title: string, yPosition: number): 
   doc.setFontSize(16);
   doc.setTextColor(0, 48, 87); 
   doc.text(title, 14, yPosition);
-  return yPosition + 5;
-};
-
-// Add a data table to the PDF
-export const addDataTable = (
-  doc: jsPDF, 
-  data: Array<[string, string]>, 
-  startY: number
-): number => {
-  let finalY = startY;
-  
-  try {
-    // @ts-ignore - Add table
-    doc.autoTable({
-      startY,
-      head: [],
-      body: data,
-      theme: 'grid',
-      styles: { fontSize: 10, cellPadding: 4 },
-      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
-      headStyles: { fillColor: [240, 240, 240] },
-      didDrawPage: (data: any) => {
-        finalY = data.cursor.y + 10;
-      }
-    });
-  } catch (error) {
-    console.error("Error adding table to PDF:", error);
-    finalY = startY + 20; // Fallback in case of error
-  }
-  
-  return finalY;
+  return yPosition + 8; // Return the next Y position
 };
