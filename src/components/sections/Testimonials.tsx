@@ -1,60 +1,104 @@
-import { ChevronRight } from 'lucide-react';
-import CustomButton from '@/components/ui/CustomButton';
+
+import { useState } from 'react';
+import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
+import CustomButton from '../ui/CustomButton';
+
+const testimonials = [
+  {
+    name: "Michael Davis",
+    business: "Davis Construction",
+    quote: "The funding process was incredibly simple. We were approved within 24 hours and had the capital in our account the next day. This allowed us to take on a major project immediately.",
+    stars: 5
+  },
+  {
+    name: "Sarah Johnson",
+    business: "Organic Wellness Co.",
+    quote: "As a small business owner, I was worried about the application process being complicated. It was actually the easiest funding application I've ever completed, and the terms were transparent.",
+    stars: 5
+  },
+  {
+    name: "Robert Chen",
+    business: "RC Tech Solutions",
+    quote: "I needed capital quickly to purchase inventory for a large order. Not only was the approval fast, but the customer service was exceptional throughout the entire process.",
+    stars: 5
+  }
+];
+
 const Testimonials = () => {
-  const testimonials = [{
-    quote: "I was approved for $75,000 in less than 24 hours. The process was incredibly simple and straightforward.",
-    author: "Franklyn Jackson",
-    business: "Action Jackson Septic",
-    rating: 5,
-    gradient: "bg-gradient-to-br from-soft-blue/20 to-soft-purple/10"
-  }, {
-    quote: "After being rejected by three banks, Growth Path Advisory got me the funding I needed to expand my business. Forever grateful!",
-    author: "Arturo Rendon",
-    business: "AAffordable Landscape",
-    rating: 5,
-    gradient: "bg-gradient-to-br from-soft-peach/20 to-soft-yellow/10"
-  }, {
-    quote: "The team was professional and responsive. They found the perfect funding solution for my situation when no one else could.",
-    author: "Robin Thomas",
-    business: "Watch Me Grow Daycare",
-    rating: 5,
-    gradient: "bg-gradient-to-br from-soft-green/20 to-soft-blue/10"
-  }];
-  return <section id="testimonials" className="py-12 md:py-16 bg-gradient-to-br from-white to-funding-light-gray/50 relative overflow-hidden bg-gray-100">
-      {/* Background texture */}
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const nextTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+  
+  const prevTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+  };
+  
+  return (
+    <section className="py-12 md:py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -left-24 w-72 md:w-96 h-72 md:h-96 bg-soft-orange/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -right-24 w-72 md:w-96 h-72 md:h-96 bg-soft-yellow/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-soft-blue/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-soft-green/10 rounded-full blur-3xl"></div>
         <div className="diagonal-pattern opacity-20"></div>
       </div>
       
       <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold text-funding-dark mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-funding-gray max-w-2xl mx-auto">
-            Hundreds of business owners have grown their businesses with our funding solutions
+          <h2 className="text-2xl md:text-4xl font-bold text-funding-dark mb-3">What Our Clients Say</h2>
+          <p className="text-funding-gray max-w-2xl mx-auto text-sm md:text-base">
+            Join thousands of businesses who have successfully secured funding
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {testimonials.map((testimonial, index) => <div key={index} className={`glass-card p-6 md:p-8 animate-fade-in ${testimonial.gradient} hover-scale text-left md:text-left`} style={{
-          animationDelay: `${index * 0.1}s`
-        }}>
-              <div className="flex justify-center md:justify-start mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => <svg key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                  </svg>)}
+        <div className="glass-card p-6 md:p-10 max-w-3xl mx-auto mb-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-funding-blue/10 to-transparent rounded-bl-full"></div>
+          
+          <div className="relative">
+            <div className="flex items-center gap-1 mb-4">
+              {[...Array(testimonials[currentIndex].stars)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
+              ))}
+            </div>
+            
+            <blockquote className="mb-6 text-sm md:text-lg text-funding-dark italic">
+              "{testimonials[currentIndex].quote}"
+            </blockquote>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium text-funding-dark">{testimonials[currentIndex].name}</p>
+                <p className="text-sm text-funding-gray">{testimonials[currentIndex].business}</p>
               </div>
-              <p className="text-funding-dark mb-4 italic text-center md:text-left">"{testimonial.quote}"</p>
-              <div className="mt-auto text-center md:text-left">
-                <p className="font-semibold text-funding-dark">{testimonial.author}</p>
-                <p className="text-funding-gray text-sm">{testimonial.business}</p>
+              
+              <div className="flex gap-2">
+                <button 
+                  onClick={prevTestimonial}
+                  className="p-2 rounded-full border border-funding-light-gray hover:bg-funding-light-gray/50 transition-colors"
+                  aria-label="Previous testimonial"
+                >
+                  <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-funding-dark" />
+                </button>
+                <button 
+                  onClick={nextTestimonial}
+                  className="p-2 rounded-full border border-funding-light-gray hover:bg-funding-light-gray/50 transition-colors"
+                  aria-label="Next testimonial"
+                >
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-funding-dark" />
+                </button>
               </div>
-            </div>)}
+            </div>
+          </div>
+        </div>
+        
+        <div className="text-center">
+          <CustomButton size="lg" href="#apply-now">
+            Get Pre-Qualified Now
+          </CustomButton>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Testimonials;

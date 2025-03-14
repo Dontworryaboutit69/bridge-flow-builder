@@ -1,3 +1,4 @@
+
 import { useEffect, useLayoutEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -8,7 +9,6 @@ import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
-import { Link } from 'react-router-dom';
 
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -79,11 +79,10 @@ const Index = () => {
         <FundingProducts />
         <Benefits />
         <Testimonials />
-        <section id="apply-now" className="py-12 md:py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-5 md:px-10">
-            
-            <ProgressiveForm />
-          </div>
+        
+        {/* Application Form Section */}
+        <section id="apply-now" className="pt-16 pb-20 bg-gray-50">
+          <ProgressiveForm />
         </section>
       </main>
       <Footer />
