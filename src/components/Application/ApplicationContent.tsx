@@ -5,24 +5,34 @@ import PersonalInfo from '@/components/ApplicationSteps/PersonalInfo';
 import BusinessInfo from '@/components/ApplicationSteps/BusinessInfo';
 import FinancialInfo from '@/components/ApplicationSteps/FinancialInfo';
 import ReviewSubmit from '@/components/ApplicationSteps/ReviewSubmit';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ApplicationContent = () => {
   const { currentStep, nextStep } = useApplication();
   const nodeRef = useRef(null);
+  const [isAdvancing, setIsAdvancing] = useState(false);
   
   // When step changes, scroll to top of page
   useEffect(() => {
     window.scrollTo(0, 0);
+    setIsAdvancing(false);
   }, [currentStep]);
   
   // Handler for form submission
   const handleFormSubmit = () => {
-    console.log("Form submitted, moving to next step");
+    console.log("ApplicationContent: Form submitted, moving to next step");
+    
+    if (isAdvancing) {
+      console.log("Already in the process of advancing, ignoring duplicate events");
+      return;
+    }
+    
+    setIsAdvancing(true);
+    
     // Add a small delay to ensure the form submission is complete
     setTimeout(() => {
       nextStep();
-    }, 500);
+    }, 1000);
   };
   
   return (
