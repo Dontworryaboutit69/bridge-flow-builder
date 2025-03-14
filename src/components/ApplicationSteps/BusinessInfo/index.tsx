@@ -37,6 +37,11 @@ const BusinessInfo = ({ onFormSubmit }: BusinessInfoProps) => {
     // Call the parent's onFormSubmit if provided
     if (onFormSubmit) {
       onFormSubmit();
+    } else {
+      // Automatically proceed to next step after form is submitted
+      setTimeout(() => {
+        nextStep();
+      }, 1000);
     }
   };
   
@@ -68,13 +73,17 @@ const BusinessInfo = ({ onFormSubmit }: BusinessInfoProps) => {
           <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Back
         </CustomButton>
-        <CustomButton 
-          onClick={nextStep} 
-          className="group"
-        >
-          Continue to Financial Information
-          <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </CustomButton>
+        
+        {/* Only show next button if the form hasn't been submitted yet */}
+        {!formSubmitted && (
+          <CustomButton 
+            onClick={nextStep} 
+            className="group"
+          >
+            Continue to Financial Information
+            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </CustomButton>
+        )}
       </div>
     </div>
   );

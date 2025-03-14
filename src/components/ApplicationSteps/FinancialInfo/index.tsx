@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CrmEmbed from '@/components/CrmEmbed';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 interface FinancialInfoProps {
   onFormSubmit?: () => void;
@@ -13,8 +14,10 @@ interface FinancialInfoProps {
 const FinancialInfo = ({ onFormSubmit }: FinancialInfoProps) => {
   const { nextStep, prevStep } = useApplication();
   const navigate = useNavigate();
+  const [formSubmitted, setFormSubmitted] = useState(false);
   
   const handleFinancialFormSubmit = () => {
+    setFormSubmitted(true);
     toast({
       title: "Financial information submitted",
       description: "Your financial information has been saved successfully.",
@@ -25,7 +28,9 @@ const FinancialInfo = ({ onFormSubmit }: FinancialInfoProps) => {
       onFormSubmit();
     } else {
       // Automatically go to the next step
-      nextStep();
+      setTimeout(() => {
+        nextStep();
+      }, 1000);
     }
   };
   
@@ -57,13 +62,17 @@ const FinancialInfo = ({ onFormSubmit }: FinancialInfoProps) => {
           <ArrowLeft className="mr-1 w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Back
         </CustomButton>
-        <CustomButton 
-          onClick={nextStep} 
-          className="group"
-        >
-          Continue to Review & Submit
-          <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </CustomButton>
+        
+        {/* Only show next button if the form hasn't been submitted yet */}
+        {!formSubmitted && (
+          <CustomButton 
+            onClick={nextStep} 
+            className="group"
+          >
+            Continue to Review & Submit
+            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </CustomButton>
+        )}
       </div>
     </div>
   );
