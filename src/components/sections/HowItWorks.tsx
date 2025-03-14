@@ -47,12 +47,13 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div 
               key={index} 
-              className={`glass-card p-5 md:p-8 flex flex-col items-center text-center animate-fade-in bg-gradient-to-br ${step.bgGradient} hover-scale`} 
+              className={`glass-card p-5 md:p-8 flex flex-col items-center text-center animate-fade-in bg-gradient-to-br ${step.bgGradient} hover-scale shadow-lg`} 
               style={{
-                animationDelay: `${step.delay}s`
+                animationDelay: `${step.delay}s`,
+                boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08)'
               }}
             >
-              <div className="bg-white/80 p-3 md:p-4 rounded-full mb-4 md:mb-6">
+              <div className="bg-white/80 p-3 md:p-4 rounded-full mb-4 md:mb-6 shadow-md">
                 {step.icon}
               </div>
               <h3 className="text-base md:text-xl font-bold text-funding-dark mb-2">{step.title}</h3>
