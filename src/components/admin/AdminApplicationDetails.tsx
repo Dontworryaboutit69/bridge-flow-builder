@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import CustomButton from "@/components/ui/CustomButton";
@@ -30,11 +29,17 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
       return;
     }
     
-    setGeneratePdfLoading(true);
-    console.log("Generating PDF for application:", application);
-    
     try {
-      await generateApplicationPDF(application);
+      setGeneratePdfLoading(true);
+      console.log("Generating PDF for application:", application);
+      
+      const safeApplication = {
+        ...application,
+        application_id: application.application_id || `app-${applicationId}`,
+        submission_date: application.submission_date || new Date().toISOString()
+      };
+      
+      await generateApplicationPDF(safeApplication);
     } catch (err) {
       console.error("Error in handleGeneratePdf:", err);
     } finally {
@@ -76,8 +81,8 @@ const AdminApplicationDetails: React.FC<AdminApplicationDetailsProps> = ({ appli
       />
       
       <ApplicationDetailsHeader 
-        applicationId={application.application_id}
-        submissionDate={application.submission_date}
+        applicationId={application?.application_id || applicationId}
+        submissionDate={application?.submission_date || new Date().toISOString()}
         onBack={onBack}
         onGeneratePdf={handleGeneratePdf}
         isGeneratingPdf={generatePdfLoading}
