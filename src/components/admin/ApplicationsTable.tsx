@@ -30,6 +30,13 @@ const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
     });
   };
 
+  const handleViewDetails = (applicationId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(`Viewing details for application: ${applicationId}`);
+    onSelectApplication(applicationId);
+  };
+
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <div className="overflow-x-auto">
@@ -65,7 +72,7 @@ const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
                   <CustomButton
                     size="sm"
                     variant="ghost"
-                    onClick={() => onSelectApplication(app.application_id)}
+                    onClick={(e) => handleViewDetails(app.application_id, e)}
                     className="text-funding-blue hover:text-funding-blue-dark inline-flex items-center"
                   >
                     View Details

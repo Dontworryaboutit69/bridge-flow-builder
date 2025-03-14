@@ -14,17 +14,35 @@ const ApplicationActionsBar: React.FC<ApplicationActionsBarProps> = ({
   onGeneratePdf, 
   isGeneratingPdf 
 }) => {
+  const handleBack = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Back button clicked");
+    onBack();
+  };
+  
+  const handleGeneratePdf = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Generate PDF button clicked");
+    onGeneratePdf();
+  };
+
   return (
     <div className="flex justify-between items-center">
-      <CustomButton onClick={onBack} variant="outline" className="flex items-center">
+      <CustomButton 
+        onClick={handleBack} 
+        variant="outline" 
+        className="flex items-center"
+        type="button"
+      >
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Applications
       </CustomButton>
       
       <CustomButton 
-        onClick={onGeneratePdf} 
+        onClick={handleGeneratePdf}
         disabled={isGeneratingPdf}
         className="flex items-center"
+        type="button"
       >
         {isGeneratingPdf ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import CustomButton from "@/components/ui/CustomButton";
 import { toast } from 'sonner';
 import AdminApplicationsTable from '@/components/admin/AdminApplicationsTable';
@@ -11,9 +9,6 @@ import AdminApplicationDetails from '@/components/admin/AdminApplicationDetails'
 
 const AdminConsole = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -36,13 +31,16 @@ const AdminConsole = () => {
     localStorage.removeItem('admin_token');
     setIsLoggedIn(false);
     navigate('/admin');
+    toast("Logged out successfully");
   };
 
   const handleApplicationSelect = (applicationId: string) => {
+    console.log("Setting selected application ID:", applicationId);
     setSelectedApplicationId(applicationId);
   };
 
   const handleBackToList = () => {
+    console.log("Going back to applications list");
     setSelectedApplicationId(null);
   };
 

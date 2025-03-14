@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import DocumentCard from './DocumentCard';
 import { Document, fetchDocumentsForApplication, getMockDocuments } from '@/lib/documentService';
+import { toast } from 'sonner';
 
 type DocumentsListProps = {
   applicationId: string;
@@ -15,13 +16,20 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
 
   useEffect(() => {
     const loadDocuments = async () => {
+      if (!applicationId) {
+        setLoading(false);
+        return;
+      }
+      
       try {
         setLoading(true);
+        setError(null);
+        console.log(`Loading documents for application ID: ${applicationId}`);
         
         try {
           // Try to fetch from Supabase
           const docs = await fetchDocumentsForApplication(applicationId);
-          if (docs.length > 0) {
+          if (docs && docs.length > 0) {
             setDocuments(docs);
             return;
           }
@@ -34,7 +42,8 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         try {
           const savedDocuments = localStorage.getItem(`documents_${applicationId}`);
           if (savedDocuments) {
-            setDocuments(JSON.parse(savedDocuments));
+            const parsedDocs = JSON.parse(savedDocuments);
+            setDocuments(parsedDocs);
             return;
           }
         } catch (err) {
@@ -42,12 +51,14 @@ const DocumentsList: React.FC<DocumentsListProps> = ({ applicationId }) => {
         }
         
         // Last resort - use mock data
+        console.log('Using mock documents data');
         const mockDocuments = getMockDocuments();
         setDocuments(mockDocuments);
         
-      } catch (err) {
+      } catch (err: any) {
         console.error('Error loading documents:', err);
-        setError('Failed to load documents.');
+        setError(err.message || 'Failed to load documents.');
+        toast("Error loading documents");
       } finally {
         setLoading(false);
       }

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from 'sonner';
 
@@ -20,9 +20,10 @@ export const useApplications = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null);
       
       // Fetch applications from Supabase
       const { data, error } = await supabase
@@ -34,20 +35,28 @@ export const useApplications = () => {
         throw error;
       }
       
-      setApplications(data || []);
-      console.log('Fetched applications:', data);
-    } catch (err) {
+      // Add application_id if it doesn't exist (for older entries)
+      const processedData = data.map(app => {
+        if (!app.application_id) {
+          return { ...app, application_id: app.id.toString() };
+        }
+        return app;
+      });
+      
+      setApplications(processedData || []);
+      console.log('Fetched applications:', processedData);
+    } catch (err: any) {
       console.error('Error fetching applications:', err);
-      setError('Failed to load applications. Please try again.');
+      setError(err.message || 'Failed to load applications. Please try again.');
       toast("Failed to load applications");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchApplications();
-  }, []);
+  }, [fetchApplications]);
 
   return {
     applications,
