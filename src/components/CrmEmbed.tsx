@@ -81,12 +81,12 @@ const CrmEmbed = ({
     const checkForThankYouPage = () => {
       if (iframeRef.current) {
         try {
-          const iframe = iframeRef.current;
-          const iframeSrc = iframe.src;
+          const currentIframe = iframeRef.current;
+          const iframeSrc = currentIframe.src;
           
           // If we can access contentWindow.location, check for thank you indicators
-          if (iframe.contentWindow?.location?.href) {
-            const href = iframe.contentWindow.location.href;
+          if (currentIframe.contentWindow?.location?.href) {
+            const href = currentIframe.contentWindow.location.href;
             if (href.includes('thank') || href.includes('success') || href.includes('confirm')) {
               console.log("Thank you page detected in iframe:", href);
               if (onFormSubmit && Date.now() - lastOriginCheck > 3000) {
@@ -102,7 +102,8 @@ const CrmEmbed = ({
         
         // Visual detection method - check if iframe contains thank you text
         try {
-          const thankYouText = iframe.contentDocument?.body?.innerText;
+          const currentIframe = iframeRef.current;
+          const thankYouText = currentIframe.contentDocument?.body?.innerText;
           if (thankYouText && 
               (thankYouText.includes('Thank you') || 
                thankYouText.includes('Thanks') || 
@@ -176,8 +177,8 @@ const CrmEmbed = ({
     if (!iframeRef.current) return;
     
     try {
-      const iframe = iframeRef.current;
-      const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+      const currentIframe = iframeRef.current;
+      const iframeDoc = currentIframe.contentDocument || currentIframe.contentWindow?.document;
       
       if (!iframeDoc) return;
       
