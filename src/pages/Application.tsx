@@ -6,9 +6,11 @@ import { FormProvider } from '@/lib/formContext';
 import ApplicationWrapper from '@/components/Application/ApplicationWrapper';
 import SimplifiedFooter from '@/components/Application/SimplifiedFooter';
 import AdminControls from '@/components/Application/AdminControls';
+import { useSearchParams } from 'react-router-dom';
 
 const Application = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [searchParams] = useSearchParams();
   
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -17,7 +19,7 @@ const Application = () => {
   
   return (
     <FormProvider>
-      <ApplicationProvider>
+      <ApplicationProvider initialStep={searchParams.get('step')}>
         <div className="min-h-screen flex flex-col">
           <Navbar />
           

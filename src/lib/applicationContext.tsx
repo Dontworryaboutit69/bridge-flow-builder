@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   ApplicationData, 
@@ -11,8 +12,22 @@ const ApplicationContext = createContext<ApplicationContextType | undefined>(und
 
 export const DEFAULT_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/15135493/2lh1woc/";
 
-export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+interface ApplicationProviderProps {
+  children: React.ReactNode;
+  initialStep?: string | null;
+}
+
+export const ApplicationProvider: React.FC<ApplicationProviderProps> = ({ 
+  children, 
+  initialStep = null 
+}) => {
+  // Parse the initial step or default to 1
+  const parsedInitialStep = initialStep ? parseInt(initialStep, 10) : 1;
+  const validInitialStep = !isNaN(parsedInitialStep) && parsedInitialStep > 0 && parsedInitialStep <= 4 
+    ? parsedInitialStep 
+    : 1;
+
+  const [currentStep, setCurrentStep] = useState(validInitialStep);
   const [applicationData, setApplicationData] = useState<ApplicationData>(initialApplicationData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -27,6 +42,11 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
       localStorage.setItem('application_webhook', DEFAULT_WEBHOOK_URL);
     }
   }, [zapierWebhookUrl]);
+
+  // Save the current step to localStorage so we can recover it
+  useEffect(() => {
+    localStorage.setItem('application_current_step', currentStep.toString());
+  }, [currentStep]);
 
   const updateApplicationData = (data: Partial<ApplicationData>) => {
     setApplicationData(prev => ({ ...prev, ...data }));
@@ -67,6 +87,12 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  // Generate direct links to specific steps
+  const getStepLink = (step: number): string => {
+    if (step < 1 || step > totalSteps) return '';
+    return `/application?step=${step}`;
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -83,6 +109,7 @@ export const ApplicationProvider: React.FC<{ children: React.ReactNode }> = ({ c
         submitSuccess,
         zapierWebhookUrl,
         setZapierWebhookUrl,
+        getStepLink,
       }}
     >
       {children}

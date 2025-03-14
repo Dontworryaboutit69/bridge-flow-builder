@@ -20,6 +20,11 @@ const PersonalInfo = () => {
       variant: "default",
       duration: 3000,
     });
+    
+    // Automatically proceed to next step after form is submitted
+    setTimeout(() => {
+      nextStep();
+    }, 1000);
   };
   
   return (
@@ -40,15 +45,17 @@ const PersonalInfo = () => {
         />
       </div>
       
-      <div className="mt-10 flex justify-end">
-        <CustomButton 
-          onClick={nextStep} 
-          className="group"
-        >
-          Continue to Business Information
-          <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </CustomButton>
-      </div>
+      {!formSubmitted && (
+        <div className="mt-10 flex justify-end">
+          <CustomButton 
+            onClick={nextStep} 
+            className="group"
+          >
+            Continue to Business Information
+            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </CustomButton>
+        </div>
+      )}
     </div>
   );
 };
