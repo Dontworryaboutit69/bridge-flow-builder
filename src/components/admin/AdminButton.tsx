@@ -14,34 +14,10 @@ const AdminButton = () => {
     setIsVisible(!location.pathname.includes('/admin'));
   }, [location]);
 
-  // Counter for clicking and activating
-  const [clickCount, setClickCount] = useState<number>(0);
-
   const handleClick = () => {
-    setClickCount(prev => {
-      const newCount = prev + 1;
-      // If clicked 3 times in succession, navigate to admin
-      if (newCount >= 3) {
-        // Use React Router navigation for consistent behavior
-        navigate('/admin');
-        toast("Navigating to admin portal");
-        return 0;
-      }
-      
-      // On first click, show a subtle hint
-      if (newCount === 1) {
-        toast("Click 3 times to access admin area", {
-          duration: 2000,
-        });
-      }
-      
-      return newCount;
-    });
-
-    // Reset count after a delay
-    setTimeout(() => {
-      setClickCount(0);
-    }, 3000);
+    // Direct navigation to admin page on single click
+    navigate('/admin');
+    toast("Navigating to admin portal");
   };
 
   if (!isVisible) return null;

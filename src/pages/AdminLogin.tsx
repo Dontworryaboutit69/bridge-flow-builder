@@ -8,8 +8,6 @@ import { toast } from 'sonner';
 
 const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -17,14 +15,10 @@ const AdminLogin = () => {
     setIsLoading(true);
     
     try {
-      // For demo purposes, use simple admin credentials
-      if (email === 'admin@example.com' && password === 'admin123') {
-        localStorage.setItem('admin_token', 'demo_admin_token');
-        toast("Admin login successful");
-        navigate('/admin/console');
-      } else {
-        toast("Invalid credentials");
-      }
+      // Direct access without password
+      localStorage.setItem('admin_token', 'demo_admin_token');
+      toast("Admin access granted");
+      navigate('/admin/console');
     } catch (error) {
       console.error('Login error:', error);
       toast("Login failed. Please try again.");
@@ -37,7 +31,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Admin Login
+          Admin Access
         </h2>
       </div>
 
@@ -45,27 +39,9 @@ const AdminLogin = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="mt-1"
-              />
+              <p className="text-center text-gray-500 mb-4">
+                Click the button below to access the admin console.
+              </p>
             </div>
 
             <div>
@@ -74,18 +50,10 @@ const AdminLogin = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? 'Accessing...' : 'Access Admin Console'}
               </CustomButton>
             </div>
           </form>
-          
-          <div className="mt-6">
-            <div className="text-sm text-center">
-              <span className="text-gray-500">Default credentials:</span>
-              <p>Email: admin@example.com</p>
-              <p>Password: admin123</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
