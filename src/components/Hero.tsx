@@ -30,12 +30,19 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <a href="#apply-now">
-                <CustomButton size="lg">
-                  Get Funded Now
-                  <ChevronRight className="ml-1 w-5 h-5" />
-                </CustomButton>
-              </a>
+              <CustomButton href="/pre-qualification" size="lg">
+                Get Funded Now
+                <ChevronRight className="ml-1 w-5 h-5" />
+              </CustomButton>
+              
+              <CustomButton 
+                href="https://calendly.com/growthpath/30min" 
+                target="_blank"
+                variant="outline" 
+                size="lg">
+                Schedule a Call
+                <Phone className="ml-1 w-5 h-5" />
+              </CustomButton>
             </div>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
@@ -97,12 +104,10 @@ const Hero = () => {
                 ))}
               </ul>
               
-              <a href="#apply-now">
-                <CustomButton fullWidth size="lg">
-                  Check Your Rate
-                  <ChevronRight className="ml-1 w-5 h-5" />
-                </CustomButton>
-              </a>
+              <CustomButton href="/pre-qualification" fullWidth size="lg">
+                Check Your Rate
+                <ChevronRight className="ml-1 w-5 h-5" />
+              </CustomButton>
               
               <div className="mt-5 flex items-center justify-center text-funding-gray">
                 <Phone className="w-4 h-4 text-funding-blue mr-2" />
