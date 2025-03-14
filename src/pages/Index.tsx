@@ -1,4 +1,3 @@
-
 import { useEffect, useLayoutEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -77,14 +76,7 @@ const Index = () => {
         <Testimonials />
         <section id="apply-now" className="py-12 md:py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1a2a43] mb-3">
-                Get Pre-Qualified Now
-              </h2>
-              <p className="text-[#5e6577] mb-6 text-lg">
-                Find out how much funding your business qualifies for
-              </p>
-            </div>
+            
             <ProgressiveForm />
           </div>
         </section>
