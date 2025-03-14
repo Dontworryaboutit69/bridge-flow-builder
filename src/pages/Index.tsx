@@ -13,6 +13,11 @@ import { Link } from 'react-router-dom';
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const Index = () => {
+  // Set document title for SEO
+  useEffect(() => {
+    document.title = "Bridge Flow Builder - Business Funding Solutions";
+  }, []);
+
   // More aggressive scroll reset using layout effect and multiple approaches
   useIsomorphicLayoutEffect(() => {
     // Immediate scroll
@@ -65,7 +70,7 @@ const Index = () => {
         {/* Simple visual separator with minimal spacing */}
         <div className="relative py-2">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#0056db]/30 to-transparent"></div>
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#2F54EB]/30 to-transparent"></div>
           </div>
         </div>
         
