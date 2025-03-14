@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import CustomButton from "@/components/ui/CustomButton";
 import ApplicationDetailSection from './ApplicationDetailSection';
 import DocumentsList from './DocumentsList';
-import { generateApplicationPDF } from './ApplicationPdfGenerator';
+import { generateApplicationPDF } from '@/components/admin/ApplicationPdfGenerator';
 import ApplicationActionsBar from './ApplicationActionsBar';
 import ApplicationDetailsHeader from './ApplicationDetailsHeader';
 import { useApplicationDetails } from './useApplicationDetails';
