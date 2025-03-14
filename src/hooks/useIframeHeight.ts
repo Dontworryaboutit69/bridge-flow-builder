@@ -23,11 +23,11 @@ export function useIframeHeight({
     // Function to adjust iframe height based on content
     const adjustIframeHeight = () => {
       if (iframeRef.current && containerRef.current) {
-        const iframe = iframeRef.current;
+        const currentIframe = iframeRef.current;
         
         try {
           // Try to get the height from the iframe content
-          const contentHeight = iframe.contentWindow?.document?.body?.scrollHeight;
+          const contentHeight = currentIframe.contentWindow?.document?.body?.scrollHeight;
           if (contentHeight && contentHeight > 100) {
             setIframeHeight(`${contentHeight + 50}px`); // Add padding
           }

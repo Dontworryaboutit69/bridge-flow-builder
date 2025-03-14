@@ -26,7 +26,9 @@ const CrmEmbed = ({
     iframeRef,
     formId,
     onDetect: () => {
+      console.log("Form submission detected in CrmEmbed component");
       if (onFormSubmit) {
+        console.log("Calling onFormSubmit callback");
         onFormSubmit();
       }
     }

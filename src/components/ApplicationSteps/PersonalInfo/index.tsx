@@ -35,13 +35,13 @@ const PersonalInfo = ({ onFormSubmit }: PersonalInfoProps) => {
     if (onFormSubmit) {
       console.log("Calling parent onFormSubmit");
       onFormSubmit();
-    } else {
-      // Automatically proceed to next step after form is submitted
-      console.log("Auto-advancing to next step in 1 second");
-      setTimeout(() => {
-        nextStep();
-      }, 1000);
     }
+    
+    // Automatically proceed to next step after form is submitted
+    console.log("Auto-advancing to next step in 1 second");
+    setTimeout(() => {
+      nextStep();
+    }, 1000);
   };
   
   // Add a manual continue button as fallback
@@ -62,6 +62,33 @@ const PersonalInfo = ({ onFormSubmit }: PersonalInfoProps) => {
     return () => {
       setFormSubmitted(false);
     };
+  }, []);
+  
+  // Force detect submission based on iframe content after load
+  useEffect(() => {
+    const checkForThankYou = setInterval(() => {
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach(iframe => {
+        try {
+          // Try to detect thank you message in the iframe content
+          const iframeContent = iframe.contentDocument?.body?.innerText;
+          if (iframeContent && 
+              (iframeContent.includes('Thank you') || 
+               iframeContent.includes('Thanks') ||
+               iframeContent.includes('thank you') ||
+               iframeContent.includes('thanks') ||
+               iframeContent.includes('complete this survey'))) {
+            console.log("Thank you message found in iframe:", iframeContent);
+            handleFormSubmit();
+            clearInterval(checkForThankYou);
+          }
+        } catch (e) {
+          // Cross-origin access error expected
+        }
+      });
+    }, 1000);
+    
+    return () => clearInterval(checkForThankYou);
   }, []);
   
   return (

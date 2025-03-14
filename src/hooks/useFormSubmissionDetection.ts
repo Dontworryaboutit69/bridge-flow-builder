@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseFormSubmissionDetectionProps {
   iframeRef: React.RefObject<HTMLIFrameElement>;
@@ -76,10 +76,14 @@ export function useFormSubmissionDetection({
       try {
         const currentIframe = iframeRef.current;
         const thankYouText = currentIframe.contentDocument?.body?.innerText;
+        console.log("Checking iframe content for thank you text:", thankYouText);
         if (thankYouText && 
             (thankYouText.includes('Thank you') || 
              thankYouText.includes('Thanks') || 
-             thankYouText.includes('successfully submitted'))) {
+             thankYouText.includes('thank you') ||
+             thankYouText.includes('thanks') ||
+             thankYouText.includes('successfully submitted') ||
+             thankYouText.includes('complete this survey'))) {
           console.log("Thank you text detected in iframe");
           triggerSubmissionDetected();
         }
@@ -88,7 +92,9 @@ export function useFormSubmissionDetection({
       }
     };
     
-    const thankYouTimer = setInterval(checkForThankYouPage, 2000);
+    // Check immediately and then at regular intervals
+    checkForThankYouPage();
+    const thankYouTimer = setInterval(checkForThankYouPage, 1000);
     
     return () => {
       clearInterval(thankYouTimer);
@@ -110,7 +116,10 @@ export function useFormSubmissionDetection({
           if (mutation.type === 'childList' && mutation.addedNodes.length) {
             return Array.from(mutation.addedNodes).some((node: any) => 
               node.textContent?.includes('Thank you') || 
-              node.textContent?.includes('Thanks')
+              node.textContent?.includes('Thanks') ||
+              node.textContent?.includes('thank you') ||
+              node.textContent?.includes('thanks') ||
+              node.textContent?.includes('complete this survey')
             );
           }
           return false;
@@ -144,11 +153,15 @@ export function useFormSubmissionDetection({
         setTimeout(() => {
           if (iframeRef.current) {
             try {
-              const thankYouElements = iframeRef.current.contentDocument?.querySelectorAll?.('*');
+              const currentIframe = iframeRef.current;
+              const thankYouElements = currentIframe.contentDocument?.querySelectorAll?.('*');
               if (thankYouElements) {
                 const hasThankYou = Array.from(thankYouElements).some(el => 
                   el.textContent?.includes('Thank you') || 
-                  el.textContent?.includes('Thanks')
+                  el.textContent?.includes('Thanks') ||
+                  el.textContent?.includes('thank you') ||
+                  el.textContent?.includes('thanks') ||
+                  el.textContent?.includes('complete this survey')
                 );
                 
                 if (hasThankYou) {
