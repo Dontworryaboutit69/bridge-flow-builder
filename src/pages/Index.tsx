@@ -9,6 +9,7 @@ import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
+import { Link } from 'react-router-dom';
 
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -79,6 +80,22 @@ const Index = () => {
         <Testimonials />
         <section id="apply-now" className="py-12 md:py-16 bg-white">
           <div className="max-w-7xl mx-auto px-5 md:px-10">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-funding-dark mb-3">
+                Apply for Funding
+              </h2>
+              <p className="text-funding-gray mb-6">
+                Choose your preferred application method
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                <a href="#apply-now" className="btn-primary px-6 py-3 rounded-lg bg-funding-blue text-white font-medium hover:bg-funding-blue-dark transition-colors">
+                  Quick Pre-Qualification
+                </a>
+                <Link to="/crm-application" className="btn-outline px-6 py-3 rounded-lg border border-funding-blue text-funding-blue font-medium hover:bg-funding-blue/5 transition-colors">
+                  Full CRM Application
+                </Link>
+              </div>
+            </div>
             <ProgressiveForm />
           </div>
         </section>

@@ -16,6 +16,7 @@ import TrackingScripts from "./components/common/TrackingScripts";
 import AdminButton from "./components/admin/AdminButton";
 import AdminLogin from "./pages/AdminLogin";
 import AdminConsole from "./pages/AdminConsole";
+import CrmApplication from "./pages/CrmApplication";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/pre-qualification" element={<PreQualification />} />
               <Route path="/application" element={<Application />} />
+              <Route path="/crm-application" element={<CrmApplication />} />
               <Route path="/thank-you" element={<ThankYou />} />
               <Route path="/documents" element={<DocumentCollection />} />
               <Route path="/admin" element={<AdminLogin />} />
