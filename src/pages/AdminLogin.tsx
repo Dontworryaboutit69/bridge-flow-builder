@@ -8,6 +8,8 @@ import { toast } from 'sonner';
 
 const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -15,10 +17,15 @@ const AdminLogin = () => {
     setIsLoading(true);
     
     try {
-      // Direct access without password
-      localStorage.setItem('admin_token', 'demo_admin_token');
-      toast("Admin access granted");
-      navigate('/admin/console');
+      // For demo purposes, use simple admin credentials
+      // Hidden credentials - email: admin@example.com, password: admin123
+      if (email === 'admin@example.com' && password === 'admin123') {
+        localStorage.setItem('admin_token', 'demo_admin_token');
+        toast("Admin login successful");
+        navigate('/admin/console');
+      } else {
+        toast("Invalid credentials");
+      }
     } catch (error) {
       console.error('Login error:', error);
       toast("Login failed. Please try again.");
@@ -31,7 +38,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Admin Access
+          Admin Login
         </h2>
       </div>
 
@@ -39,9 +46,27 @@ const AdminLogin = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <p className="text-center text-gray-500 mb-4">
-                Click the button below to access the admin console.
-              </p>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="mt-1"
+              />
             </div>
 
             <div>
@@ -50,10 +75,11 @@ const AdminLogin = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Accessing...' : 'Access Admin Console'}
+                {isLoading ? 'Logging in...' : 'Login'}
               </CustomButton>
             </div>
           </form>
+          {/* Removed visible default credentials section */}
         </div>
       </div>
     </div>
