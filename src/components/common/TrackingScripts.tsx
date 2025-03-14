@@ -12,6 +12,7 @@ const TrackingScripts: React.FC = () => {
     // Facebook pixel page view tracking
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('track', 'PageView');
+      console.log('Facebook Pixel PageView tracked:', location.pathname);
     }
     
     // Google Analytics page view tracking

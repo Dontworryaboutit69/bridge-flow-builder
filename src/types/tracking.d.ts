@@ -8,6 +8,7 @@ interface Window {
     eventName: string,
     params?: Record<string, any>
   ) => void;
+  _fbq?: any;
   
   // Google Analytics / Google Tag Manager
   gtag?: (
