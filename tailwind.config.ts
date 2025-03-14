@@ -67,8 +67,8 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				funding: {
-					'blue': '#0A84FF',
-					'light-blue': '#5AC8FA',
+					'blue': '#2F54EB', // Updated blue color
+					'light-blue': '#68a4ff',
 					'dark': '#1C1C1E',
 					'gray': '#8E8E93',
 					'light-gray': '#F2F2F7',
