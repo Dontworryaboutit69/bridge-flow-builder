@@ -1,13 +1,13 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DocumentsLayout from '@/components/DocumentCollection/DocumentsLayout';
-import DocumentPageFooter from '@/components/DocumentCollection/DocumentPageFooter';
 import { toast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import BackgroundDecorations from '@/components/DocumentCollection/BackgroundDecorations';
 import AdminSettingsSection from '@/components/DocumentCollection/AdminSettingsSection';
 import { useDocumentCollection } from '@/hooks/useDocumentCollection';
+import CrmEmbed from '@/components/CrmEmbed';
+import DocumentPageFooter from '@/components/DocumentCollection/DocumentPageFooter';
 
 const DocumentCollection = () => {
   const navigate = useNavigate();
@@ -30,8 +30,8 @@ const DocumentCollection = () => {
     setIsAdmin(params.get('admin') === 'true');
   }, []);
 
-  const handleSubmitDocuments = useCallback(() => {
-    console.log('Documents submitted:', documents);
+  const handleFormSubmit = useCallback(() => {
+    console.log('Document form submitted');
     if (webhookUrl) {
       localStorage.setItem('document_webhook', webhookUrl);
     }
@@ -39,7 +39,12 @@ const DocumentCollection = () => {
       title: "Documents submitted successfully",
       description: "Our team will review your documents shortly.",
     });
-  }, [documents, webhookUrl]);
+    
+    // Navigate to thank you page after a brief delay
+    setTimeout(() => {
+      navigate('/thank-you?docs_submitted=true');
+    }, 1500);
+  }, [webhookUrl, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -57,14 +62,27 @@ const DocumentCollection = () => {
           setWebhookUrl={setWebhookUrl}
         />
         
-        <DocumentsLayout 
-          documents={documents}
-          uploadingId={uploadingId}
-          handleUpload={handleUpload}
-          schedulingLink={schedulingLink}
-          onSubmitDocuments={handleSubmitDocuments}
-          webhookUrl={webhookUrl}
-        />
+        <div className="max-w-7xl mx-auto px-4 md:px-10 relative">
+          <div className="border-b border-funding-light-gray pb-6 mb-6">
+            <div className="text-center mb-6 md:mb-10">
+              <h1 className="text-2xl md:text-4xl font-bold text-funding-dark mb-4">
+                Document Collection
+              </h1>
+              <p className="text-funding-gray max-w-2xl mx-auto text-center">
+                Please upload the required documents to complete your funding application
+              </p>
+            </div>
+          </div>
+          
+          <div className="max-w-3xl mx-auto">
+            <CrmEmbed 
+              formId="nwNTfdAx1lyFn4mAQVkD" 
+              height="800px"
+              className="mb-8"
+              onFormSubmit={handleFormSubmit}
+            />
+          </div>
+        </div>
       </main>
       
       <DocumentPageFooter />

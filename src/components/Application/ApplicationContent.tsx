@@ -5,9 +5,16 @@ import PersonalInfo from '@/components/ApplicationSteps/PersonalInfo';
 import BusinessInfo from '@/components/ApplicationSteps/BusinessInfo';
 import FinancialInfo from '@/components/ApplicationSteps/FinancialInfo';
 import ReviewSubmit from '@/components/ApplicationSteps/ReviewSubmit';
+import { useEffect, useRef } from 'react';
 
 const ApplicationContent = () => {
   const { currentStep } = useApplication();
+  const nodeRef = useRef(null);
+  
+  // When step changes, scroll to top of page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentStep]);
   
   return (
     <TransitionGroup>
@@ -15,8 +22,9 @@ const ApplicationContent = () => {
         key={currentStep}
         timeout={300}
         classNames="form-step"
+        nodeRef={nodeRef}
       >
-        <div className="form-step">
+        <div className="form-step" ref={nodeRef}>
           {currentStep === 1 && <PersonalInfo />}
           {currentStep === 2 && <BusinessInfo />}
           {currentStep === 3 && <FinancialInfo />}

@@ -2,27 +2,22 @@
 import { useApplication } from '@/lib/applicationContext';
 import CustomButton from '../../ui/CustomButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useEffect } from 'react';
-import { useForm } from '@/lib/formContext';
-import FinancialDetailsSection from './FinancialDetailsSection';
-import FundsUsageSection from './FundsUsageSection';
-import BankAccountSection from './BankAccountSection';
+import CrmEmbed from '@/components/CrmEmbed';
+import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
 
 const FinancialInfo = () => {
-  const { applicationData, updateApplicationData, nextStep, prevStep, isStepValid } = useApplication();
-  const { formData } = useForm();
+  const { nextStep, prevStep } = useApplication();
+  const navigate = useNavigate();
   
-  // Autopopulate from pre-qualification data if available
-  useEffect(() => {
-    // Only populate if the financial fields are empty and we have pre-qualification data
-    if (!applicationData.monthlyRevenue && formData.monthlyRevenue) {
-      updateApplicationData({
-        monthlyRevenue: formData.monthlyRevenue || '',
-        creditScore: formData.creditScore || '',
-        loanAmount: formData.loanAmount || '',
-      });
-    }
-  }, [formData, applicationData, updateApplicationData]);
+  const handleFinancialFormSubmit = () => {
+    toast({
+      title: "Financial information submitted",
+      description: "Your financial information has been saved successfully.",
+    });
+    // Automatically go to the next step
+    nextStep();
+  };
   
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -36,11 +31,11 @@ const FinancialInfo = () => {
       </div>
       
       <div className="glass-card p-6 md:p-8 bg-white">
-        <div className="space-y-6">
-          <FinancialDetailsSection />
-          <FundsUsageSection />
-          <BankAccountSection />
-        </div>
+        <CrmEmbed 
+          formId="8IL41omixTKGjsWh61T9" 
+          height="600px" 
+          onFormSubmit={handleFinancialFormSubmit}
+        />
       </div>
       
       <div className="mt-10 flex justify-between">
@@ -54,7 +49,6 @@ const FinancialInfo = () => {
         </CustomButton>
         <CustomButton 
           onClick={nextStep} 
-          disabled={!isStepValid()}
           className="group"
         >
           Continue to Review & Submit
