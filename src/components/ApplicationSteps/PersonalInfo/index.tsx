@@ -7,7 +7,11 @@ import { useForm } from '@/lib/formContext';
 import CrmEmbed from '../../CrmEmbed';
 import { toast } from '@/components/ui/use-toast';
 
-const PersonalInfo = () => {
+interface PersonalInfoProps {
+  onFormSubmit?: () => void;
+}
+
+const PersonalInfo = ({ onFormSubmit }: PersonalInfoProps) => {
   const { nextStep } = useApplication();
   const { formData } = useForm();
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -21,10 +25,15 @@ const PersonalInfo = () => {
       duration: 3000,
     });
     
-    // Automatically proceed to next step after form is submitted
-    setTimeout(() => {
-      nextStep();
-    }, 1000);
+    // Call the parent's onFormSubmit if provided
+    if (onFormSubmit) {
+      onFormSubmit();
+    } else {
+      // Automatically proceed to next step after form is submitted
+      setTimeout(() => {
+        nextStep();
+      }, 1000);
+    }
   };
   
   return (

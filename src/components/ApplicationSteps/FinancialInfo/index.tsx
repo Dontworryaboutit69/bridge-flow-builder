@@ -6,7 +6,11 @@ import CrmEmbed from '@/components/CrmEmbed';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 
-const FinancialInfo = () => {
+interface FinancialInfoProps {
+  onFormSubmit?: () => void;
+}
+
+const FinancialInfo = ({ onFormSubmit }: FinancialInfoProps) => {
   const { nextStep, prevStep } = useApplication();
   const navigate = useNavigate();
   
@@ -15,8 +19,14 @@ const FinancialInfo = () => {
       title: "Financial information submitted",
       description: "Your financial information has been saved successfully.",
     });
-    // Automatically go to the next step
-    nextStep();
+    
+    // Call the parent's onFormSubmit if provided
+    if (onFormSubmit) {
+      onFormSubmit();
+    } else {
+      // Automatically go to the next step
+      nextStep();
+    }
   };
   
   return (

@@ -7,7 +7,11 @@ import { useForm } from '@/lib/formContext';
 import CrmEmbed from '../../CrmEmbed';
 import { toast } from '@/components/ui/use-toast';
 
-const BusinessInfo = () => {
+interface BusinessInfoProps {
+  onFormSubmit?: () => void;
+}
+
+const BusinessInfo = ({ onFormSubmit }: BusinessInfoProps) => {
   const { nextStep, prevStep } = useApplication();
   const { formData } = useForm();
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -29,6 +33,11 @@ const BusinessInfo = () => {
       variant: "default",
       duration: 3000,
     });
+    
+    // Call the parent's onFormSubmit if provided
+    if (onFormSubmit) {
+      onFormSubmit();
+    }
   };
   
   return (
