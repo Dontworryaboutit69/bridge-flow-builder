@@ -4,20 +4,20 @@ import CustomButton from '../ui/CustomButton';
 
 const testimonials = [
   {
-    name: "Michael Davis",
-    business: "Davis Construction",
+    name: "Franklyn D Jackson",
+    business: "Action Jackson Septic LLC",
     quote: "The funding process was incredibly simple. We were approved within 24 hours and had the capital in our account the next day. This allowed us to take on a major project immediately.",
     stars: 5
   },
   {
-    name: "Sarah Johnson",
-    business: "Organic Wellness Co.",
+    name: "Arturo Rendon",
+    business: "Aaffordable Landscaping LLC",
     quote: "As a small business owner, I was worried about the application process being complicated. It was actually the easiest funding application I've ever completed, and the terms were transparent.",
     stars: 5
   },
   {
-    name: "Robert Chen",
-    business: "RC Tech Solutions",
+    name: "Robin Thomas",
+    business: "Watch Me Grow, LLC",
     quote: "I needed capital quickly to purchase inventory for a large order. Not only was the approval fast, but the customer service was exceptional throughout the entire process.",
     stars: 5
   }
