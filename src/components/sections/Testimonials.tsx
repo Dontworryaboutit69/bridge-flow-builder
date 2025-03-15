@@ -1,6 +1,5 @@
 
-import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 
 const testimonials = [
@@ -25,16 +24,6 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-  
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
-  
   return (
     <section className="py-12 md:py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -51,44 +40,29 @@ const Testimonials = () => {
           </p>
         </div>
         
-        <div className="glass-card p-6 md:p-10 max-w-3xl mx-auto mb-10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-funding-blue/10 to-transparent rounded-bl-full"></div>
-          
-          <div className="relative">
-            <div className="flex items-center gap-1 mb-4">
-              {[...Array(testimonials[currentIndex].stars)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            
-            <blockquote className="mb-6 text-sm md:text-lg text-funding-dark italic">
-              "{testimonials[currentIndex].quote}"
-            </blockquote>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium text-funding-dark">{testimonials[currentIndex].name}</p>
-                <p className="text-sm text-funding-gray">{testimonials[currentIndex].business}</p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="glass-card p-6 md:p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-funding-blue/10 to-transparent rounded-bl-full"></div>
               
-              <div className="flex gap-2">
-                <button 
-                  onClick={prevTestimonial}
-                  className="p-2 rounded-full border border-funding-light-gray hover:bg-funding-light-gray/50 transition-colors"
-                  aria-label="Previous testimonial"
-                >
-                  <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-funding-dark" />
-                </button>
-                <button 
-                  onClick={nextTestimonial}
-                  className="p-2 rounded-full border border-funding-light-gray hover:bg-funding-light-gray/50 transition-colors"
-                  aria-label="Next testimonial"
-                >
-                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-funding-dark" />
-                </button>
+              <div className="relative">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(testimonial.stars)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                
+                <blockquote className="mb-6 text-sm md:text-lg text-funding-dark italic">
+                  "{testimonial.quote}"
+                </blockquote>
+                
+                <div>
+                  <p className="font-medium text-funding-dark">{testimonial.name}</p>
+                  <p className="text-sm text-funding-gray">{testimonial.business}</p>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
         
         <div className="text-center">
