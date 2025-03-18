@@ -31,7 +31,7 @@ const Hero = () => {
             
             <div className="flex justify-center lg:justify-start mb-8">
               <CustomButton href="#apply-now" size="lg">
-                Get Funded Now
+                Get Pre-Qualified
                 <ChevronRight className="ml-1 w-5 h-5" />
               </CustomButton>
             </div>
