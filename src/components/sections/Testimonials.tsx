@@ -1,7 +1,8 @@
 
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, ChevronRight, ChevronLeft } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const testimonials = [
   {
@@ -31,6 +32,10 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  // State for controlling which testimonial to show on mobile
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -53,6 +58,25 @@ const Testimonials = () => {
     }
   };
 
+  const cardVariants = {
+    initial: { scale: 0.95, opacity: 0.7 },
+    hover: { 
+      scale: 1.02, 
+      opacity: 1,
+      boxShadow: "0 20px 30px rgba(0, 0, 0, 0.1)",
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
+  // Handle navigation for mobile carousel
+  const nextTestimonial = () => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -72,8 +96,9 @@ const Testimonials = () => {
           </p>
         </div>
         
+        {/* Desktop view - All testimonials visible */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          className="hidden md:grid grid-cols-3 gap-8 mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -82,8 +107,10 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div 
               key={index} 
-              className={`rounded-2xl relative overflow-hidden bg-gradient-to-br ${testimonial.color} shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/80`}
+              className={`rounded-2xl relative overflow-hidden bg-gradient-to-br ${testimonial.color} shadow-xl transition-all duration-500 border border-white/80`}
               variants={itemVariants}
+              whileHover={cardVariants.hover}
+              initial={cardVariants.initial}
             >
               <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9InBhdHRlcm4iIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMzMzMiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=')]"></div>
               
@@ -93,11 +120,16 @@ const Testimonials = () => {
                 </div>
                 
                 <div className="relative">
-                  <div className="flex items-center gap-1 mb-6">
+                  <motion.div 
+                    className="flex items-center gap-1 mb-6"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 * index, duration: 0.5 }}
+                  >
                     {[...Array(testimonial.stars)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 md:w-6 md:h-6 fill-yellow-400 text-yellow-400" />
                     ))}
-                  </div>
+                  </motion.div>
                   
                   <blockquote className="mb-8 text-base md:text-lg text-funding-dark italic leading-relaxed">
                     "{testimonial.quote}"
@@ -124,7 +156,93 @@ const Testimonials = () => {
           ))}
         </motion.div>
         
-        <div className="text-center">
+        {/* Mobile view - Carousel style */}
+        <div className="md:hidden relative mb-8">
+          <motion.div
+            className="relative overflow-hidden px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className={`rounded-2xl relative overflow-hidden bg-gradient-to-br ${testimonials[activeIndex].color} shadow-xl border border-white/80`}
+            >
+              <div className="p-6 relative">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(testimonials[activeIndex].stars)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                
+                <blockquote className="mb-6 text-base text-funding-dark italic leading-relaxed">
+                  "{testimonials[activeIndex].quote}"
+                </blockquote>
+                
+                <div className="pt-4 border-t border-gray-200/50 flex items-center">
+                  {testimonials[activeIndex].image && (
+                    <div className="mr-3 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+                      <img 
+                        src={testimonials[activeIndex].image} 
+                        alt={testimonials[activeIndex].name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-bold text-funding-dark">{testimonials[activeIndex].name}</p>
+                    <p className="text-xs text-funding-gray">{testimonials[activeIndex].business}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* Navigation controls for mobile */}
+            <div className="flex justify-between mt-4">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={prevTestimonial}
+                className="bg-white p-2 rounded-full shadow-md border border-gray-100"
+              >
+                <ChevronLeft className="w-5 h-5 text-funding-blue" />
+              </motion.button>
+              
+              <div className="flex space-x-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`w-2 h-2 rounded-full ${
+                      idx === activeIndex ? "bg-funding-blue" : "bg-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextTestimonial}
+                className="bg-white p-2 rounded-full shadow-md border border-gray-100"
+              >
+                <ChevronRight className="w-5 h-5 text-funding-blue" />
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+        
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
           <CustomButton 
             size="lg" 
             href="#apply-now" 
@@ -132,7 +250,7 @@ const Testimonials = () => {
           >
             Get Pre-Qualified Now
           </CustomButton>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

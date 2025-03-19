@@ -1,5 +1,5 @@
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import TrustIndicators from '@/components/TrustIndicators';
@@ -10,6 +10,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
 import { Helmet } from 'react-helmet-async';
+import { AnimatePresence } from 'framer-motion';
 
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -73,25 +74,27 @@ const Index = () => {
       <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
       <Navbar />
       <main>
-        <Hero />
-        
-        {/* Simple visual separator with minimal spacing */}
-        <div className="relative py-2">
-          <div className="max-w-7xl mx-auto px-5 md:px-10">
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#2F54EB]/30 to-transparent"></div>
+        <AnimatePresence mode="wait">
+          <Hero />
+          
+          {/* Simple visual separator with minimal spacing */}
+          <div className="relative py-2">
+            <div className="max-w-7xl mx-auto px-5 md:px-10">
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-[#2F54EB]/30 to-transparent"></div>
+            </div>
           </div>
-        </div>
-        
-        <HowItWorks />
-        <TrustIndicators />
-        <FundingProducts />
-        <Benefits />
-        <Testimonials />
-        
-        {/* Application Form Section */}
-        <section id="apply-now" className="pt-16 pb-20 bg-gray-50">
-          <ProgressiveForm />
-        </section>
+          
+          <HowItWorks />
+          <TrustIndicators />
+          <FundingProducts />
+          <Benefits />
+          <Testimonials />
+          
+          {/* Application Form Section */}
+          <section id="apply-now" className="pt-16 pb-20 bg-gray-50">
+            <ProgressiveForm />
+          </section>
+        </AnimatePresence>
       </main>
       <Footer />
     </div>
