@@ -9,6 +9,7 @@ import Benefits from '@/components/sections/Benefits';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/sections/Footer';
 import ProgressiveForm from '@/components/ProgressiveForm';
+import { Helmet } from 'react-helmet-async';
 
 // Create a cross-browser compatible useIsomorphicLayoutEffect
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -60,7 +61,14 @@ const Index = () => {
       });
     };
   }, []);
-  return <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
+      <Helmet>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </Helmet>
+      
       {/* Add an invisible marker at the top to ensure scroll position is correct */}
       <div id="page-top" className="h-0 w-0 overflow-hidden"></div>
       <Navbar />
@@ -86,6 +94,7 @@ const Index = () => {
         </section>
       </main>
       <Footer />
-    </div>;
+    </div>
+  );
 };
 export default Index;

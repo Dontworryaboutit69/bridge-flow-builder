@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['SF Pro Display', 'Inter', 'system-ui', 'sans-serif'],
+				playfair: ['"Playfair Display"', 'serif']
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -106,8 +107,8 @@ export default {
 					'100%': { transform: 'translateY(-20px)', opacity: '0' }
 				},
 				'pulse-soft': {
-					'0%, 100%': { opacity: '1' },
-					'50%': { opacity: '0.8' }
+					'0%, 100%': { opacity: '1', transform: 'scale(1)' },
+					'50%': { opacity: '0.8', transform: 'scale(1.05)' }
 				}
 			},
 			animation: {
@@ -117,7 +118,7 @@ export default {
 				'fade-out': 'fade-out 0.5s ease-out',
 				'slide-in': 'slide-in 0.5s ease-out',
 				'slide-out': 'slide-out 0.5s ease-out',
-				'pulse-soft': 'pulse-soft 3s infinite'
+				'pulse-soft': 'pulse-soft 6s infinite'
 			},
 			backdropFilter: {
 				'none': 'none',
