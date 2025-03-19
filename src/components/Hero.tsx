@@ -5,24 +5,29 @@ import CustomButton from './ui/CustomButton';
 const Hero = () => {
   return (
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-      {/* Enhanced background effects */}
+      {/* Enhanced background effects with more personality */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-funding-blue/5 to-white"></div>
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-funding-blue/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/4"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-soft-green/5 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/4"></div>
-        <div className="absolute inset-0 diagonal-pattern opacity-[0.03]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-[#E0E8FF]/30 to-white"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#E0E8FF]/20 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#E2F7E9]/20 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/4"></div>
+        <div className="absolute inset-0 diagonal-pattern opacity-[0.05]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-12">
-          {/* Hero content with improved breathing room */}
+          {/* Hero content with improved typography and spacing */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <div className="inline-block bg-funding-blue/10 text-funding-blue font-medium text-sm px-4 py-1.5 rounded-full mb-5 animate-fade-in">
               Business Funding Made Simple
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-funding-dark mb-5 leading-tight">
-              Get Business Funding <span className="text-funding-blue">In 24 Hours</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight">
+              Get Business Funding <span className="text-funding-blue relative inline-block">
+                In 24 Hours
+                <svg className="absolute -bottom-1 left-0 w-full h-2 text-funding-blue/20" viewBox="0 0 100 12" preserveAspectRatio="none">
+                  <path d="M0,0 Q50,12 100,0" fill="currentColor" />
+                </svg>
+              </span>
             </h1>
             
             <p className="text-xl text-funding-gray mb-6 max-w-xl mx-auto lg:mx-0">
@@ -30,7 +35,11 @@ const Hero = () => {
             </p>
             
             <div className="flex justify-center lg:justify-start mb-8">
-              <CustomButton href="#apply-now" size="lg">
+              <CustomButton 
+                href="#apply-now" 
+                size="lg" 
+                className="shadow-lg hover:shadow-funding-blue/20 transition-all duration-300"
+              >
                 Get Pre-Qualified
                 <ChevronRight className="ml-1 w-5 h-5" />
               </CustomButton>
@@ -40,14 +49,14 @@ const Hero = () => {
               <div className="flex items-center">
                 <div className="flex -space-x-3">
                   {[
-                    { bg: 'bg-blue-500', text: 'J' },
+                    { bg: 'bg-purple-500', text: 'J' },
                     { bg: 'bg-green-500', text: 'S' },
-                    { bg: 'bg-purple-500', text: 'M' },
-                    { bg: 'bg-amber-500', text: 'K' }
+                    { bg: 'bg-amber-500', text: 'M' },
+                    { bg: 'bg-pink-500', text: 'K' }
                   ].map((profile, i) => (
                     <div
                       key={i}
-                      className={`w-10 h-10 rounded-full border-2 border-white ${profile.bg} flex items-center justify-center text-xs font-medium text-white`}
+                      className={`w-10 h-10 rounded-full border-2 border-white ${profile.bg} flex items-center justify-center text-xs font-medium text-white shadow-md`}
                     >
                       {profile.text}
                     </div>
@@ -69,10 +78,10 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Qualification form card with enhanced visual separation */}
+          {/* Qualification form card with more personality */}
           <div className="w-full lg:w-1/2 max-w-md mx-auto lg:max-w-none">
-            <div className="bg-white rounded-2xl p-6 shadow-soft border border-funding-light-gray/50 relative backdrop-blur-sm">
-              <div className="absolute -top-3 -right-3 bg-funding-blue/10 text-funding-blue text-xs font-bold px-3 py-1 rounded-full">
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-funding-light-gray/30 relative backdrop-blur-sm transform transition-all hover:shadow-xl">
+              <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500/80 to-funding-blue/80 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                 <Shield className="w-4 h-4 inline-block mr-1" />
                 Quick Pre-qualification
               </div>
@@ -87,7 +96,7 @@ const Hero = () => {
                   "All credit types considered"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start">
-                    <div className="p-1 rounded-full bg-soft-green mr-3 mt-0.5">
+                    <div className="p-1 rounded-full bg-green-100 mr-3 mt-0.5 shadow-sm">
                       <Check className="w-4 h-4 text-green-600" />
                     </div>
                     <span className="text-funding-dark">{item}</span>
@@ -95,7 +104,12 @@ const Hero = () => {
                 ))}
               </ul>
               
-              <CustomButton href="#apply-now" fullWidth size="lg">
+              <CustomButton 
+                href="#apply-now" 
+                fullWidth 
+                size="lg" 
+                className="bg-gradient-to-r from-funding-blue to-purple-600 hover:from-funding-blue/90 hover:to-purple-600/90 shadow-md"
+              >
                 Check Your Rate
                 <ChevronRight className="ml-1 w-5 h-5" />
               </CustomButton>
