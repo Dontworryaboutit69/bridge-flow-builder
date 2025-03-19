@@ -10,24 +10,21 @@ const testimonials = [
     business: "Action Jackson Septic LLC",
     quote: "The funding process was incredibly simple. We were approved within 24 hours and had the capital in our account the next day. This allowed us to take on a major project immediately.",
     stars: 5,
-    color: "from-blue-50 to-purple-50",
-    image: "/lovable-uploads/0d1efe81-a8fc-4a8c-8ee9-6c8dcc0c4701.png"
+    color: "from-blue-50 to-purple-50"
   },
   {
     name: "Arturo Rendon",
     business: "Aaffordable Landscaping LLC",
     quote: "As a small business owner, I was worried about the application process being complicated. It was actually the easiest funding application I've ever completed, and the terms were transparent.",
     stars: 5,
-    color: "from-green-50 to-emerald-50",
-    image: "/lovable-uploads/451acf52-90c5-4675-b014-d35c439f3382.png"
+    color: "from-green-50 to-emerald-50"
   },
   {
     name: "Robin Thomas",
     business: "Watch Me Grow, LLC",
     quote: "I needed capital quickly to purchase inventory for a large order. Not only was the approval fast, but the customer service was exceptional throughout the entire process.",
     stars: 5,
-    color: "from-amber-50 to-yellow-50",
-    image: "/lovable-uploads/910a0a2a-6c75-4d00-a585-e6cc0375c553.png"
+    color: "from-amber-50 to-yellow-50"
   }
 ];
 
@@ -135,20 +132,9 @@ const Testimonials = () => {
                     "{testimonial.quote}"
                   </blockquote>
                   
-                  <div className="pt-6 border-t border-gray-200/50 flex items-center">
-                    {testimonial.image && (
-                      <div className="mr-4 w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md">
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.name} 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-bold text-funding-dark text-lg">{testimonial.name}</p>
-                      <p className="text-sm text-funding-gray">{testimonial.business}</p>
-                    </div>
+                  <div className="pt-6 border-t border-gray-200/50">
+                    <p className="font-bold text-funding-dark text-lg">{testimonial.name}</p>
+                    <p className="text-sm text-funding-gray">{testimonial.business}</p>
                   </div>
                 </div>
               </div>
@@ -183,20 +169,9 @@ const Testimonials = () => {
                   "{testimonials[activeIndex].quote}"
                 </blockquote>
                 
-                <div className="pt-4 border-t border-gray-200/50 flex items-center">
-                  {testimonials[activeIndex].image && (
-                    <div className="mr-3 w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
-                      <img 
-                        src={testimonials[activeIndex].image} 
-                        alt={testimonials[activeIndex].name} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <div>
-                    <p className="font-bold text-funding-dark">{testimonials[activeIndex].name}</p>
-                    <p className="text-xs text-funding-gray">{testimonials[activeIndex].business}</p>
-                  </div>
+                <div className="pt-4 border-t border-gray-200/50">
+                  <p className="font-bold text-funding-dark">{testimonials[activeIndex].name}</p>
+                  <p className="text-xs text-funding-gray">{testimonials[activeIndex].business}</p>
                 </div>
               </div>
             </motion.div>
